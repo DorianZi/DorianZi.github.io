@@ -5,15 +5,74 @@
   
 
   
-  <title>Hexo</title>
+  <title>matrix_QR_decomposition | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="矩阵的QR分解来源于gram-schmidt正交化. 先看后者 gram-schmidt正交化我们有空间的一组基 ，并希望得到该空间的一组正交基 1) 令，则被消灭 2) 向作垂线获得，那么和正交，且可以表示，则被消灭 向量到向量的正交投影为 则 3) 向和表示的二维平面作垂线，获得，那么，，互相正交，且可以表示，则被消灭  向量到和表示的二维平面的正交投影可以分解为：到的正交投影，以及到的正交投">
+<meta property="og:type" content="article">
+<meta property="og:title" content="matrix_QR_decomposition">
+<meta property="og:url" content="http://yoursite.com/2019/03/13/matrix-QR-decomposition/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="矩阵的QR分解来源于gram-schmidt正交化. 先看后者 gram-schmidt正交化我们有空间的一组基 ，并希望得到该空间的一组正交基 1) 令，则被消灭 2) 向作垂线获得，那么和正交，且可以表示，则被消灭 向量到向量的正交投影为 则 3) 向和表示的二维平面作垂线，获得，那么，，互相正交，且可以表示，则被消灭  向量到和表示的二维平面的正交投影可以分解为：到的正交投影，以及到的正交投">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?R^{n}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\left&space;(&space;\alpha_{1},\alpha_{1},\alpha_{1},...,\alpha_{n}&space;\right&space;)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\left&space;(&space;\beta_{1},\beta_{1},\beta_{1},...,\beta_{n}&space;\right&space;)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}=\alpha_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{2}">
+<meta property="og:image" content="https://img-blog.csdn.net/20150525203312381?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDk0NTY4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{2}=\alpha_{2}-&space;\frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{3}">
+<meta property="og:image" content="https://img-blog.csdn.net/20150525212155052?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDk0NTY4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}+\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{3}=&space;\alpha_{3}-&space;\left&space;(\frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}+\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2}&space;\right&space;)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{n}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{n},\beta_{n-1},...,\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{n}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{n}=\alpha_{n}-\sum_{m=1}^{n-1}\frac{(\alpha_{n},\beta_{m})}{(\beta_{m},\beta_{m})}\beta_{m}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{1}=k_{11}\beta{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{2}=k_{12}\beta{1}+k_{22}\beta_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{3}=k_{13}\beta{1}+k_{23}\beta_{2}+k_{33}\beta_{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{n}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\left&space;(&space;\beta_{1},\beta_{2},\beta_{3},...,\beta_{n}&space;\right&space;)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{n}=k_{1n}\beta{1}+k_{2n}\beta_{2}+k_{3n}\beta_{3}+...+k_{nn}\beta_{n}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(&space;\alpha_{1},\alpha_{2},\alpha_{3},...,\alpha_{n}&space;)=&space;(\beta_{1},\beta_{2},\beta_{3},...,\beta_{n})&space;\begin{bmatrix}&space;k_{11}&space;&&space;k_{12}&space;&&space;k_{13}&space;&&space;...&space;&&space;k_{1n}\\&space;0&space;&&space;k_{22}&space;&&space;k_{23}&space;&&space;...&space;&&space;k_{2n}\\&space;0&space;&&space;0&space;&&space;k_{33}&space;&&space;...&space;&&space;k_{3n}\\&space;...&space;&&space;...&space;&&space;...&space;&&space;...&space;&&space;...\\&space;0&space;&&space;0&space;&&space;0&space;&&space;...&space;&&space;k_{nn}&space;\end{bmatrix}\right">
+<meta property="og:updated_time" content="2019-03-13T00:53:37.973Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="matrix_QR_decomposition">
+<meta name="twitter:description" content="矩阵的QR分解来源于gram-schmidt正交化. 先看后者 gram-schmidt正交化我们有空间的一组基 ，并希望得到该空间的一组正交基 1) 令，则被消灭 2) 向作垂线获得，那么和正交，且可以表示，则被消灭 向量到向量的正交投影为 则 3) 向和表示的二维平面作垂线，获得，那么，，互相正交，且可以表示，则被消灭  向量到和表示的二维平面的正交投影可以分解为：到的正交投影，以及到的正交投">
+<meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?R^{n}">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,9 +119,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-matrix-QR-decomposition" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-matrix-QR-decomposition" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/03/13/matrix-QR-decomposition/" class="article-date">
   <time datetime="2019-03-13T00:52:44.000Z" itemprop="datePublished">2019-03-13</time>
@@ -75,8 +132,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/13/matrix-QR-decomposition/">matrix_QR_decomposition</a>
+    <h1 class="article-title" itemprop="name">
+      matrix_QR_decomposition
     </h1>
   
 
@@ -117,92 +174,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/13/hello-world/" class="article-date">
-  <time datetime="2019-03-13T00:46:41.869Z" itemprop="datePublished">2019-03-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/13/hello-world/">Hello World</a>
-    </h1>
+    <a href="/2019/03/13/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/13/hello-world/" data-id="cjt6hsjtp0001aceo06tz7zi0" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-PCA" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/13/PCA/" class="article-date">
-  <time datetime="2019-03-13T00:10:38.000Z" itemprop="datePublished">2019-03-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/13/PCA/">PCA</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/13/PCA/" data-id="cjt6hsjtm0000aceo985iy3vy" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
 
 </section>
         
