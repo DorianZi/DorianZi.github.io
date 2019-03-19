@@ -1,7 +1,7 @@
 ---
-title: matrix_QR_decomposition
-date: 2019-03-19 08:52:44
-tags:
+title: QR Decomposition
+date: 2019-03-04 01:52:44
+tags: "Algorithm"
 ---
 
 矩阵的QR分解来源于gram-schmidt正交化. 先看后者

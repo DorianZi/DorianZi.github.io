@@ -1,7 +1,7 @@
 ---
 title: PCA
 date: 2019-03-19 10:53:44
-tags:
+tags: "Algorithm"
 ---
 
 # PCA主成分分析
