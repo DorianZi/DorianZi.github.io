@@ -98,16 +98,16 @@
 
 
 
-  <meta name="description" content="矩阵的QR分解来源于gram-schmidt正交化. 先看后者 gram-schmidt正交化我们有空间的一组基 )，并希望得到该空间的一组正交基) 1) 令，则被消灭 2) 向作垂线获得，那么和正交，且可以表示，则被消灭 向量到向量的正交投影为 则 3) 向和表示的二维平面作垂线，获得，那么，，互相正交，且可以表示，则被消灭  向量到和表示的二维平面的正交投影可以分解为：到的正交投影，以及到的正">
+  <meta name="description" content="矩阵的QR分解来源于gram-schmidt正交化. 先看后者 gram-schmidt正交化我们有空间的一组基 ，并希望得到该空间的一组正交基 1) 令，则被消灭 2) 向作垂线获得，那么和正交，且可以表示，则被消灭  向量到向量的正交投影为 则 3) 向和表示的二维平面作垂线，获得，那么，，互相正交，且可以表示，则被消灭  向量到和表示的二维平面的正交投影可以分解为：到的正交投影，以及到的正交">
 <meta property="og:type" content="article">
 <meta property="og:title" content="matrix_QR_decomposition">
-<meta property="og:url" content="http://yoursite.com/2019/03/13/matrix-QR-decomposition/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="矩阵的QR分解来源于gram-schmidt正交化. 先看后者 gram-schmidt正交化我们有空间的一组基 )，并希望得到该空间的一组正交基) 1) 令，则被消灭 2) 向作垂线获得，那么和正交，且可以表示，则被消灭 向量到向量的正交投影为 则 3) 向和表示的二维平面作垂线，获得，那么，，互相正交，且可以表示，则被消灭  向量到和表示的二维平面的正交投影可以分解为：到的正交投影，以及到的正">
+<meta property="og:url" content="http://yoursite.com/2019/03/19/matrix-QR-decomposition/index.html">
+<meta property="og:site_name" content="Dorian Circle">
+<meta property="og:description" content="矩阵的QR分解来源于gram-schmidt正交化. 先看后者 gram-schmidt正交化我们有空间的一组基 ，并希望得到该空间的一组正交基 1) 令，则被消灭 2) 向作垂线获得，那么和正交，且可以表示，则被消灭  向量到向量的正交投影为 则 3) 向和表示的二维平面作垂线，获得，那么，，互相正交，且可以表示，则被消灭  向量到和表示的二维平面的正交投影可以分解为：到的正交投影，以及到的正交">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?R^{n}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\left&space;(&space;\alpha_{1},\alpha_{1},\alpha_{1},...,\alpha_{n}&space;\right&space;">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\left&space;(&space;\beta_{1},\beta_{1},\beta_{1},...,\beta_{n}&space;\right&space;">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\left&space;(&space;\alpha_{1},\alpha_{1},\alpha_{1},...,\alpha_{n}&space;\right&space;)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\left&space;(&space;\beta_{1},\beta_{1},\beta_{1},...,\beta_{n}&space;\right&space;)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}=\alpha_{1}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{1}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{2}">
@@ -117,7 +117,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{2}">
-<meta property="og:image" content="https://img-blog.csdn.net/20150525203312381?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDk0NTY4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/QR_pic1.png?raw=true">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}">
@@ -131,7 +131,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{3}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{3}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{3}">
-<meta property="og:image" content="https://img-blog.csdn.net/20150525212155052?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDk0NTY4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/QR_pic2.png?raw=true">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{3}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_{1}">
@@ -159,10 +159,10 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\left&space;(&space;\beta_{1},\beta_{2},\beta_{3},...,\beta_{n}&space;\right&space;)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{n}=k_{1n}\beta{1}+k_{2n}\beta_{2}+k_{3n}\beta_{3}+...+k_{nn}\beta_{n}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?(&space;\alpha_{1},\alpha_{2},\alpha_{3},...,\alpha_{n}&space;)=&space;(\beta_{1},\beta_{2},\beta_{3},...,\beta_{n})&space;\begin{bmatrix}&space;k_{11}&space;&&space;k_{12}&space;&&space;k_{13}&space;&&space;...&space;&&space;k_{1n}\\&space;0&space;&&space;k_{22}&space;&&space;k_{23}&space;&&space;...&space;&&space;k_{2n}\\&space;0&space;&&space;0&space;&&space;k_{33}&space;&&space;...&space;&&space;k_{3n}\\&space;...&space;&&space;...&space;&&space;...&space;&&space;...&space;&&space;...\\&space;0&space;&&space;0&space;&&space;0&space;&&space;...&space;&&space;k_{nn}&space;\end{bmatrix}\right">
-<meta property="og:updated_time" content="2019-03-19T02:12:18.628Z">
+<meta property="og:updated_time" content="2019-03-19T03:24:45.975Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="matrix_QR_decomposition">
-<meta name="twitter:description" content="矩阵的QR分解来源于gram-schmidt正交化. 先看后者 gram-schmidt正交化我们有空间的一组基 )，并希望得到该空间的一组正交基) 1) 令，则被消灭 2) 向作垂线获得，那么和正交，且可以表示，则被消灭 向量到向量的正交投影为 则 3) 向和表示的二维平面作垂线，获得，那么，，互相正交，且可以表示，则被消灭  向量到和表示的二维平面的正交投影可以分解为：到的正交投影，以及到的正">
+<meta name="twitter:description" content="矩阵的QR分解来源于gram-schmidt正交化. 先看后者 gram-schmidt正交化我们有空间的一组基 ，并希望得到该空间的一组正交基 1) 令，则被消灭 2) 向作垂线获得，那么和正交，且可以表示，则被消灭  向量到向量的正交投影为 则 3) 向和表示的二维平面作垂线，获得，那么，，互相正交，且可以表示，则被消灭  向量到和表示的二维平面的正交投影可以分解为：到的正交投影，以及到的正交">
 <meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?R^{n}">
 
 
@@ -170,7 +170,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/13/matrix-QR-decomposition/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/19/matrix-QR-decomposition/">
 
 
 
@@ -180,7 +180,7 @@
   };
 </script>
 
-  <title>matrix_QR_decomposition | Hexo</title>
+  <title>matrix_QR_decomposition | Dorian Circle</title>
   
 
 
@@ -239,7 +239,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">Dorian Circle</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -345,16 +345,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/13/matrix-QR-decomposition/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/19/matrix-QR-decomposition/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="Dorian Zi">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Dorian Circle">
     </span>
 
     
@@ -388,24 +388,12 @@
                 
               
 
-              <time title="Created: 2019-03-13 08:52:44" itemprop="dateCreated datePublished" datetime="2019-03-13T08:52:44+08:00">2019-03-13</time>
+              <time title="Created: 2019-03-19 08:52:44 / Modified: 11:24:45" itemprop="dateCreated datePublished" datetime="2019-03-19T08:52:44+08:00">2019-03-19</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-03-19 10:12:18" itemprop="dateModified" datetime="2019-03-19T10:12:18+08:00">2019-03-19</time>
               
             
           </span>
@@ -440,28 +428,29 @@
 
       
         <p>矩阵的QR分解来源于gram-schmidt正交化. 先看后者</p>
-<h1 id="gram-schmidt正交化"><a href="#gram-schmidt正交化" class="headerlink" title="gram-schmidt正交化"></a>gram-schmidt正交化</h1><p>我们有<img src="https://latex.codecogs.com/gif.latex?R^{n}" alt>空间的一组基 <img src="https://latex.codecogs.com/gif.latex?\left&space;(&space;\alpha_{1},\alpha_{1},\alpha_{1},...,\alpha_{n}&space;\right&space;" alt>)，并希望得到该空间的一组正交基<img src="https://latex.codecogs.com/gif.latex?\left&space;(&space;\beta_{1},\beta_{1},\beta_{1},...,\beta_{n}&space;\right&space;" alt>)</p>
-<p>1) 令<img src="https://latex.codecogs.com/gif.latex?\beta_{1}=\alpha_{1}" title="\beta_{1}=\alpha_{1}">，则<img src="https://latex.codecogs.com/gif.latex?\alpha_{1}" title="\alpha_{1}">被消灭</p>
-<p>2) <img src="https://latex.codecogs.com/gif.latex?\alpha_{2}" title="\alpha_{2}">向<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}">作垂线获得<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}">，那么<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}">和<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}">正交，且可以表示<img src="https://latex.codecogs.com/gif.latex?\alpha_{2}" title="\alpha_{2}">，则<img src="https://latex.codecogs.com/gif.latex?\alpha_{2}" title="\alpha_{2}">被消灭<br><img src="https://img-blog.csdn.net/20150525203312381?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDk0NTY4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"></p>
-<p>向量<img src="https://latex.codecogs.com/gif.latex?\alpha_{2}" title="\alpha_{2}">到向量<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}">的正交投影为<img src="https://latex.codecogs.com/gif.latex?\frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}" title="\frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}"></p>
-<p>则<img src="https://latex.codecogs.com/gif.latex?\beta_{2}=\alpha_{2}-&space;\frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}" title="\beta_{2}=\alpha_{2}- \frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}"></p>
-<p>3) <img src="https://latex.codecogs.com/gif.latex?\alpha_{3}" title="\alpha_{3}">向<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}">和<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}">表示的二维平面作垂线，获得<img src="https://latex.codecogs.com/gif.latex?\beta_{3}" title="\beta_{3}">，那么<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}">，<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}">，<img src="https://latex.codecogs.com/gif.latex?\beta_{3}" title="\beta_{3}">互相正交，且可以表示<img src="https://latex.codecogs.com/gif.latex?\alpha_{3}" title="\alpha_{3}">，则<img src="https://latex.codecogs.com/gif.latex?\alpha_{3}" title="\alpha_{3}">被消灭</p>
-<p><img src="https://img-blog.csdn.net/20150525212155052?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDk0NTY4Mw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></p>
-<p>向量<img src="https://latex.codecogs.com/gif.latex?\alpha_{3}" title="\alpha_{3}">到<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}">和<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}">表示的二维平面的正交投影可以分解为：到<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}">的正交投影，以及到<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}">的正交投影的和</p>
-<p>所以正交投影为<img src="https://latex.codecogs.com/gif.latex?\frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}&plus;\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2}" title="\frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}+\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2}"></p>
-<p>则<img src="https://latex.codecogs.com/gif.latex?\beta_{3}=&space;\alpha_{3}-&space;\left&space;(\frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}&plus;\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2}&space;\right&space;)" title="\beta_{3}= \alpha_{3}- \left (\frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}+\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2} \right )"></p>
-<p>4) 推广到n维,<img src="https://latex.codecogs.com/gif.latex?\alpha_{n}" title="\alpha_{n}">可以被正交向量<img src="https://latex.codecogs.com/gif.latex?\beta_{n},\beta_{n-1},...,\beta_{1}" title="\beta_{n},\beta_{n-1},...,\beta_{1}">表示，则<img src="https://latex.codecogs.com/gif.latex?\alpha_{n}" title="\alpha_{n}">被消灭，<br>且：<br><img src="https://latex.codecogs.com/gif.latex?\beta_{n}=\alpha_{n}-\sum_{m=1}^{n-1}\frac{(\alpha_{n},\beta_{m})}{(\beta_{m},\beta_{m})}\beta_{m}" title="\beta_{n}=\alpha_{n}-\sum_{m=1}^{n-1}\frac{(\alpha_{n},\beta_{m})}{(\beta_{m},\beta_{m})}\beta_{m}"></p>
+<h1 id="gram-schmidt正交化"><a href="#gram-schmidt正交化" class="headerlink" title="gram-schmidt正交化"></a>gram-schmidt正交化</h1><p>我们有<img src="https://latex.codecogs.com/gif.latex?R^{n}" style="display:inline;vertical-align:text-top;">空间的一组基 <img src="https://latex.codecogs.com/gif.latex?\left&space;(&space;\alpha_{1},\alpha_{1},\alpha_{1},...,\alpha_{n}&space;\right&space;)" style="display:inline;vertical-align:text-top;">，并希望得到该空间的一组正交基<img src="https://latex.codecogs.com/gif.latex?\left&space;(&space;\beta_{1},\beta_{1},\beta_{1},...,\beta_{n}&space;\right&space;)" style="display:inline;vertical-align:text-top;"></p>
+<p>1) 令<img src="https://latex.codecogs.com/gif.latex?\beta_{1}=\alpha_{1}" title="\beta_{1}=\alpha_{1}" style="display:inline;vertical-align:text-top;">，则<img src="https://latex.codecogs.com/gif.latex?\alpha_{1}" title="\alpha_{1}" style="display:inline;vertical-align:text-top;">被消灭</p>
+<p>2) <img src="https://latex.codecogs.com/gif.latex?\alpha_{2}" title="\alpha_{2}" style="display:inline;vertical-align:text-top;">向<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}" style="display:inline;vertical-align:text-top;">作垂线获得<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}" style="display:inline;vertical-align:text-top;">，那么<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}" style="display:inline;vertical-align:text-top;">和<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}" style="display:inline;vertical-align:text-top;">正交，且可以表示<img src="https://latex.codecogs.com/gif.latex?\alpha_{2}" title="\alpha_{2}" style="display:inline;vertical-align:text-top;">，则<img src="https://latex.codecogs.com/gif.latex?\alpha_{2}" title="\alpha_{2}" style="display:inline;vertical-align:text-top;">被消灭</p>
+<p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/QR_pic1.png?raw=true" style="display:inline;vertical-align:text-top;"></p>
+<p>向量<img src="https://latex.codecogs.com/gif.latex?\alpha_{2}" title="\alpha_{2}" style="display:inline;vertical-align:text-top;">到向量<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}" style="display:inline;vertical-align:text-top;">的正交投影为<img src="https://latex.codecogs.com/gif.latex?\frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}" title="\frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}" style="display:inline;vertical-align:text-top;"></p>
+<p>则<img src="https://latex.codecogs.com/gif.latex?\beta_{2}=\alpha_{2}-&space;\frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}" title="\beta_{2}=\alpha_{2}- \frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}" style="display:inline;vertical-align:text-top;"></p>
+<p>3) <img src="https://latex.codecogs.com/gif.latex?\alpha_{3}" title="\alpha_{3}" style="display:inline;vertical-align:text-top;">向<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}" style="display:inline;vertical-align:text-top;">和<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}" style="display:inline;vertical-align:text-top;">表示的二维平面作垂线，获得<img src="https://latex.codecogs.com/gif.latex?\beta_{3}" title="\beta_{3}" style="display:inline;vertical-align:text-top;">，那么<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}" style="display:inline;vertical-align:text-top;">，<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}" style="display:inline;vertical-align:text-top;">，<img src="https://latex.codecogs.com/gif.latex?\beta_{3}" title="\beta_{3}" style="display:inline;vertical-align:text-top;">互相正交，且可以表示<img src="https://latex.codecogs.com/gif.latex?\alpha_{3}" title="\alpha_{3}" style="display:inline;vertical-align:text-top;">，则<img src="https://latex.codecogs.com/gif.latex?\alpha_{3}" title="\alpha_{3}" style="display:inline;vertical-align:text-top;">被消灭</p>
+<p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/QR_pic2.png?raw=true" style="display:inline;vertical-align:text-top;"></p>
+<p>向量<img src="https://latex.codecogs.com/gif.latex?\alpha_{3}" title="\alpha_{3}" style="display:inline;vertical-align:text-top;">到<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}" style="display:inline;vertical-align:text-top;">和<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}" style="display:inline;vertical-align:text-top;">表示的二维平面的正交投影可以分解为：到<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}" style="display:inline;vertical-align:text-top;">的正交投影，以及到<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}" style="display:inline;vertical-align:text-top;">的正交投影的和</p>
+<p>所以正交投影为<img src="https://latex.codecogs.com/gif.latex?\frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}&plus;\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2}" title="\frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}+\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2}" style="display:inline;vertical-align:text-top;"></p>
+<p>则<img src="https://latex.codecogs.com/gif.latex?\beta_{3}=&space;\alpha_{3}-&space;\left&space;(\frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}&plus;\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2}&space;\right&space;)" title="\beta_{3}= \alpha_{3}- \left (\frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}+\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2} \right )" style="display:inline;vertical-align:text-top;"></p>
+<p>4) 推广到n维,<img src="https://latex.codecogs.com/gif.latex?\alpha_{n}" title="\alpha_{n}" style="display:inline;vertical-align:text-top;">可以被正交向量<img src="https://latex.codecogs.com/gif.latex?\beta_{n},\beta_{n-1},...,\beta_{1}" title="\beta_{n},\beta_{n-1},...,\beta_{1}" style="display:inline;vertical-align:text-top;">表示，则<img src="https://latex.codecogs.com/gif.latex?\alpha_{n}" title="\alpha_{n}" style="display:inline;vertical-align:text-top;">被消灭，且：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\beta_{n}=\alpha_{n}-\sum_{m=1}^{n-1}\frac{(\alpha_{n},\beta_{m})}{(\beta_{m},\beta_{m})}\beta_{m}" title="\beta_{n}=\alpha_{n}-\sum_{m=1}^{n-1}\frac{(\alpha_{n},\beta_{m})}{(\beta_{m},\beta_{m})}\beta_{m}" style="display:inline;vertical-align:text-top;"></p>
 <p>以上即为gram-schmidt正交化。</p>
-<h1 id="QR分解"><a href="#QR分解" class="headerlink" title="QR分解"></a>QR分解</h1><p>在前面的gram-schmidt推导过程可知：<br><img src="https://latex.codecogs.com/gif.latex?\alpha_{1}" title="\alpha_{1}">可以由<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}">表示：<img src="https://latex.codecogs.com/gif.latex?\alpha_{1}=k_{11}\beta{1}" title="\alpha_{1}=k_{11}\beta{1}"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?\alpha_{2}" title="\alpha_{2}">可以由正交向量<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}">，<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}">表示：<img src="https://latex.codecogs.com/gif.latex?\alpha_{2}=k_{12}\beta{1}&plus;k_{22}\beta_{2}" title="\alpha_{2}=k_{12}\beta{1}+k_{22}\beta_{2}"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?\alpha_{3}" title="\alpha_{3}">可以由正交向量<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}">，<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}">，<img src="https://latex.codecogs.com/gif.latex?\beta_{3}" title="\beta_{3}">表示：<img src="https://latex.codecogs.com/gif.latex?\alpha_{3}=k_{13}\beta{1}&plus;k_{23}\beta_{2}&plus;k_{33}\beta_{3}" title="\alpha_{3}=k_{13}\beta{1}+k_{23}\beta_{2}+k_{33}\beta_{3}"></p>
+<h1 id="QR分解"><a href="#QR分解" class="headerlink" title="QR分解"></a>QR分解</h1><p>在前面的gram-schmidt推导过程可知：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\alpha_{1}" title="\alpha_{1}" style="display:inline;vertical-align:text-top;">可以由<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}" style="display:inline;vertical-align:text-top;">表示：<img src="https://latex.codecogs.com/gif.latex?\alpha_{1}=k_{11}\beta{1}" title="\alpha_{1}=k_{11}\beta{1}" style="display:inline;vertical-align:text-top;"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?\alpha_{2}" title="\alpha_{2}" style="display:inline;vertical-align:text-top;">可以由正交向量<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}" style="display:inline;vertical-align:text-top;">，<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}" style="display:inline;vertical-align:text-top;">表示：<img src="https://latex.codecogs.com/gif.latex?\alpha_{2}=k_{12}\beta{1}&plus;k_{22}\beta_{2}" title="\alpha_{2}=k_{12}\beta{1}+k_{22}\beta_{2}" style="display:inline;vertical-align:text-top;"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?\alpha_{3}" title="\alpha_{3}" style="display:inline;vertical-align:text-top;">可以由正交向量<img src="https://latex.codecogs.com/gif.latex?\beta_{1}" title="\beta_{1}" style="display:inline;vertical-align:text-top;">，<img src="https://latex.codecogs.com/gif.latex?\beta_{2}" title="\beta_{2}" style="display:inline;vertical-align:text-top;">，<img src="https://latex.codecogs.com/gif.latex?\beta_{3}" title="\beta_{3}" style="display:inline;vertical-align:text-top;">表示：<img src="https://latex.codecogs.com/gif.latex?\alpha_{3}=k_{13}\beta{1}&plus;k_{23}\beta_{2}&plus;k_{33}\beta_{3}" title="\alpha_{3}=k_{13}\beta{1}+k_{23}\beta_{2}+k_{33}\beta_{3}" style="display:inline;vertical-align:text-top;"></p>
 <p>……</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\alpha_{n}" title="\alpha_{n}">可以由正交向量<img src="https://latex.codecogs.com/gif.latex?\left&space;(&space;\beta_{1},\beta_{2},\beta_{3},...,\beta_{n}&space;\right&space;)" title="\left ( \beta_{1},\beta_{2},\beta_{3},...,\beta_{n} \right )">表示：<img src="https://latex.codecogs.com/gif.latex?\alpha_{n}=k_{1n}\beta{1}&plus;k_{2n}\beta_{2}&plus;k_{3n}\beta_{3}&plus;...&plus;k_{nn}\beta_{n}" title="\alpha_{n}=k_{1n}\beta{1}+k_{2n}\beta_{2}+k_{3n}\beta_{3}+...+k_{nn}\beta_{n}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?\alpha_{n}" title="\alpha_{n}" style="display:inline;vertical-align:text-top;">可以由正交向量<img src="https://latex.codecogs.com/gif.latex?\left&space;(&space;\beta_{1},\beta_{2},\beta_{3},...,\beta_{n}&space;\right&space;)" title="\left ( \beta_{1},\beta_{2},\beta_{3},...,\beta_{n} \right )" style="display:inline;vertical-align:text-top;">表示：<img src="https://latex.codecogs.com/gif.latex?\alpha_{n}=k_{1n}\beta{1}&plus;k_{2n}\beta_{2}&plus;k_{3n}\beta_{3}&plus;...&plus;k_{nn}\beta_{n}" title="\alpha_{n}=k_{1n}\beta{1}+k_{2n}\beta_{2}+k_{3n}\beta_{3}+...+k_{nn}\beta_{n}" style="display:inline;vertical-align:text-top;"></p>
 <p>写成矩阵乘法格式A=QR：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?(&space;\alpha_{1},\alpha_{2},\alpha_{3},...,\alpha_{n}&space;)=&space;(\beta_{1},\beta_{2},\beta_{3},...,\beta_{n})&space;\begin{bmatrix}&space;k_{11}&space;&&space;k_{12}&space;&&space;k_{13}&space;&&space;...&space;&&space;k_{1n}\\&space;0&space;&&space;k_{22}&space;&&space;k_{23}&space;&&space;...&space;&&space;k_{2n}\\&space;0&space;&&space;0&space;&&space;k_{33}&space;&&space;...&space;&&space;k_{3n}\\&space;...&space;&&space;...&space;&&space;...&space;&&space;...&space;&&space;...\\&space;0&space;&&space;0&space;&&space;0&space;&&space;...&space;&&space;k_{nn}&space;\end{bmatrix}\right" title="( \alpha_{1},\alpha_{2},\alpha_{3},...,\alpha_{n} )= (\beta_{1},\beta_{2},\beta_{3},...,\beta_{n}) \begin{bmatrix} k_{11} & k_{12} & k_{13} & ... & k_{1n}\\ 0 & k_{22} & k_{23} & ... & k_{2n}\\ 0 & 0 & k_{33} & ... & k_{3n}\\ ... & ... & ... & ... & ...\\ 0 & 0 & 0 & ... & k_{nn} \end{bmatrix}\right"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?(&space;\alpha_{1},\alpha_{2},\alpha_{3},...,\alpha_{n}&space;)=&space;(\beta_{1},\beta_{2},\beta_{3},...,\beta_{n})&space;\begin{bmatrix}&space;k_{11}&space;&&space;k_{12}&space;&&space;k_{13}&space;&&space;...&space;&&space;k_{1n}\\&space;0&space;&&space;k_{22}&space;&&space;k_{23}&space;&&space;...&space;&&space;k_{2n}\\&space;0&space;&&space;0&space;&&space;k_{33}&space;&&space;...&space;&&space;k_{3n}\\&space;...&space;&&space;...&space;&&space;...&space;&&space;...&space;&&space;...\\&space;0&space;&&space;0&space;&&space;0&space;&&space;...&space;&&space;k_{nn}&space;\end{bmatrix}\right" title="( \alpha_{1},\alpha_{2},\alpha_{3},...,\alpha_{n} )= (\beta_{1},\beta_{2},\beta_{3},...,\beta_{n}) \begin{bmatrix} k_{11} & k_{12} & k_{13} & ... & k_{1n}\\ 0 & k_{22} & k_{23} & ... & k_{2n}\\ 0 & 0 & k_{33} & ... & k_{3n}\\ ... & ... & ... & ... & ...\\ 0 & 0 & 0 & ... & k_{nn} \end{bmatrix}\right" style="display:inline;vertical-align:text-top;"></p>
 <p>以上即为A=QR分解。</p>
-<hr>
-<p>参考文档：<a href="https://blog.csdn.net/u010945683/article/details/45972819" target="_blank" rel="noopener">https://blog.csdn.net/u010945683/article/details/45972819</a></p>
 
       
     </div>
@@ -492,15 +481,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/13/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/19/matrix_similarity/" rel="prev" title="Matrix Similarity">
+                Matrix Similarity <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -558,7 +547,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-author-name" itemprop="name">Dorian Zi</p>
               <div class="site-description motion-element" itemprop="description"></div>
           </div>
 
@@ -569,7 +558,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -636,7 +625,7 @@
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">Dorian Zi</span>
 
   
 
