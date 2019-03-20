@@ -77,12 +77,11 @@ SVD分解即奇异值分解， 可以从特征值分解推导而来。先理解�
 ## SVD奇异值分解
 SVD = Singular Value Decomposition 即奇异值分解。特征值可以理解为奇异值的一种特殊情况，即矩阵为方阵的情况。在矩阵非方阵的时候，我们将类似的分解称作奇异值分解
 
-我们有一个非方阵的维度为<img src="https://latex.codecogs.com/gif.latex?m\times&space;n(m<n)" title="m\times n(m<n)"  style="display:inline;vertical-align:text-top;"/>的矩阵<img src="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{A}" title="\underset{m\times n}{A}"  style="display:inline;vertical-align:text-top;"/>，希望能够对角化。采用上面的特征矩阵分解方式是不可能了，但是我们可以利用<img src="https://latex.codecogs.com/gif.latex?A^{T}A" title="A^{T}A"  style="display:inline;vertical-align:text-top;"/>（<img src="https://latex.codecogs.com/gif.latex?AA^{T}" title="AA^{T}"  style="display:inline;vertical-align:text-top;"/>）为实对称方阵的特性来获得不同的特征矩阵分解：
+我们有一个非方阵的维度为<img src="https://latex.codecogs.com/gif.latex?m\times&space;n(m<n)" title="m\times n(m<n)"  style="display:inline;vertical-align:text-top;"/>的矩阵<img src="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{A}" title="\underset{m\times n}{A}"  style="display:inline;vertical-align:text-top;"/>，希望能够对角化。采用上面的特征矩阵分解方式是不可能了，但是我们可以利用<img src="https://latex.codecogs.com/gif.latex?AA^{T}" title="AA^{T}"  style="display:inline;vertical-align:text-top;"/>和<img src="https://latex.codecogs.com/gif.latex?A^{T}A" title="A^{T}A"  style="display:inline;vertical-align:text-top;"/>为实对称方阵的特性来获得不同的特征矩阵分解：
 
-<img src="https://latex.codecogs.com/gif.latex?\underset{n\times&space;m}{A^{T}}\underset{m\times&space;n}{A}=\underset{n\times&space;n}{U}\underset{n\times&space;n}{\Lambda&space;_{1}}\underset{n\times&space;n}{U^{-1}}=\underset{n\times&space;n}{U}\underset{n\times&space;n}{\Lambda&space;_{1}}\underset{n\times&space;n}{U^{T}}" style="display:inline;vertical-align:text-top;">
+<img src="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{A}\underset{n\times&space;m}{A^{T}}=\underset{m\times&space;m}{U}\underset{m\times&space;m}{\Lambda&space;_{2}}\underset{m\times&space;m}{U^{-1}}=\underset{m\times&space;m}{U}\underset{m\times&space;m}{\Lambda&space;_{2}}\underset{m\times&space;m}{U^{T}}">
 
-<img src="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{A}\underset{n\times&space;m}{A^{T}}=\underset{m\times&space;m}{V}\underset{m\times&space;m}{\Lambda&space;_{2}}\underset{m\times&space;m}{V^{-1}}=\underset{m\times&space;m}{V}\underset{m\times&space;m}{\Lambda&space;_{2}}\underset{m\times&space;m}{V^{T}}" style="display:inline;vertical-align:text-top;">
-
+<img src="https://latex.codecogs.com/gif.latex?\underset{n\times&space;m}{A^{T}}\underset{m\times&space;n}{A}=\underset{n\times&space;n}{V}\underset{n\times&space;n}{\Lambda&space;_{1}}\underset{n\times&space;n}{V^{-1}}=\underset{n\times&space;n}{V}\underset{n\times&space;n}{\Lambda&space;_{1}}\underset{n\times&space;n}{V^{T}}">
 可以推得(推导过程TBD)：
 
 <img src="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{A}=\underset{m\times&space;m}{U}\underset{m\times&space;n}{\sum}\underset{n\times&space;n}{V^{T}}" style="display:inline;vertical-align:text-top;">
