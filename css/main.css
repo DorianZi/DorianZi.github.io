@@ -328,10 +328,11 @@ video {
   margin-right: auto;
 }
 img {
-  display: block;
+  display: inline;
   margin: auto;
   max-width: 100%;
   height: auto;
+  vertical-align: text-top;
 }
 hr {
   margin: 40px 0;
@@ -1887,7 +1888,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2ec1a2;
+  background: #655329;
 }
 .links-of-blogroll {
   font-size: 13px;
