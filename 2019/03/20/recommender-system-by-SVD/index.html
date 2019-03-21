@@ -98,12 +98,12 @@
 
 
 
-  <meta name="description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践全维推荐我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0分">
+  <meta name="description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践问题的提出我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Recommender System by SVD">
 <meta property="og:url" content="http://yoursite.com/2019/03/20/recommender-system-by-SVD/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践全维推荐我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0分">
+<meta property="og:description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践问题的提出我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{A}=\underset{m\times&space;m}{U}\underset{m\times&space;n}{\sum}\underset{n\times&space;n}{V^{T}}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?U">
@@ -113,18 +113,6 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?U,&space;\sum,V">
 <meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/svd_cut_2.png?raw=true">
 <meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/raw/master/res/svd_recommender_data_2.png">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_1^{T}&space;=&space;(1,5,0,5,4)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_2^{T}&space;=&space;(5,4,4,3,2)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_3^{T}&space;=&space;(0,4,0,0,5)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_4^{T}&space;=&space;(4,4,1,4,0)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_5^{T}&space;=&space;(0,4,3,5,0)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_6^{T}&space;=&space;(2,4,3,5,3)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_5^{T}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(x_{11},x_{12},...,x_{1n})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(x_{21},x_{22},...,x_{2n})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?d=\sqrt{\sum_{i=1}^{n}(x_{1i}-x_{2i})^2}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_6^{T}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_5^{T}">
 <meta property="og:image" content="https://latex.codecogs.com/png.latex?\underset{\underset{m&space;\times&space;n}{A}}{\begin{bmatrix}&space;1&space;&&space;5&&space;0&&space;5&&space;4\\&space;5&space;&&space;4&&space;4&space;&3&space;&2&space;\\&space;0&&space;4&&space;0&&space;0&&space;5\\&space;4&&space;4&&space;1&&space;4&&space;0\\&space;0&&space;4&&space;3&&space;5&&space;0\\&space;2&&space;4&&space;3&&space;5&&space;3&space;\end{bmatrix}}&space;=&space;\underset{\underset{m&space;\times&space;m}{U}}{\begin{bmatrix}&space;-0.46&space;&&space;0.40&space;&&space;0.30&space;&&space;-0.43&space;&&space;0.32&space;&&space;-0.50\\&space;-0.46&space;&&space;-0.30&space;&&space;-0.65&space;&&space;0.28&space;&&space;0.02&space;&&space;-0.44&space;\\&space;-0.25&space;&&space;0.75&space;&&space;-0.28&space;&&space;0.16&space;&&space;-0.46&space;&&space;0.22\\&space;-0.38&space;&&space;-0.35&space;&&space;-0.13&space;&&space;-0.68&space;&&space;-0.32&space;&&space;0.38&space;\\&space;-0.38&space;&&space;-0.24&space;&&space;0.62&space;&&space;0.38&space;&&space;-0.50&space;&&space;-0.13\\&space;-0.48&space;&&space;-0.01&space;&&space;0.10&space;&&space;0.31&space;&&space;0.57&space;&&space;0.59&space;\end{bmatrix}&space;}&space;\underset{\underset{m&space;\times&space;n}{\sum}}{\begin{bmatrix}&space;16.47&space;&&space;0&space;&&space;0&space;&&space;0&space;&&space;0\\&space;0&space;&&space;6.21&space;&&space;0&space;&&space;0&space;&&space;0\\&space;0&&space;0&space;&&space;4.40&space;&&space;0&space;&&space;0&space;\\&space;0&&space;0&space;&&space;0&space;&&space;2.90&space;&&space;0&space;\\&space;0&&space;0&space;&&space;0&space;&&space;0&space;&&space;1.58&space;\\&space;0&&space;0&space;&&space;0&space;&&space;0&space;&&space;0&space;\end{bmatrix}&space;}&space;\underset{\underset{n&space;\times&space;n}{V^{T}}}{&space;\begin{bmatrix}&space;-0.32&space;&&space;-0.61&space;&&space;-0.29&space;&&space;-0.58&space;&&space;-0.33\\&space;-0.41&space;&&space;0.22&space;&&space;-0.38&space;&&space;-0.26&space;&&space;0.76\\&space;-0.74&space;&&space;0.03&space;&&space;-0.13&space;&&space;0.60&space;&&space;-0.27&space;\\&space;-0.39&space;&&space;-0.12&space;&&space;0.87&space;&&space;-0.20&space;&&space;0.19\\&space;0.17&space;&&space;-0.75&space;&&space;-0.03&space;&&space;0.45&space;&&space;0.45&space;\end{bmatrix}&space;}">
 <meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/recommender_rate_dot.png?raw=true">
 <meta property="og:image" content="https://latex.codecogs.com/png.latex?4&space;=&space;(-0.25)\times&space;16.47\times&space;(-0.61)+0.75\times&space;6.21\times&space;0.22+(-0.28)\times&space;4.4\times&space;0.03+0.16\times&space;2.9\times&space;(-0.12)+(-0.46)\times&space;1.58\times&space;(-0.75)">
@@ -134,10 +122,22 @@
 <meta property="og:image" content="https://latex.codecogs.com/png.latex?V^{T}">
 <meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/recommender_system_svd_feature.png?raw=true">
 <meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/recommender_system_svd_feature_cut.png?raw=true">
-<meta property="og:updated_time" content="2019-03-21T08:07:46.093Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_1^{T}&space;=&space;(-0.46,0.40)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_2^{T}&space;=&space;(-0.46，-0.30)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_3^{T}&space;=&space;(-0.25,0.75)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_4^{T}&space;=&space;(-0.38,-0.35)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_5^{T}&space;=&space;(-0.38，-0.24)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_6^{T}&space;=&space;(-0.48,-0.01)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_5^{T}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(x_{11},x_{12},...,x_{1n})">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(x_{21},x_{22},...,x_{2n})">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?d=\sqrt{\sum_{i=1}^{n}(x_{1i}-x_{2i})^2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_2^{T}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_5^{T}">
+<meta property="og:updated_time" content="2019-03-21T08:34:46.515Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Recommender System by SVD">
-<meta name="twitter:description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践全维推荐我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0分">
+<meta name="twitter:description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践问题的提出我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0">
 <meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{A}=\underset{m\times&space;m}{U}\underset{m\times&space;n}{\sum}\underset{n\times&space;n}{V^{T}}">
 
 
@@ -421,24 +421,12 @@
 <p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/svd_cut_2.png?raw=true"></p>
 <p>这一降维方式可以运用在<a href="https://dorianzi.github.io/2019/03/10/image_compression_with_SVD/" target="_blank" rel="noopener">图像压缩</a>中。</p>
 <p>此文中，我们将继续探索SVD降维方法在<font size="5">推荐系统</font>中的应用。</p>
-<h2 id="推荐系统实践"><a href="#推荐系统实践" class="headerlink" title="推荐系统实践"></a>推荐系统实践</h2><h3 id="全维推荐"><a href="#全维推荐" class="headerlink" title="全维推荐"></a>全维推荐</h3><p>我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0分：</p>
+<h2 id="推荐系统实践"><a href="#推荐系统实践" class="headerlink" title="推荐系统实践"></a>推荐系统实践</h2><h3 id="问题的提出"><a href="#问题的提出" class="headerlink" title="问题的提出"></a>问题的提出</h3><p>我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0分：</p>
 <p><img src="https://github.com/DorianZi/algorithm_explained/raw/master/res/svd_recommender_data_2.png"></p>
 <p>接下来，我们的目标是向user_5推荐item。应该向Ta推荐item_1，还是item_5呢? ——</p>
 <p>这里采用的策略是：找到与user_5喜好最接近的用户，然后把该用户对item_1, item_5中评分最高的那一个推荐给user_5。于是问题转化为：<font size="4">哪个用户与user_5的喜好最接近？</font></p>
-<p>把用户所在行抽离出来，就会得到用户们的喜好向量：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?user\_1^{T}&space;=&space;(1,5,0,5,4)"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?user\_2^{T}&space;=&space;(5,4,4,3,2)"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?user\_3^{T}&space;=&space;(0,4,0,0,5)"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?user\_4^{T}&space;=&space;(4,4,1,4,0)"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?user\_5^{T}&space;=&space;(0,4,3,5,0)"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?user\_6^{T}&space;=&space;(2,4,3,5,3)"></p>
-<p>然后我们要找出与<img src="https://latex.codecogs.com/gif.latex?user\_5^{T}" title="user\_5^{T}">向量相似度最高的向量。</p>
-<p><font size="4">向量的相似度</font>是怎么评估的？—— 评估标准有很多种，常见的有：夹角余弦法，欧氏距离法等。这里我们使用欧式距离，即两个向量<img src="https://latex.codecogs.com/gif.latex?(x_{11},x_{12},...,x_{1n})" title="(x_{11},x_{12},...,x_{1n})">和<img src="https://latex.codecogs.com/gif.latex?(x_{21},x_{22},...,x_{2n})" title="(x_{21},x_{22},...,x_{2n})">之间的欧式距离为：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?d=\sqrt{\sum_{i=1}^{n}(x_{1i}-x_{2i})^2}" title="d=\sqrt{\sum_{i=1}^{n}(x_{1i}-x_{2i})^2}"></p>
-<p>欧式距离越小，向量相似度越高。</p>
-<p>通过计算得知，<img src="https://latex.codecogs.com/gif.latex?user\_6^{T}" title="user\_6^{T}">与<img src="https://latex.codecogs.com/gif.latex?user\_5^{T}" title="user\_5^{T}">相似度最高，所以user_6和user_5的喜好最接近，于是在item_1和item_5之间，将user_6评分更高的item_5推荐给user_5</p>
-<h3 id="SVD降维推荐"><a href="#SVD降维推荐" class="headerlink" title="SVD降维推荐"></a>SVD降维推荐</h3><p>以上，我们没有用到SVD。但是在实际应用中，该user-item数据表的维度远远大于6x5。在巨大维度下，逐一计算欧式距离成本太大。因此使用SVD进行降维，再计算欧式距离，是推荐系统里常用的方法。</p>
-<p>首先将样本数据看做一个矩阵6x5的矩阵并进行SVD分解：</p>
+<p>在实际应用中，user-item数据表的维度远远大于6x5。在巨大维度下，计算成本太高，使用SVD进行降维后再计算，是推荐系统里常用的方法。</p>
+<h3 id="SVD求解"><a href="#SVD求解" class="headerlink" title="SVD求解"></a>SVD求解</h3><p>首先将样本数据看做一个矩阵6x5的矩阵并进行SVD分解：</p>
 <p><img src="https://latex.codecogs.com/png.latex?\underset{\underset{m&space;\times&space;n}{A}}{\begin{bmatrix}&space;1&space;&&space;5&&space;0&&space;5&&space;4\\&space;5&space;&&space;4&&space;4&space;&3&space;&2&space;\\&space;0&&space;4&&space;0&&space;0&&space;5\\&space;4&&space;4&&space;1&&space;4&&space;0\\&space;0&&space;4&&space;3&&space;5&&space;0\\&space;2&&space;4&&space;3&&space;5&&space;3&space;\end{bmatrix}}&space;=&space;\underset{\underset{m&space;\times&space;m}{U}}{\begin{bmatrix}&space;-0.46&space;&&space;0.40&space;&&space;0.30&space;&&space;-0.43&space;&&space;0.32&space;&&space;-0.50\\&space;-0.46&space;&&space;-0.30&space;&&space;-0.65&space;&&space;0.28&space;&&space;0.02&space;&&space;-0.44&space;\\&space;-0.25&space;&&space;0.75&space;&&space;-0.28&space;&&space;0.16&space;&&space;-0.46&space;&&space;0.22\\&space;-0.38&space;&&space;-0.35&space;&&space;-0.13&space;&&space;-0.68&space;&&space;-0.32&space;&&space;0.38&space;\\&space;-0.38&space;&&space;-0.24&space;&&space;0.62&space;&&space;0.38&space;&&space;-0.50&space;&&space;-0.13\\&space;-0.48&space;&&space;-0.01&space;&&space;0.10&space;&&space;0.31&space;&&space;0.57&space;&&space;0.59&space;\end{bmatrix}&space;}&space;\underset{\underset{m&space;\times&space;n}{\sum}}{\begin{bmatrix}&space;16.47&space;&&space;0&space;&&space;0&space;&&space;0&space;&&space;0\\&space;0&space;&&space;6.21&space;&&space;0&space;&&space;0&space;&&space;0\\&space;0&&space;0&space;&&space;4.40&space;&&space;0&space;&&space;0&space;\\&space;0&&space;0&space;&&space;0&space;&&space;2.90&space;&&space;0&space;\\&space;0&&space;0&space;&&space;0&space;&&space;0&space;&&space;1.58&space;\\&space;0&&space;0&space;&&space;0&space;&&space;0&space;&&space;0&space;\end{bmatrix}&space;}&space;\underset{\underset{n&space;\times&space;n}{V^{T}}}{&space;\begin{bmatrix}&space;-0.32&space;&&space;-0.61&space;&&space;-0.29&space;&&space;-0.58&space;&&space;-0.33\\&space;-0.41&space;&&space;0.22&space;&&space;-0.38&space;&&space;-0.26&space;&&space;0.76\\&space;-0.74&space;&&space;0.03&space;&&space;-0.13&space;&&space;0.60&space;&&space;-0.27&space;\\&space;-0.39&space;&&space;-0.12&space;&&space;0.87&space;&&space;-0.20&space;&&space;0.19\\&space;0.17&space;&&space;-0.75&space;&&space;-0.03&space;&&space;0.45&space;&&space;0.45&space;\end{bmatrix}&space;}" title="\underset{\underset{m \times n}{A}}{\begin{bmatrix} 1 & 5& 0& 5& 4\\ 5 & 4& 4 &3 &2 \\ 0& 4& 0& 0& 5\\ 4& 4& 1& 4& 0\\ 0& 4& 3& 5& 0\\ 2& 4& 3& 5& 3 \end{bmatrix}} = \underset{\underset{m \times m}{U}}{\begin{bmatrix} -0.46 & 0.40 & 0.30 & -0.43 & 0.32 & -0.50\\ -0.46 & -0.30 & -0.65 & 0.28 & 0.02 & -0.44 \\ -0.25 & 0.75 & -0.28 & 0.16 & -0.46 & 0.22\\ -0.38 & -0.35 & -0.13 & -0.68 & -0.32 & 0.38 \\ -0.38 & -0.24 & 0.62 & 0.38 & -0.50 & -0.13\\ -0.48 & -0.01 & 0.10 & 0.31 & 0.57 & 0.59 \end{bmatrix} } \underset{\underset{m \times n}{\sum}}{\begin{bmatrix} 16.47 & 0 & 0 & 0 & 0\\ 0 & 6.21 & 0 & 0 & 0\\ 0& 0 & 4.40 & 0 & 0 \\ 0& 0 & 0 & 2.90 & 0 \\ 0& 0 & 0 & 0 & 1.58 \\ 0& 0 & 0 & 0 & 0 \end{bmatrix} } \underset{\underset{n \times n}{V^{T}}}{ \begin{bmatrix} -0.32 & -0.61 & -0.29 & -0.58 & -0.33\\ -0.41 & 0.22 & -0.38 & -0.26 & 0.76\\ -0.74 & 0.03 & -0.13 & 0.60 & -0.27 \\ -0.39 & -0.12 & 0.87 & -0.20 & 0.19\\ 0.17 & -0.75 & -0.03 & 0.45 & 0.45 \end{bmatrix} }"></p>
 <p>对于评分矩阵，该分解意味着什么呢？我们来计算一下user_3对item_2的评分</p>
 <p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/recommender_rate_dot.png?raw=true"></p>
@@ -450,8 +438,20 @@
 <p>=&gt;</p>
 <p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/recommender_system_svd_feature_cut.png?raw=true"></p>
 <p>至此，实现了降维。</p>
-<p>我们在此维度下，寻找与user_5最接近的user。计算欧式距离</p>
-<p>（待更新。。。。）</p>
+<p>我们在此维度下，寻找与user_5最接近的user。每个用户向量抽离出来是2维向量：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?user\_1^{T}&space;=&space;(-0.46,0.40)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?user\_2^{T}&space;=&space;(-0.46，-0.30)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?user\_3^{T}&space;=&space;(-0.25,0.75)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?user\_4^{T}&space;=&space;(-0.38,-0.35)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?user\_5^{T}&space;=&space;(-0.38，-0.24)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?user\_6^{T}&space;=&space;(-0.48,-0.01)"></p>
+<p>然后我们要找出与<img src="https://latex.codecogs.com/gif.latex?user\_5^{T}" title="user\_5^{T}">向量相似度最高的向量。</p>
+<p><font size="4">向量的相似度</font>是怎么评估的？—— 评估标准有很多种，常见的有：夹角余弦法，欧氏距离法等。这里我们使用欧式距离，即两个向量<img src="https://latex.codecogs.com/gif.latex?(x_{11},x_{12},...,x_{1n})" title="(x_{11},x_{12},...,x_{1n})">和<img src="https://latex.codecogs.com/gif.latex?(x_{21},x_{22},...,x_{2n})" title="(x_{21},x_{22},...,x_{2n})">之间的欧式距离为：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?d=\sqrt{\sum_{i=1}^{n}(x_{1i}-x_{2i})^2}" title="d=\sqrt{\sum_{i=1}^{n}(x_{1i}-x_{2i})^2}"></p>
+<p>欧式距离越小，向量相似度越高。</p>
+<p>通过计算得知，<img src="https://latex.codecogs.com/gif.latex?user\_2^{T}" title="user\_2^{T}">与<img src="https://latex.codecogs.com/gif.latex?user\_5^{T}" title="user\_5^{T}">相似度最高，所以user_2和user_5的喜好最接近。</p>
+<p>回到原始矩阵看user_2对item_1和item_5的评分：item_1评分，更高。 因此将item_1推荐给user_5。</p>
+<p>以上</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://etd.lib.metu.edu.tr/upload/12612129/index.pdf" target="_blank" rel="noopener">http://etd.lib.metu.edu.tr/upload/12612129/index.pdf</a></p>
 
       
@@ -702,7 +702,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引入"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐系统实践"><span class="nav-number">2.</span> <span class="nav-text">推荐系统实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全维推荐"><span class="nav-number">2.1.</span> <span class="nav-text">全维推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVD降维推荐"><span class="nav-number">2.2.</span> <span class="nav-text">SVD降维推荐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引入"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐系统实践"><span class="nav-number">2.</span> <span class="nav-text">推荐系统实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题的提出"><span class="nav-number">2.1.</span> <span class="nav-text">问题的提出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVD求解"><span class="nav-number">2.2.</span> <span class="nav-text">SVD求解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
