@@ -1,7 +1,8 @@
 ---
 title: Matrix Similarity
 date: 2019-03-04 00:00:00
-tags: "Algorithm"
+tags: 
+    - Algorithm
 ---
 
 # 相似矩阵

@@ -1,7 +1,9 @@
 ---
 title: SVD Decomposition
 date: 2019-03-09 02:00:00
-tags: "Algorithm"
+tags: 
+    - Algorithm
+    - SVD
 ---
 
 SVD分解即奇异值分解， 可以从特征值分解推导而来。先理解特征值分解

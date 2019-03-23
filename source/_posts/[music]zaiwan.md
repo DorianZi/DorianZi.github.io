@@ -1,7 +1,8 @@
 ---
 title: 再晚
 date: 2019-03-18 08:52:44
-tags: "Original Music"
+tags: 
+    - Original Music
 ---
 
 Try if the external music player gets loaded properly

@@ -1,7 +1,9 @@
 ---
 title: Image Compression by SVD
 date: 2019-03-10 07:50:00
-tags: "Algorithm"
+tags: 
+    - Algorithm
+    - SVD
 ---
 
 # 基于SVD的图像压缩实践

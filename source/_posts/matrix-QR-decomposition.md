@@ -1,7 +1,8 @@
 ---
 title: QR Decomposition
 date: 2019-03-04 01:52:44
-tags: "Algorithm"
+tags: 
+    - Algorithm
 ---
 
 矩阵的QR分解来源于gram-schmidt正交化. 先看后者
