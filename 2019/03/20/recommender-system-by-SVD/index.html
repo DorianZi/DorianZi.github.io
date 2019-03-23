@@ -99,6 +99,7 @@
 
 
   <meta name="description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践问题的提出我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0">
+<meta name="keywords" content="Algorithm,SVD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Recommender System by SVD">
 <meta property="og:url" content="http://yoursite.com/2019/03/20/recommender-system-by-SVD/index.html">
@@ -134,7 +135,14 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?d=\sqrt{\sum_{i=1}^{n}(x_{1i}-x_{2i})^2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_2^{T}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_5^{T}">
-<meta property="og:updated_time" content="2019-03-21T08:34:46.515Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X=(2,0,5,2,0)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X_{k}^{T}&space;=&space;X^{T}\underset{n\times&space;k}{V}\underset{k\times&space;k}{\sum}^{-1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X_{2}^{T}&space;=(2,0,5,2,0)\begin{bmatrix}&space;-0.32&space;&&space;-0.41\\&space;-0.61&&space;0.22&space;\\&space;-0.29&space;&&space;-0.38&space;\\&space;-0.58&space;&&space;-0.26&space;\\&space;-0.33&space;&&space;0.76&space;\end{bmatrix}&space;\begin{bmatrix}&space;16.47&space;&&space;0\\&space;0&space;&&space;6.21&space;\end{bmatrix}^{-1}=(-0.20,-0.52)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_1^{T}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?user\_1^{T}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X_{2}^{T}}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X">
+<meta property="og:updated_time" content="2019-03-23T13:53:23.274Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Recommender System by SVD">
 <meta name="twitter:description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践问题的提出我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0">
@@ -451,7 +459,12 @@
 <p>欧式距离越小，向量相似度越高。</p>
 <p>通过计算得知，<img src="https://latex.codecogs.com/gif.latex?user\_2^{T}" title="user\_2^{T}">与<img src="https://latex.codecogs.com/gif.latex?user\_5^{T}" title="user\_5^{T}">相似度最高，所以user_2和user_5的喜好最接近。</p>
 <p>回到原始矩阵看user_2对item_1和item_5的评分：item_1评分，更高。 因此将item_1推荐给user_5。</p>
-<p>以上</p>
+<h2 id="向新用户推荐item"><a href="#向新用户推荐item" class="headerlink" title="向新用户推荐item"></a>向新用户推荐item</h2><p>上面求解的是向已知用户推荐item。如果现在有一个新的用户<img src="https://latex.codecogs.com/gif.latex?X=(2,0,5,2,0)" title="user\_new^{T}=(2,0,5,2,0)">，它的数据并不在上面的样本矩阵里，怎么办？<br>容易想到的是，直接加入原样本数据进行扩展再求解，但是这样做在大数据情况下时间消耗太大。我们需要基于已经有的模型对新加入的用户进行item推荐。</p>
+<p>首先，将新用户投影到降维后的user向量空间中去（为什么是这个算法？我也在找寻答案）：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?X_{k}^{T}&space;=&space;X^{T}\underset{n\times&space;k}{V}\underset{k\times&space;k}{\sum}^{-1}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?X_{2}^{T}&space;=(2,0,5,2,0)\begin{bmatrix}&space;-0.32&space;&&space;-0.41\\&space;-0.61&&space;0.22&space;\\&space;-0.29&space;&&space;-0.38&space;\\&space;-0.58&space;&&space;-0.26&space;\\&space;-0.33&space;&&space;0.76&space;\end{bmatrix}&space;\begin{bmatrix}&space;16.47&space;&&space;0\\&space;0&space;&&space;6.21&space;\end{bmatrix}^{-1}=(-0.20,-0.52)"></p>
+<p>接下来通过欧式距离或者其它方式,找出<img src="https://latex.codecogs.com/gif.latex?user\_1^{T}"> ~ <img src="https://latex.codecogs.com/gif.latex?user\_1^{T}">中与<img src="https://latex.codecogs.com/gif.latex?X_{2}^{T}}">相似度最该的且对item_2和item_5评过分的user, 然后把该user对item_2和item_5中评分更高的item推荐给<img src="https://latex.codecogs.com/gif.latex?X" title="X">用户</p>
+<p>以上。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://etd.lib.metu.edu.tr/upload/12612129/index.pdf" target="_blank" rel="noopener">http://etd.lib.metu.edu.tr/upload/12612129/index.pdf</a></p>
 
       
@@ -473,6 +486,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+            <a href="/tags/SVD/" rel="tag"># SVD</a>
+          
+        </div>
       
 
       
@@ -593,7 +614,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -714,7 +737,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引入"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐系统实践"><span class="nav-number">2.</span> <span class="nav-text">推荐系统实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题的提出"><span class="nav-number">2.1.</span> <span class="nav-text">问题的提出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVD求解"><span class="nav-number">2.2.</span> <span class="nav-text">SVD求解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引入"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐系统实践"><span class="nav-number">2.</span> <span class="nav-text">推荐系统实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题的提出"><span class="nav-number">2.1.</span> <span class="nav-text">问题的提出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVD求解"><span class="nav-number">2.2.</span> <span class="nav-text">SVD求解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向新用户推荐item"><span class="nav-number">3.</span> <span class="nav-text">向新用户推荐item</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
