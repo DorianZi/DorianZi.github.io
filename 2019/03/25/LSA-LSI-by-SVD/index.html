@@ -117,7 +117,18 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?U">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\sum">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?V^{T}">
-<meta property="og:updated_time" content="2019-03-25T13:14:45.048Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?U">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\sum">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?V^{T}">
+<meta property="og:image" content="http://yoursite.com/uploads/LSA_model_guess.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?U">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\sum">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?V^{T}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?U">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\sum">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?V^{T}">
+<meta property="og:image" content="http://yoursite.com/uploads/LSA_model.png">
+<meta property="og:updated_time" content="2019-03-25T13:59:04.625Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LSA&#x2F;LSI by SVD">
 <meta name="twitter:description" content="问题的提出在一个图书馆系统中，如果用户键入“计算机”，系统可能会返回诸如《计算机技术与应用》，《互联网通信技术》《C++编程理论》，《算法之美》，《电脑维修方法》等书籍。我们的知道“计算机” 与“互联网”，“编程”，“算法”，“电脑”有着类似的潜在语义，所以它们被筛选出来是可以理解的，但是系统是怎么知道它们有着类似的潜在语义呢？ 答案是LSA 或者 LSI LSA/LSILSA，即Latent S">
@@ -481,7 +492,11 @@
 <p><img src="https://latex.codecogs.com/gif.latex?=\begin{bmatrix}&space;-0.2&space;&&space;-0.61&space;\\&space;-0.06&space;&&space;0.17&space;\\&space;0.11&space;&&space;-0.5&space;\\&space;-0.95&space;&&space;-0.03&space;\\&space;0.05&space;&&space;-0.21&space;\\&space;-0.08&space;&&space;-0.26&space;\\&space;-0.18&space;&&space;0.43&space;\\&space;0.01&space;&&space;-0.05&space;\\&space;0.06&space;&&space;-0.24&space;\end{bmatrix}&space;\begin{bmatrix}&space;3.34&space;&&space;0\\&space;0&space;&&space;2.54&space;\end{bmatrix}&space;\begin{bmatrix}&space;-0.2&space;&&space;-0.6&space;&&space;-0.47&space;&&space;-0.55&space;&&space;-0.28&space;&&space;0.&space;&&space;0.&space;&&space;0.&space;\\&space;-0.12&space;&&space;0.53&space;&&space;-0.23&space;&&space;-0.61&space;&&space;0.53&space;&&space;0.&space;&&space;0.&space;&&space;0.&space;\end{bmatrix}"></p>
 <p>好，我们完成了降维，数据变得简单了。看起来非常顺利，但是我们将词汇-文本矩阵用SVD分解后得到三个矩阵是什么意义呢， 降维操作降的是什么东西呢？</p>
 <p>在<a href="https://dorianzi.github.io/2019/03/20/recommender-system-by-SVD" target="_blank" rel="noopener">推荐系统的应用中</a>，我们理解：<img src="https://latex.codecogs.com/gif.latex?U">的行向量是各个user特征的向量，<img src="https://latex.codecogs.com/gif.latex?\sum">的对角线值是权重，<img src="https://latex.codecogs.com/gif.latex?V^{T}">的列向量是各个item特征的向量，因为前几个权重占非常大，所以仅保留user的前几个特征，和item的前几个特征以实现降维是合理的。</p>
-<p>那么在我们现在讨论的潜在语义分析中，如何理解呢?</p>
+<p>在现在讨论的潜在语义分析中，如何理解呢? 我们试着探索一下:</p>
+<h2 id="语义空间及主题模型的引入"><a href="#语义空间及主题模型的引入" class="headerlink" title="语义空间及主题模型的引入"></a>语义空间及主题模型的引入</h2><p>首先我们确定的是原始数据是词汇-文本矩阵，<img src="https://latex.codecogs.com/gif.latex?U">是词汇-x矩阵，<img src="https://latex.codecogs.com/gif.latex?\sum">是x-y矩阵，<img src="https://latex.codecogs.com/gif.latex?V^{T}">是y-文本矩阵：</p>
+<p><img src="/uploads/LSA_model_guess.png" alt></p>
+<p>那么x和y分别是什么呢？我们<font size="5">人为地</font>认为，x=”语义”，y=”主题”，它的合理性在于：一个词汇可以对应不同的语义（<img src="https://latex.codecogs.com/gif.latex?U">），而一个语义可以对应不同主题（<img src="https://latex.codecogs.com/gif.latex?\sum">），而一个主题可以对应不同的文本（<img src="https://latex.codecogs.com/gif.latex?V^{T}">）。且它是可降维的，因为词汇对应的相关性低的语义可以忽略（<img src="https://latex.codecogs.com/gif.latex?U">的降维），被忽略的语义对应的主题也被忽略（<img src="https://latex.codecogs.com/gif.latex?\sum">的降维），主题对应的相关性低的文本可以忽略（<img src="https://latex.codecogs.com/gif.latex?V^{T}"> 的降维）</p>
+<p><img src="/uploads/LSA_model.png" alt></p>
 
       
     </div>
@@ -766,7 +781,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题的提出"><span class="nav-number">1.</span> <span class="nav-text">问题的提出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSA-LSI"><span class="nav-number">2.</span> <span class="nav-text">LSA/LSI</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题的提出"><span class="nav-number">1.</span> <span class="nav-text">问题的提出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSA-LSI"><span class="nav-number">2.</span> <span class="nav-text">LSA/LSI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语义空间及主题模型的引入"><span class="nav-number">3.</span> <span class="nav-text">语义空间及主题模型的引入</span></a></li></ol></div>
             
 
           </div>
