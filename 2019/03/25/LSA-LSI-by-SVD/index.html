@@ -147,7 +147,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?S'">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?v_{3},v_{1},v_{4},v_{2},v_{5},v_{6},v_{7},v_{8}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?v_{3}">
-<meta property="og:updated_time" content="2019-03-26T06:39:58.256Z">
+<meta property="og:updated_time" content="2019-03-26T06:49:34.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LSA&#x2F;LSI by SVD">
 <meta name="twitter:description" content="问题的提出在一个图书馆系统中，如果用户键入“计算机”，系统可能会返回诸如《计算机技术与应用》，《互联网通信技术》《C++编程理论》，《算法之美》，《电脑维修方法》等书籍。我们的知道“计算机” 与“互联网”，“编程”，“算法”，“电脑”有着类似的潜在语义，所以它们被筛选出来是可以理解的，但是系统是怎么知道它们有着类似的潜在语义呢？ 答案是LSA 或者 LSI LSA/LSILSA，即Latent S">
@@ -507,7 +507,8 @@
 <p>计算如下：</p>
 <p>检索项目在词汇-文本里面是列向量<img src="https://latex.codecogs.com/gif.latex?S=\begin{pmatrix}&space;1\\&space;0\\&space;1\\&space;0\\&space;0\\&space;0\\&space;0\\&space;0\\&space;0\\&space;0\\&space;0\\&space;0&space;\end{pmatrix}"> , 将它投影到主题-文本空间的列向量(使用<a href="https://dorianzi.github.io/2019/03/20/recommender-system-by-SVD/#%E9%99%84%E5%BD%95" target="_blank" rel="noopener">公式</a>)：</p>
 <p><img src="https://latex.codecogs.com/gif.latex?S'^{T}=S^{T}U(\sum&space;)^{-1}"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?=&space;(1,0,1,0,0,0,0,0,0,0,0,0)&space;\begin{bmatrix}&space;-0.22&space;&&space;-0.31&space;&&space;0.&space;\\&space;-0.2&space;&&space;-0.15&space;&&space;0.&space;\\&space;-0.24&space;&&space;0.17&space;&&space;0.&space;\\&space;-0.4&space;&&space;0.35&space;&&space;0.\\&space;-0.65&space;&&space;-0.39&space;&&space;0.\\&space;-0.26&space;&&space;0.45&space;&&space;0.&space;\\&space;-0.26&space;&&space;0.45&space;&&space;0.\\&space;-0.31&space;&&space;-0.36&space;&&space;0.&space;\\&space;-0.18&space;&&space;0.22&space;&&space;0.&space;\\&space;0.&space;&&space;0.&&space;-0.74&space;\\&space;0.&space;&&space;0.&space;&&space;-0.59\\&space;0.&space;&&space;0.&space;&&space;-0.33&space;\end{bmatrix}&space;(&space;\begin{bmatrix}&space;3.33&space;&&space;0&space;&&space;0\\&space;0&space;&&space;2.36&space;&&space;0&space;\\&space;0&space;&&space;0&space;&&space;2.25&space;\end{bmatrix}&space;)^{-1}"><img src="https://latex.codecogs.com/gif.latex?=(-0.14,&space;-0.06,&space;0.)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=&space;(1,0,1,0,0,0,0,0,0,0,0,0)&space;\begin{bmatrix}&space;-0.22&space;&&space;-0.31&space;&&space;0.&space;\\&space;-0.2&space;&&space;-0.15&space;&&space;0.&space;\\&space;-0.24&space;&&space;0.17&space;&&space;0.&space;\\&space;-0.4&space;&&space;0.35&space;&&space;0.\\&space;-0.65&space;&&space;-0.39&space;&&space;0.\\&space;-0.26&space;&&space;0.45&space;&&space;0.&space;\\&space;-0.26&space;&&space;0.45&space;&&space;0.\\&space;-0.31&space;&&space;-0.36&space;&&space;0.&space;\\&space;-0.18&space;&&space;0.22&space;&&space;0.&space;\\&space;0.&space;&&space;0.&&space;-0.74&space;\\&space;0.&space;&&space;0.&space;&&space;-0.59\\&space;0.&space;&&space;0.&space;&&space;-0.33&space;\end{bmatrix}&space;(&space;\begin{bmatrix}&space;3.33&space;&&space;0&space;&&space;0\\&space;0&space;&&space;2.36&space;&&space;0&space;\\&space;0&space;&&space;0&space;&&space;2.25&space;\end{bmatrix}&space;)^{-1}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=(-0.14,&space;-0.06,&space;0.)"></p>
 <p>=&gt;</p>
 <p><img src="https://latex.codecogs.com/gif.latex?S'=\begin{pmatrix}&space;-0.14\\&space;-0.06\\&space;0.&space;\end{pmatrix}"></p>
 <p>至此，我们得到了主题-文本空间的检索向量。 接下来计算该向量与此空间其它的向量（即<img src="https://latex.codecogs.com/gif.latex?V^{T}">的列向量）的相似度，找出相似度最高的那个。</p>
