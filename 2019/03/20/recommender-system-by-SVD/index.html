@@ -101,7 +101,7 @@
 
 
   <meta name="description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践问题的提出我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0">
-<meta name="keywords" content="Algorithm,SVD">
+<meta name="keywords" content="SVD,Algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Recommender System by SVD">
 <meta property="og:url" content="http://yoursite.com/2019/03/20/recommender-system-by-SVD/index.html">
@@ -146,10 +146,17 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?X">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?A=U\sum&space;V^{T}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{pmatrix}&space;A_{1}\\&space;A_{2}\\&space;...\\&space;A_{m}\\&space;\end{pmatrix}=&space;\begin{pmatrix}&space;u_{1}\\&space;u_{2}\\&space;...\\&space;u_{m}\\&space;\end{pmatrix}&space;\sum&space;V^{T}&space;=&space;\begin{pmatrix}&space;u_{1}\sum&space;V^{T}\\&space;u_{2}\sum&space;V^{T}\\&space;...\\&space;u_{m}\sum&space;V^{T}\\&space;\end{pmatrix}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_{i}&space;=&space;u_{i}\sum&space;V^{T}\&space;,\&space;\&space;\&space;\&space;\&space;i=0,1,2,...,m">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_{i}&space;=&space;u_{i}\sum&space;V^{T}\&space;,\&space;\&space;\&space;\&space;i=1,2,...,m">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?u_{i}=A_{i}(V^{T})^{-1}(\sum)&space;^{-1}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?u_{i}=A_{i}V(\sum)&space;^{-1}">
-<meta property="og:updated_time" content="2019-03-25T13:13:16.991Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?V^{T}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A=U\sum&space;V^{T}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(A_{1},A_{2},...,A_{n})=U\sum&space;(v_{1},v_{2},...,v_{n})">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_{i}=U\sum&space;v_{i}\&space;,\&space;\&space;\&space;\&space;i=1,2,...,n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?v_{i}=(\sum&space;)^{-1}U^{-1}A_{i}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?v^{T}_{i}=A^{T}_{i}(U^{-1})^{T}((\sum&space;)^{-1})^{T}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?v^{T}_{i}=A^{T}_{i}U(\sum&space;)^{-1}">
+<meta property="og:updated_time" content="2019-03-25T23:25:20.575Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Recommender System by SVD">
 <meta name="twitter:description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践问题的提出我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0">
@@ -530,12 +537,25 @@
 <p>=&gt;</p>
 <p><img src="https://latex.codecogs.com/gif.latex?\begin{pmatrix}&space;A_{1}\\&space;A_{2}\\&space;...\\&space;A_{m}\\&space;\end{pmatrix}=&space;\begin{pmatrix}&space;u_{1}\\&space;u_{2}\\&space;...\\&space;u_{m}\\&space;\end{pmatrix}&space;\sum&space;V^{T}&space;=&space;\begin{pmatrix}&space;u_{1}\sum&space;V^{T}\\&space;u_{2}\sum&space;V^{T}\\&space;...\\&space;u_{m}\sum&space;V^{T}\\&space;\end{pmatrix}"></p>
 <p>=&gt;</p>
-<p><img src="https://latex.codecogs.com/gif.latex?A_{i}&space;=&space;u_{i}\sum&space;V^{T}\&space;,\&space;\&space;\&space;\&space;\&space;i=0,1,2,...,m"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?A_{i}&space;=&space;u_{i}\sum&space;V^{T}\&space;,\&space;\&space;\&space;\&space;i=1,2,...,m"></p>
 <p>=&gt;</p>
 <p><img src="https://latex.codecogs.com/gif.latex?u_{i}=A_{i}(V^{T})^{-1}(\sum)&space;^{-1}" title="u_{i}=A_{i}(V^{T})^{-1}(\sum) ^{-1}"></p>
 <p>=&gt;</p>
 <p><img src="https://latex.codecogs.com/gif.latex?u_{i}=A_{i}V(\sum)&space;^{-1}" title="u_{i}=A_{i}V(\sum) ^{-1}"></p>
-<p>上述即原始user向量向新特征下的user向量的转换公式</p>
+<p>上述即原始user向量向新特征下的user向量的转换公式。</p>
+<p>将SVD分解的原始矩阵A和分解矩阵<img src="https://latex.codecogs.com/gif.latex?V^{T}">都写成列向量形式：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?A=U\sum&space;V^{T}"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?(A_{1},A_{2},...,A_{n})=U\sum&space;(v_{1},v_{2},...,v_{n})"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?A_{i}=U\sum&space;v_{i}\&space;,\&space;\&space;\&space;\&space;i=1,2,...,n"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?v_{i}=(\sum&space;)^{-1}U^{-1}A_{i}"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?v^{T}_{i}=A^{T}_{i}(U^{-1})^{T}((\sum&space;)^{-1})^{T}"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?v^{T}_{i}=A^{T}_{i}U(\sum&space;)^{-1}"></p>
+<p>上述即原始item向量向新特征下的item向量的转换公式。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://etd.lib.metu.edu.tr/upload/12612129/index.pdf" target="_blank" rel="noopener">http://etd.lib.metu.edu.tr/upload/12612129/index.pdf</a></p>
 
       
@@ -560,9 +580,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
-          
             <a href="/tags/SVD/" rel="tag"># SVD</a>
+          
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
           
         </div>
       
@@ -679,13 +699,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -712,7 +726,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
