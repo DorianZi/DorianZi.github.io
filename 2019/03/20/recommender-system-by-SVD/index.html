@@ -101,7 +101,7 @@
 
 
   <meta name="description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践问题的提出我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0">
-<meta name="keywords" content="SVD,Algorithm">
+<meta name="keywords" content="Algorithm,SVD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Recommender System by SVD">
 <meta property="og:url" content="http://yoursite.com/2019/03/20/recommender-system-by-SVD/index.html">
@@ -580,9 +580,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SVD/" rel="tag"># SVD</a>
-          
             <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+            <a href="/tags/SVD/" rel="tag"># SVD</a>
           
         </div>
       
@@ -628,6 +628,10 @@
 
           </div>
           
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
 
   
 
@@ -1031,6 +1035,35 @@
 
   
 
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '5b4b5d838e55b91b3713',
+    clientSecret: 'ca4bfc7fee3940ef0896565d06b76890fd29ce40',
+    repo: 'DorianZi.github.io',
+    owner: 'DorianZi',
+    admin: ['DorianZi'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
 
   
 
