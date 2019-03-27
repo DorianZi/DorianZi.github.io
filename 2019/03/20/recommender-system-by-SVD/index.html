@@ -101,10 +101,10 @@
 
 
   <meta name="description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践问题的提出我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0">
-<meta name="keywords" content="SVD,Algorithm">
+<meta name="keywords" content="Algorithm,SVD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Recommender System by SVD">
-<meta property="og:url" content="http://yoursite.com/2019/03/20/recommender-system-by-SVD/index.html">
+<meta property="og:url" content="https://dorianzi.github.io/2019/03/20/recommender-system-by-SVD/index.html">
 <meta property="og:site_name" content="Dorian Mode">
 <meta property="og:description" content="引入在之前的SVD Decomposition一文中，我们介绍过，一个mxn的矩阵A可以分解为:  其中为的特征矩阵，为的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对的降维：  这一降维方式可以运用在图像压缩中。 此文中，我们将继续探索SVD降维方法在推荐系统中的应用。 推荐系统实践问题的提出我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0">
 <meta property="og:locale" content="default">
@@ -167,7 +167,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/20/recommender-system-by-SVD/">
+  <link rel="canonical" href="https://dorianzi.github.io/2019/03/20/recommender-system-by-SVD/">
 
 
 
@@ -422,7 +422,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/20/recommender-system-by-SVD/">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/03/20/recommender-system-by-SVD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dorian Zi">
@@ -525,11 +525,11 @@
       
 
       
-        <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>在之前的<a href="https://dorianzi.github.io/2019/03/09/matrix_SVD_decomposition/" target="_blank" rel="noopener">SVD Decomposition</a>一文中，我们介绍过，一个mxn的矩阵A可以分解为:</p>
+        <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>在之前的<a href="https://dorianzi.github.io/2019/03/09/matrix_SVD_decomposition/">SVD Decomposition</a>一文中，我们介绍过，一个mxn的矩阵A可以分解为:</p>
 <p><img src="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{A}=\underset{m\times&space;m}{U}\underset{m\times&space;n}{\sum}\underset{n\times&space;n}{V^{T}}"></p>
 <p>其中<img src="https://latex.codecogs.com/gif.latex?U" title="U">为<img src="https://latex.codecogs.com/gif.latex?AA^{T}">的特征矩阵，<img src="https://latex.codecogs.com/gif.latex?V" title="V">为<img src="https://latex.codecogs.com/gif.latex?A^{T}A">的特征矩阵。同时我们通过选取部分奇异值及其对应的特征向量的方式实现对<img src="https://latex.codecogs.com/gif.latex?U,&space;\sum,V" title="U, \sum,V">的降维：</p>
 <p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/svd_cut_2.png?raw=true"></p>
-<p>这一降维方式可以运用在<a href="https://dorianzi.github.io/2019/03/10/image_compression_with_SVD/" target="_blank" rel="noopener">图像压缩</a>中。</p>
+<p>这一降维方式可以运用在<a href="https://dorianzi.github.io/2019/03/10/image_compression_with_SVD/">图像压缩</a>中。</p>
 <p>此文中，我们将继续探索SVD降维方法在<font size="5">推荐系统</font>中的应用。</p>
 <h2 id="推荐系统实践"><a href="#推荐系统实践" class="headerlink" title="推荐系统实践"></a>推荐系统实践</h2><h3 id="问题的提出"><a href="#问题的提出" class="headerlink" title="问题的提出"></a>问题的提出</h3><p>我们考虑这样一个评分样本，6个user对5个item分别进行了评分，没有评分的计作0分：</p>
 <p><img src="https://github.com/DorianZi/algorithm_explained/raw/master/res/svd_recommender_data_2.png"></p>
@@ -615,9 +615,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SVD/" rel="tag"># SVD</a>
-          
             <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+            <a href="/tags/SVD/" rel="tag"># SVD</a>
           
         </div>
       
