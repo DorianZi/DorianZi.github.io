@@ -100,14 +100,24 @@
 
 
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="在介绍朴素贝叶斯之前，先简要回顾一下贝叶斯 贝叶斯定理定理表达式： 它描述的是，我们对A事件有一个先验的概率判断，然后B事件发生了，它影响了我们对A事件的认识，影响因子为，那么调整后的A的概率为。当然我们可以把更新后的A事件的概率当做新的先验概率，然后继续使用贝叶斯定理，通过新事件B的加入，再次更新我们对A的认识。它的伟大在于，描述了人类大脑的思维方式，即通过新信息的加入，不断改变对一个事物的认识">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Naive Bayes">
 <meta property="og:url" content="http://yoursite.com/2019/03/26/Naive-Bayes/index.html">
 <meta property="og:site_name" content="Dorian Mode">
+<meta property="og:description" content="在介绍朴素贝叶斯之前，先简要回顾一下贝叶斯 贝叶斯定理定理表达式： 它描述的是，我们对A事件有一个先验的概率判断，然后B事件发生了，它影响了我们对A事件的认识，影响因子为，那么调整后的A的概率为。当然我们可以把更新后的A事件的概率当做新的先验概率，然后继续使用贝叶斯定理，通过新事件B的加入，再次更新我们对A的认识。它的伟大在于，描述了人类大脑的思维方式，即通过新信息的加入，不断改变对一个事物的认识">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-26T09:52:41.400Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A|B)=P(A)\frac{P(B|A)}{P(B)}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{P(B|A)}{P(B)}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A|B)">
+<meta property="og:image" content="http://yoursite.com/uploads/bayes_vs_naive_bayes.png">
+<meta property="og:updated_time" content="2019-03-27T01:04:01.573Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Naive Bayes">
+<meta name="twitter:description" content="在介绍朴素贝叶斯之前，先简要回顾一下贝叶斯 贝叶斯定理定理表达式： 它描述的是，我们对A事件有一个先验的概率判断，然后B事件发生了，它影响了我们对A事件的认识，影响因子为，那么调整后的A的概率为。当然我们可以把更新后的A事件的概率当做新的先验概率，然后继续使用贝叶斯定理，通过新事件B的加入，再次更新我们对A的认识。它的伟大在于，描述了人类大脑的思维方式，即通过新信息的加入，不断改变对一个事物的认识">
+<meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?P(A|B)=P(A)\frac{P(B|A)}{P(B)}">
 
 
 
@@ -419,6 +429,24 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -454,7 +482,15 @@
       
 
       
-        
+        <p>在介绍朴素贝叶斯之前，先简要回顾一下贝叶斯</p>
+<h2 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h2><p>定理表达式：<img src="https://latex.codecogs.com/gif.latex?P(A|B)=P(A)\frac{P(B|A)}{P(B)}"></p>
+<p>它描述的是，我们对A事件有一个先验的概率判断<img src="https://latex.codecogs.com/gif.latex?P(A)">，然后B事件发生了，它影响了我们对A事件的认识，影响因子为<img src="https://latex.codecogs.com/gif.latex?\frac{P(B|A)}{P(B)}">，那么调整后的A的概率为<img src="https://latex.codecogs.com/gif.latex?P(A|B)">。当然我们可以把更新后的A事件的概率当做新的先验概率，然后继续使用贝叶斯定理，通过新事件B的加入，再次更新我们对A的认识。它的伟大在于，描述了人类大脑的思维方式，即通过新信息的加入，不断改变对一个事物的认识。在机器学习里有着广泛应用，因为它描述正是从初始值不断学习，逐渐趋近真相的过程</p>
+<h2 id="朴素贝叶斯-V-S-贝叶斯"><a href="#朴素贝叶斯-V-S-贝叶斯" class="headerlink" title="朴素贝叶斯 V.S. 贝叶斯"></a>朴素贝叶斯 V.S. 贝叶斯</h2><p>朴素贝叶斯假设的是条件之间互相独立，网路得以简化。比如：</p>
+<p>1)已知行业和工时的条件下，计算收入&gt;Z的概率 -&gt; 贝叶斯</p>
+<p>2)已知行业和姓氏的条件下，计算收入&gt;Z的概率 -&gt; 朴素贝叶斯</p>
+<p><img src="/uploads/bayes_vs_naive_bayes.png" alt></p>
+<p>(未完待续。。。)</p>
+
       
     </div>
 
@@ -474,6 +510,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+        </div>
       
 
       
@@ -540,8 +582,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -718,6 +769,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯定理"><span class="nav-number">1.</span> <span class="nav-text">贝叶斯定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯-V-S-贝叶斯"><span class="nav-number">2.</span> <span class="nav-text">朴素贝叶斯 V.S. 贝叶斯</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
