@@ -100,20 +100,45 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Dorian Mode">
-<meta property="og:url" content="https://dorianzi.github.io/tags/NLP/index.html">
+  <meta name="description" content="问题的提出我们考虑一个股票推荐的数据集，它每行是一个样本。每个样本有四个特征，推荐结果只有“推荐”与“不推荐”两类：  基于以上的数据集，我们训练一个分类器。首先将推荐结果量化表示：1表示推荐，0表示不推荐。 那么对前3个样本中的任何一个，我们希望分类器应该能将它分类到1，而对后3个样本中的任何一个，我们希望分类器应该能将它分类到0。 从这里开始，假如用线性回归的思维，我们可以训练出一个这样的模型">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Logistic Regression">
+<meta property="og:url" content="https://dorianzi.github.io/2019/03/28/Logistic-Regression/index.html">
 <meta property="og:site_name" content="Dorian Mode">
+<meta property="og:description" content="问题的提出我们考虑一个股票推荐的数据集，它每行是一个样本。每个样本有四个特征，推荐结果只有“推荐”与“不推荐”两类：  基于以上的数据集，我们训练一个分类器。首先将推荐结果量化表示：1表示推荐，0表示不推荐。 那么对前3个样本中的任何一个，我们希望分类器应该能将它分类到1，而对后3个样本中的任何一个，我们希望分类器应该能将它分类到0。 从这里开始，假如用线性回归的思维，我们可以训练出一个这样的模型">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/logistic_regression_pic_1.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X1,X2,X3">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X4,X5,X6">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(X)=V^{T}X+C">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(X)>0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(X)>0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X1,X2,X3">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X4,X5,X6">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(Y=1|X,\theta)>0.5,&space;\&space;\&space;\&space;\&space;\&space;\&space;(X=X1,X2,X3)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(Y=0|X,\theta)>0.5,&space;\&space;\&space;\&space;\&space;\&space;\&space;(X=X4,X5,X6)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(0,1)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(0,1)">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/logistic_regression_pic_2.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?sigmoid(z)=\frac{1}{1+e^{-z}}">
+<meta property="og:updated_time" content="2019-03-28T07:00:08.196Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dorian Mode">
+<meta name="twitter:title" content="Logistic Regression">
+<meta name="twitter:description" content="问题的提出我们考虑一个股票推荐的数据集，它每行是一个样本。每个样本有四个特征，推荐结果只有“推荐”与“不推荐”两类：  基于以上的数据集，我们训练一个分类器。首先将推荐结果量化表示：1表示推荐，0表示不推荐。 那么对前3个样本中的任何一个，我们希望分类器应该能将它分类到1，而对后3个样本中的任何一个，我们希望分类器应该能将它分类到0。 从这里开始，假如用线性回归的思维，我们可以训练出一个这样的模型">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/logistic_regression_pic_1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/tags/NLP/">
+  <link rel="canonical" href="https://dorianzi.github.io/2019/03/28/Logistic-Regression/">
 
 
 
@@ -123,7 +148,7 @@
   };
 </script>
 
-  <title>Tag: NLP | Dorian Mode</title>
+  <title>Logistic Regression | Dorian Mode</title>
   
 
 
@@ -181,7 +206,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/DorianZi/DorianZi.github.io/tree/master" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
@@ -254,7 +279,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -348,80 +373,216 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>NLP<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/03/28/Logistic-Regression/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dorian Zi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dorian Mode">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/03/25/LSA-LSI-by-SVD/" itemprop="url">
-            
-              <span itemprop="name">LSA/LSI by SVD</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Logistic Regression
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-25T08:09:26+08:00" content="2019-03-25">
-          03-25
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-28 14:02:15" itemprop="dateCreated datePublished" datetime="2019-03-28T14:02:15+08:00">2019-03-28</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="问题的提出"><a href="#问题的提出" class="headerlink" title="问题的提出"></a>问题的提出</h2><p>我们考虑一个股票推荐的数据集，它每行是一个样本。每个样本有四个特征，推荐结果只有“推荐”与“不推荐”两类：</p>
+<p><img src="/uploads/logistic_regression_pic_1.png" alt></p>
+<p>基于以上的数据集，我们训练一个分类器。首先将推荐结果量化表示：1表示推荐，0表示不推荐。</p>
+<p>那么对前3个样本<img src="https://latex.codecogs.com/gif.latex?X1,X2,X3">中的任何一个<img src="https://latex.codecogs.com/gif.latex?X" title="X">，我们希望分类器应该能将它分类到1，而对后3个样本<img src="https://latex.codecogs.com/gif.latex?X4,X5,X6">中的任何一个<img src="https://latex.codecogs.com/gif.latex?X" title="X">，我们希望分类器应该能将它分类到0。</p>
+<p>从这里开始，假如用线性回归的思维，我们可以训练出一个这样的模型：<img src="https://latex.codecogs.com/gif.latex?f(X)=V^{T}X+C">，当<img src="https://latex.codecogs.com/gif.latex?f(X)>0" title="f(X)>0">时，归到1类；当<img src="https://latex.codecogs.com/gif.latex?f(X)>0" title="f(X)>0">时，归到0类。 这样分类精度会很低。</p>
+<p>我们这里要使用的是逻辑回归，也就是Logistic Regression。注意它不是回归，而它是一种分类算法。</p>
+<h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><p>用逻辑回归，我们从这里就需要切换到<font size="5">极大似然估计</font>的思维.即：对前3个样本<img src="https://latex.codecogs.com/gif.latex?X1,X2,X3">中的任何一个<img src="https://latex.codecogs.com/gif.latex?X" title="X">，我们希望分类器应该将它分类到1的概率大于0.5; 对后3个样本<img src="https://latex.codecogs.com/gif.latex?X4,X5,X6">中的任何一个<img src="https://latex.codecogs.com/gif.latex?X" title="X">，我们希望分类器将它分类到0的概率大于0.5。用数学表示就是：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?P(Y=1|X,\theta)>0.5,&space;\&space;\&space;\&space;\&space;\&space;\&space;(X=X1,X2,X3)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?P(Y=0|X,\theta)>0.5,&space;\&space;\&space;\&space;\&space;\&space;\&space;(X=X4,X5,X6)"></p>
+<p>以上式子中<img src="https://latex.codecogs.com/gif.latex?\theta" title="\theta">为模型的参数。那么模型是什么呢？</p>
+<p>我们看到这里求的是概率，所以模型应该是取值为<img src="https://latex.codecogs.com/gif.latex?(0,1)">的函数，而我们正好有一个著名的函数Sigmoid,其取值正是为<img src="https://latex.codecogs.com/gif.latex?(0,1)">：</p>
+<p><img src="/uploads/logistic_regression_pic_2.png" alt></p>
+<p>函数表达式： <img src="https://latex.codecogs.com/gif.latex?sigmoid(z)=\frac{1}{1&plus;e^{-z}}" title="sigmoid(z)=\frac{1}{1+e^{-z}}"></p>
+<p>所以我们想到将线性特征嵌入Sigmoid中：<br>（未完待续。。。）</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/27/MLE/" rel="next" title="MLE">
+                <i class="fa fa-chevron-left"></i> MLE
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -441,8 +602,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -620,6 +790,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题的提出"><span class="nav-number">1.</span> <span class="nav-text">问题的提出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归"><span class="nav-number">2.</span> <span class="nav-text">逻辑回归</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -776,6 +963,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -791,6 +982,37 @@
 
   
 
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '5b4b5d838e55b91b3713',
+    clientSecret: 'ca4bfc7fee3940ef0896565d06b76890fd29ce40',
+    repo: 'DorianZi.github.io',
+    owner: 'DorianZi',
+    admin: ['DorianZi'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
 
 
   
