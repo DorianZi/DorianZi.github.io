@@ -100,33 +100,58 @@
 
 
 
-  <meta name="description" content="极大似然估计MLE即maximum likelihood estimation，极大似然估计，它描述的是这样一种状况：当一件事A发生了，我们认为这件事A（而不是另外一些事B,C,D,…）之所以发生一定是因为这件事A发生的概率比其它所有的事情发生的概率都大。从这个角度，我们可以反推到底是什么前提条件才会使得这件事A发生的概率最大，这个“前提条件”就是我们要求解的。 极大似然估计的结果不一定是符合事实">
+  <meta name="description" content="感知机模型在n维度空间，有m个数据组成的线性可分的数据集，每个数据点都有对应的类别，但一共只有两个类别：,则存在一个超平面，( 其中 )能够准确地将所有的C1和C2数据区分开来，使得他们分别在在超平面的两边。 感知机只针对线性可分的数据，超平面在二维空间是一条线，在三维空间就是一个平面。 线性可分： 线性不可分： 超平面分类的判别方法是通过带入计算正负，比如：  作为1类  作为-1类 感知机的损">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MLE">
-<meta property="og:url" content="https://dorianzi.github.io/2019/03/27/MLE/index.html">
+<meta property="og:title" content="Perceptron Classifier">
+<meta property="og:url" content="https://dorianzi.github.io/2019/03/29/Perceptron/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="极大似然估计MLE即maximum likelihood estimation，极大似然估计，它描述的是这样一种状况：当一件事A发生了，我们认为这件事A（而不是另外一些事B,C,D,…）之所以发生一定是因为这件事A发生的概率比其它所有的事情发生的概率都大。从这个角度，我们可以反推到底是什么前提条件才会使得这件事A发生的概率最大，这个“前提条件”就是我们要求解的。 极大似然估计的结果不一定是符合事实">
+<meta property="og:description" content="感知机模型在n维度空间，有m个数据组成的线性可分的数据集，每个数据点都有对应的类别，但一共只有两个类别：,则存在一个超平面，( 其中 )能够准确地将所有的C1和C2数据区分开来，使得他们分别在在超平面的两边。 感知机只针对线性可分的数据，超平面在二维空间是一条线，在三维空间就是一个平面。 线性可分： 线性不可分： 超平面分类的判别方法是通过带入计算正负，比如：  作为1类  作为-1类 感知机的损">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta&space;^{7}(1-\theta)^{3}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta&space;^{7}(1-\theta)^{3}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(\theta)=\theta&space;^{7}(1-\theta)^{3}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta=70\%">
-<meta property="og:updated_time" content="2019-03-28T07:03:07.188Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;x_{11}&space;&&space;x_{12}&space;&&space;...&space;&&space;x_{1n}&space;&|&space;\&space;\&space;C_{1}\\&space;x_{21}&space;&&space;x_{22}&space;&&space;...&space;&&space;x_{2n}&space;&|&space;\&space;\&space;C_2\\&space;x_{31}&space;&&space;x_{32}&space;&&space;...&space;&&space;x_{3n}&space;&|&space;\&space;\&space;C_3\\&space;x_{41}&space;&&space;x_{42}&space;&&space;...&space;&&space;x_{4n}&space;&|&space;\&space;\&space;C_4\\&space;...&space;&&space;...&space;&&space;...&space;&&space;...&space;&|&space;\&space;\&space;\&space;...\\&space;x_{m1}&space;&&space;x_{m2}&space;&&space;...&space;&&space;x_{mn}&space;&\&space;\&space;|&space;\&space;\&space;\&space;C_m&space;\end{bmatrix}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?C_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?C_1=1,C_2=1,C_3=-1,C_4=1,...,C_m=-1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?WX^{T}+b=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?W=(w_{1},w_{2},...,w_{n})">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/Perceptron_1.gif">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/Perceptron_2.gif">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?W\begin{pmatrix}&space;x_{11}\\&space;x_{12}\\&space;...\\&space;x_{1n}&space;\end{pmatrix}+b>0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?W\begin{pmatrix}&space;x_{31}\\&space;x_{32}\\&space;...\\&space;x_{3n}&space;\end{pmatrix}+b<0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?Y_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?C_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?Y_i=C_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{(WX^T_i+b)}{\|W\|}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?-Y_i\frac{(WX^T_i+b)}{\|W\|}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?M">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(W,b)=-\sum&space;_{X_i\epsilon&space;M}Y_i\frac{(WX^T_i+b)}{\|W\|}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(W,b)=-\sum&space;_{X_i\epsilon&space;M}Y_i(WX^T_i+b)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{\partial&space;L(W,b)}{\partial&space;W}=-\sum_{X_i\epsilon&space;M}^{&space;}Y_iX_i^T">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{\partial&space;L(W,b)}{\partial&space;b}=-\sum_{X_i\epsilon&space;M}^{&space;}Y_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?W:=W+\eta&space;\sum_{X_i\epsilon&space;M}^{&space;}Y_iX_i^T">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b:=b+\eta&space;\sum_{X_i\epsilon&space;M}^{&space;}Y_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?W">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_j:=w_j+\eta&space;\sum_{X_i\epsilon&space;M}^{&space;}Y_iX_ij">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;x_{11}&space;&&space;x_{12}&space;&&space;...&space;&&space;x_{1n}&space;&|&space;\&space;\&space;C_{1}\\&space;x_{21}&space;&&space;x_{22}&space;&&space;...&space;&&space;x_{2n}&space;&|&space;\&space;\&space;C_2\\&space;x_{31}&space;&&space;x_{32}&space;&&space;...&space;&&space;x_{3n}&space;&|&space;\&space;\&space;C_3\\&space;x_{41}&space;&&space;x_{42}&space;&&space;...&space;&&space;x_{4n}&space;&|&space;\&space;\&space;C_4\\&space;...&space;&&space;...&space;&&space;...&space;&&space;...&space;&|&space;\&space;\&space;\&space;...\\&space;x_{m1}&space;&&space;x_{m2}&space;&&space;...&space;&&space;x_{mn}&space;&\&space;\&space;|&space;\&space;\&space;\&space;C_m&space;\end{bmatrix}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?C_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?W,b">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?W_0,b_0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(X_i,C_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?Y_i(WX^T_i+b)<0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?W:=W+\eta&space;Y_iX_i^T">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b:=b+\eta&space;Y_i">
+<meta property="og:updated_time" content="2019-03-29T02:02:12.358Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MLE">
-<meta name="twitter:description" content="极大似然估计MLE即maximum likelihood estimation，极大似然估计，它描述的是这样一种状况：当一件事A发生了，我们认为这件事A（而不是另外一些事B,C,D,…）之所以发生一定是因为这件事A发生的概率比其它所有的事情发生的概率都大。从这个角度，我们可以反推到底是什么前提条件才会使得这件事A发生的概率最大，这个“前提条件”就是我们要求解的。 极大似然估计的结果不一定是符合事实">
-<meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?\theta">
+<meta name="twitter:title" content="Perceptron Classifier">
+<meta name="twitter:description" content="感知机模型在n维度空间，有m个数据组成的线性可分的数据集，每个数据点都有对应的类别，但一共只有两个类别：,则存在一个超平面，( 其中 )能够准确地将所有的C1和C2数据区分开来，使得他们分别在在超平面的两边。 感知机只针对线性可分的数据，超平面在二维空间是一条线，在三维空间就是一个平面。 线性可分： 线性不可分： 超平面分类的判别方法是通过带入计算正负，比如：  作为1类  作为-1类 感知机的损">
+<meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;x_{11}&space;&&space;x_{12}&space;&&space;...&space;&&space;x_{1n}&space;&|&space;\&space;\&space;C_{1}\\&space;x_{21}&space;&&space;x_{22}&space;&&space;...&space;&&space;x_{2n}&space;&|&space;\&space;\&space;C_2\\&space;x_{31}&space;&&space;x_{32}&space;&&space;...&space;&&space;x_{3n}&space;&|&space;\&space;\&space;C_3\\&space;x_{41}&space;&&space;x_{42}&space;&&space;...&space;&&space;x_{4n}&space;&|&space;\&space;\&space;C_4\\&space;...&space;&&space;...&space;&&space;...&space;&&space;...&space;&|&space;\&space;\&space;\&space;...\\&space;x_{m1}&space;&&space;x_{m2}&space;&&space;...&space;&&space;x_{mn}&space;&\&space;\&space;|&space;\&space;\&space;\&space;C_m&space;\end{bmatrix}">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/2019/03/27/MLE/">
+  <link rel="canonical" href="https://dorianzi.github.io/2019/03/29/Perceptron/">
 
 
 
@@ -136,7 +161,7 @@
   };
 </script>
 
-  <title>MLE | Dorian Mode</title>
+  <title>Perceptron Classifier | Dorian Mode</title>
   
 
 
@@ -381,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/03/27/MLE/">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/03/29/Perceptron/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dorian Zi">
@@ -398,7 +423,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MLE
+          <h1 class="post-title" itemprop="name headline">Perceptron Classifier
 
               
             
@@ -424,7 +449,7 @@
                 
               
 
-              <time title="Created: 2019-03-27 19:03:27" itemprop="dateCreated datePublished" datetime="2019-03-27T19:03:27+08:00">2019-03-27</time>
+              <time title="Created: 2019-03-29 02:27:05" itemprop="dateCreated datePublished" datetime="2019-03-29T02:27:05+08:00">2019-03-29</time>
             
 
             
@@ -484,16 +509,35 @@
       
 
       
-        <h2 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h2><p>MLE即maximum likelihood estimation，极大似然估计，它描述的是这样一种状况：当一件事A发生了，我们认为这件事A（而不是另外一些事B,C,D,…）之所以发生一定是因为这件事A发生的概率比其它所有的事情发生的概率都大。从这个角度，我们可以反推到底是什么前提条件才会使得这件事A发生的概率最大，这个“前提条件”就是我们要求解的。</p>
-<p>极大似然估计的结果不一定是符合事实的，但是它确实在现有信息量下面进行的最有可能符合事实的推断。</p>
-<p>举个例子：平常不点名的老师在最后一节课点名了，而我恰好不在，老师并不认为这是巧合，而认为我就是全班逃课最勤的那个人。因为只有“我是全班逃课最勤的”，才能导致最大程度地导致“老师点名发现我不在”。老师的思维方式就是“极大似然估计”</p>
-<h2 id="似然函数"><a href="#似然函数" class="headerlink" title="似然函数"></a>似然函数</h2><p>假如从一个装了黑白球的箱子里抓取球，记下颜色再放回去。抓取10次，出现7个黑球3个白球。问箱子里黑白球的比例是多少？</p>
-<p>设黑球占比为<img src="https://latex.codecogs.com/gif.latex?\theta">。我们知道结果是已经是“7个黑球3个白球”，也知道“7个黑球3个白球的结果”的概率模型是<img src="https://latex.codecogs.com/gif.latex?\theta&space;^{7}(1-\theta)^{3}">，而需要通过极大似然估计求<img src="https://latex.codecogs.com/gif.latex?\theta">，也就是需要求使得<img src="https://latex.codecogs.com/gif.latex?\theta&space;^{7}(1-\theta)^{3}">&gt;最大的<img src="https://latex.codecogs.com/gif.latex?\theta">值。</p>
-<p>所以，极大似然估计的已知信息为：已经发生的事件结果，该事件发生的概率模型结构。而待求解的未知信息为：该模型中的具体参数值<br>我们将待求参数向该模型的映射称作似然函数，也就是<img src="https://latex.codecogs.com/gif.latex?f(\theta)=\theta&space;^{7}(1-\theta)^{3}">。求似然函数的极大值，就是求解极大似然估计的过程。此例中，可以求得<img src="https://latex.codecogs.com/gif.latex?\theta=70\%">时，似然函数取极值。所以答案是70%</p>
-<h2 id="贝叶斯理论-V-S-极大似然估计"><a href="#贝叶斯理论-V-S-极大似然估计" class="headerlink" title="贝叶斯理论 V.S. 极大似然估计"></a>贝叶斯理论 V.S. 极大似然估计</h2><p>它们是逆向关系：</p>
-<p>1）贝叶斯是已知前提条件是什么，去计算事件A发生的概率</p>
-<p>2）极大似然估计是已知事件A发生了，去估计前提条件是什么</p>
-<h2 id="逻辑回归中的极大似然估计"><a href="#逻辑回归中的极大似然估计" class="headerlink" title="逻辑回归中的极大似然估计"></a>逻辑回归中的极大似然估计</h2><p>见<a href="https://dorianzi.github.io/2019/03/28/Logistic-Regression/">Logistic Regression</a></p>
+        <h2 id="感知机模型"><a href="#感知机模型" class="headerlink" title="感知机模型"></a>感知机模型</h2><p>在n维度空间，有m个数据组成的线性可分的数据集<img src="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;x_{11}&space;&&space;x_{12}&space;&&space;...&space;&&space;x_{1n}&space;&|&space;\&space;\&space;C_{1}\\&space;x_{21}&space;&&space;x_{22}&space;&&space;...&space;&&space;x_{2n}&space;&|&space;\&space;\&space;C_2\\&space;x_{31}&space;&&space;x_{32}&space;&&space;...&space;&&space;x_{3n}&space;&|&space;\&space;\&space;C_3\\&space;x_{41}&space;&&space;x_{42}&space;&&space;...&space;&&space;x_{4n}&space;&|&space;\&space;\&space;C_4\\&space;...&space;&&space;...&space;&&space;...&space;&&space;...&space;&|&space;\&space;\&space;\&space;...\\&space;x_{m1}&space;&&space;x_{m2}&space;&&space;...&space;&&space;x_{mn}&space;&\&space;\&space;|&space;\&space;\&space;\&space;C_m&space;\end{bmatrix}">，每个数据点都有对应的类别<img src="https://latex.codecogs.com/gif.latex?C_i">，但一共只有两个类别：<img src="https://latex.codecogs.com/gif.latex?C_1=1,C_2=1,C_3=-1,C_4=1,...,C_m=-1">,则存在一个超平面<img src="https://latex.codecogs.com/gif.latex?WX^{T}&plus;b=0">，( 其中<img src="https://latex.codecogs.com/gif.latex?W=(w_{1},w_{2},...,w_{n})"> )能够准确地将所有的C1和C2数据区分开来，使得他们分别在在超平面的两边。</p>
+<p>感知机只针对线性可分的数据，超平面在二维空间是一条线，在三维空间就是一个平面。</p>
+<p>线性可分：<br><img src="/uploads/Perceptron_1.gif" alt></p>
+<p>线性不可分：<br><img src="/uploads/Perceptron_2.gif" alt></p>
+<p>超平面分类的判别方法是通过带入计算正负，比如：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?W\begin{pmatrix}&space;x_{11}\\&space;x_{12}\\&space;...\\&space;x_{1n}&space;\end{pmatrix}&plus;b>0"> 作为1类</p>
+<p><img src="https://latex.codecogs.com/gif.latex?W\begin{pmatrix}&space;x_{31}\\&space;x_{32}\\&space;...\\&space;x_{3n}&space;\end{pmatrix}&plus;b<0"> 作为-1类</p>
+<h2 id="感知机的损失函数"><a href="#感知机的损失函数" class="headerlink" title="感知机的损失函数"></a>感知机的损失函数</h2><p>感知机的学习过程就是将分错类的数据不断纠正的过程。设分类器对<img src="https://latex.codecogs.com/gif.latex?X_i">判定的类别是<img src="https://latex.codecogs.com/gif.latex?Y_i"> ,而它实际的类别是<img src="https://latex.codecogs.com/gif.latex?C_i" title="C_i"> ，完美情况下当然希望所有点都能满足<img src="https://latex.codecogs.com/gif.latex?Y_i=C_i"> 。</p>
+<p>即使不完美我们也知道一个好的分类器会有这两个特性：被分错的点尽可能少，即使被分错了，也距离超平面非常近。能够描述这两个的特性的，就是被分错的点到超平面的距离之和。所以可以把这个距离之和作为损失函数。</p>
+<p>点到超平面的距离为：<img src="https://latex.codecogs.com/gif.latex?\frac{(WX^T_i&plus;b)}{\|W\|}">, 注意它是有正负的，1类的点到超平面的距离为正，-1类的点为负。我们关注被分错的点，不管是1类点被错分到-1类，还是-1类点被错分到1类，他们的距离取绝对值都是：<img src="https://latex.codecogs.com/gif.latex?-Y_i\frac{(WX^T_i&plus;b)}{\|W\|}"></p>
+<p>设所有分错的点的几何是<img src="https://latex.codecogs.com/gif.latex?M">,那么所有分错的点到超平面的距离和是：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?L(W,b)=-\sum&space;_{X_i\epsilon&space;M}Y_i\frac{(WX^T_i&plus;b)}{\|W\|}"></p>
+<p>忽略常数项 =&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?L(W,b)=-\sum&space;_{X_i\epsilon&space;M}Y_i(WX^T_i&plus;b)"></p>
+<p>对损失函数求导：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;L(W,b)}{\partial&space;W}=-\sum_{X_i\epsilon&space;M}^{&space;}Y_iX_i^T" title="\frac{\partial L(W,b)}{\partial W}=-\sum_{X_i\epsilon M}^{ }Y_iX_i^T"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;L(W,b)}{\partial&space;b}=-\sum_{X_i\epsilon&space;M}^{&space;}Y_i" title="\frac{\partial L(W,b)}{\partial b}=-\sum_{X_i\epsilon M}^{ }Y_i"></p>
+<p>也就是说参数更新公式为：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?W:=W&plus;\eta&space;\sum_{X_i\epsilon&space;M}^{&space;}Y_iX_i^T" title="W:=W+\alpha Y_iX_i^T"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?b:=b&plus;\eta&space;\sum_{X_i\epsilon&space;M}^{&space;}Y_i" title="b:=b+\beta Y_i"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?W" title="W">的更新如果细化到每个维度，就是：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?w_j:=w_j&plus;\eta&space;\sum_{X_i\epsilon&space;M}^{&space;}Y_iX_ij" title="w_j:=w_j+\eta Y_iX_ij"></p>
+<h2 id="学习过程"><a href="#学习过程" class="headerlink" title="学习过程"></a>学习过程</h2><p>输入：m个n维度的线性可分的已经标好label的数据集<img src="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;x_{11}&space;&&space;x_{12}&space;&&space;...&space;&&space;x_{1n}&space;&|&space;\&space;\&space;C_{1}\\&space;x_{21}&space;&&space;x_{22}&space;&&space;...&space;&&space;x_{2n}&space;&|&space;\&space;\&space;C_2\\&space;x_{31}&space;&&space;x_{32}&space;&&space;...&space;&&space;x_{3n}&space;&|&space;\&space;\&space;C_3\\&space;x_{41}&space;&&space;x_{42}&space;&&space;...&space;&&space;x_{4n}&space;&|&space;\&space;\&space;C_4\\&space;...&space;&&space;...&space;&&space;...&space;&&space;...&space;&|&space;\&space;\&space;\&space;...\\&space;x_{m1}&space;&&space;x_{m2}&space;&&space;...&space;&&space;x_{mn}&space;&\&space;\&space;|&space;\&space;\&space;\&space;C_m&space;\end{bmatrix}">， <img src="https://latex.codecogs.com/gif.latex?C_i" title="C_i">只有1或-1两种label。</p>
+<p>输出：<img src="https://latex.codecogs.com/gif.latex?W,b"></p>
+<p>1) 选择初始值 <img src="https://latex.codecogs.com/gif.latex?W_0,b_0">构建初始感知机分类器<br>2) 选择数据点<img src="https://latex.codecogs.com/gif.latex?(X_i,C_i)">进行分类，判断是否为分错的点，即如果<img src="https://latex.codecogs.com/gif.latex?Y_i(WX^T_i&plus;b)<0">则为分错的点。否则循环2)<br>3) 更新参数，因为每次只取一个点来更新参数，所以参数迭代公式可以简化为：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?W:=W&plus;\eta&space;Y_iX_i^T" title="W:=W+\alpha Y_iX_i^T"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?b:=b&plus;\eta&space;Y_i" title="b:=b+\beta Y_i"></p>
+<p>4）回到2）直到找不到分错的点</p>
+<p>以上。</p>
 
       
     </div>
@@ -530,8 +574,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/26/Naive-Bayes/" rel="next" title="Naive Bayes Classifier">
-                <i class="fa fa-chevron-left"></i> Naive Bayes Classifier
+              <a href="/2019/03/28/Logistic-Regression/" rel="next" title="Logistic Regression Classifier">
+                <i class="fa fa-chevron-left"></i> Logistic Regression Classifier
               </a>
             
           </div>
@@ -539,10 +583,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/28/Logistic-Regression/" rel="prev" title="Logistic Regression Classifier">
-                Logistic Regression Classifier <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -788,7 +828,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#极大似然估计"><span class="nav-number">1.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#似然函数"><span class="nav-number">2.</span> <span class="nav-text">似然函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯理论-V-S-极大似然估计"><span class="nav-number">3.</span> <span class="nav-text">贝叶斯理论 V.S. 极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归中的极大似然估计"><span class="nav-number">4.</span> <span class="nav-text">逻辑回归中的极大似然估计</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#感知机模型"><span class="nav-number">1.</span> <span class="nav-text">感知机模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感知机的损失函数"><span class="nav-number">2.</span> <span class="nav-text">感知机的损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习过程"><span class="nav-number">3.</span> <span class="nav-text">学习过程</span></a></li></ol></div>
             
 
           </div>
