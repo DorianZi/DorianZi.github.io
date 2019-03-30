@@ -249,6 +249,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_2)=0.918">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_5.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_6.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_6.png">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?g_R(D,A)=\frac{g(D,A)}{H_A(D)}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}log_2\frac{|D_i|}{|D|}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?n">
@@ -263,7 +264,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A1|B1)=\frac{1}{2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A2|B1)=\frac{1}{2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A=A_i|B=B_i)=\frac{P(A=A_i,B=B_i)}{P(B=B_i)}">
-<meta property="og:updated_time" content="2019-03-30T09:30:44.438Z">
+<meta property="og:updated_time" content="2019-03-30T09:39:56.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Decision Tree">
 <meta name="twitter:description" content="决策树决策树的定义决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选">
@@ -634,9 +635,9 @@
       
         <h2 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h2><h3 id="决策树的定义"><a href="#决策树的定义" class="headerlink" title="决策树的定义"></a>决策树的定义</h3><p>决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类</p>
 <p>考虑下面的样本：</p>
-<p><img src="\uploads/decision_tree_1.png" alt></p>
+<p><img src="/uploads/decision_tree_1.png" alt></p>
 <p>人们的决策过程：</p>
-<p><img src="\uploads/decision_tree_2.png" alt></p>
+<p><img src="/uploads/decision_tree_2.png" alt></p>
 <p>我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？</p>
 <p>而在实际操作中，我们是用什么算法策略决定每一步特征的选取呢？也就是说，我们进行特征选择是基于什么准则？</p>
 <h3 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h3><p>我们基于信息增益来选择特征。信息增益指的是信息熵的增益，为理解它需要提前了解两个概念：信息熵，条件熵</p>
@@ -702,10 +703,10 @@
 <p><img src="https://latex.codecogs.com/gif.latex?g(D,A_4)=H(D)-H(D|A_4)=0.971-0.608=0.363"></p>
 <p>1.6）比较<img src="https://latex.codecogs.com/gif.latex?g(D,A_1)">，<img src="https://latex.codecogs.com/gif.latex?g(D,A_2)">，<img src="https://latex.codecogs.com/gif.latex?g(D,A_3)">，<img src="https://latex.codecogs.com/gif.latex?g(D,A_4)">&emsp;=&gt;&emsp;<img src="https://latex.codecogs.com/gif.latex?g(D,A_3)>g(D,A_4)>g(D,A_2)>g(D,A_1)"></p>
 <p>也就是这里我们选择特征<font size="5">“有房子与否”</font>，至此我们做出了第一个特征选择，在选择之后根据有房子与否的“是”与“否”岔开了两个路径,也就是分割出来了两个子空间<img src="https://latex.codecogs.com/gif.latex?D_1" title="D_1">和<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_1">，其中“是”空间的路径已经抵达了叶子；“否”空间还有待开发。</p>
-<p><img src="\uploads/decision_tree_3.png" alt></p>
+<p><img src="/uploads/decision_tree_3.png" alt></p>
 <p>2.1）针对分出来的子空间，继续进行特征选择。</p>
 <p>幸运的是，我们只有一个子空间<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">需要开发。<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">空间的数据缩小为：</p>
-<p><img src="\uploads/decision_tree_4.png" alt></p>
+<p><img src="/uploads/decision_tree_4.png" alt></p>
 <p>此时<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">空间处于初始状态，即没有选择任何特征，它的信息熵为:</p>
 <p><img src="https://latex.codecogs.com/gif.latex?H(D_2)=-(\frac{3}{9}log_2\frac{3}{9}&plus;\frac{6}{9}log_2\frac{6}{9})=-0.918"></p>
 <p>2.2）假设引入<font size="5">“年龄段”</font>特征。设“年龄段”为<img src="https://latex.codecogs.com/gif.latex?A_1">,使用上述②式，在<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">数据空间计算条件熵：</p>
@@ -730,14 +731,15 @@
 <p><img src="https://latex.codecogs.com/gif.latex?g(D_2,A_3)=H(D_2)-H(D_2|A_3)=0.918-0.444=0.474"></p>
 <p>2.5）比较<img src="https://latex.codecogs.com/gif.latex?g(D_2,A_1)">，<img src="https://latex.codecogs.com/gif.latex?g(D_2,A_2)">，<img src="https://latex.codecogs.com/gif.latex?g(D_2,A_3)">&emsp;=&gt;&emsp;<img src="https://latex.codecogs.com/gif.latex?g(D_2,A_2)>g(D_2,A_3)>g(D_2,A_1)"></p>
 <p>所以我们选择的特征是“有工作与否”，并且注意，该特征的信息增益是<img src="https://latex.codecogs.com/gif.latex?g(D_2,A_2)=0.918">，意味着，全部信息被衰减，流程图应该停止了。我们绘图看看是否如此：</p>
-<p><img src="\uploads/decision_tree_5.png" alt></p>
+<p><img src="/uploads/decision_tree_5.png" alt></p>
 <p>的确如此！</p>
 <p>我们比较此图和初始的流程图，可知，采用信息增益，可以尽可能等减少分支和叶子，迅速决策。</p>
 <h2 id="决策树生成算法"><a href="#决策树生成算法" class="headerlink" title="决策树生成算法"></a>决策树生成算法</h2><p>常见的决策树生成算法有ID3算法，C4.5算法和CART算法</p>
 <h3 id="ID3算法"><a href="#ID3算法" class="headerlink" title="ID3算法"></a>ID3算法</h3><p>ID3算法使用的是信息增益，其运算过程正是上节所描述的例子！</p>
 <h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p>C4.5与ID3的区别仅仅是使用<font size="4">信息增益比</font> 而非信息增益。为什么要用信息增益比呢？</p>
 <p>因为在使用信息增益，会导致特征选择时偏向于选择取值较多的那个特征，而那个特征可能是没有意义的。比如编号，身份证号，星期几。如下的用星期作为特征，可以产生5个分支，使用ID3算法的信息增益可以将所有信息熵衰减掉，直接生成五个叶子：</p>
-<p><img src="\uploads/decision_tree_6.png" alt></p>
+<p><img src="/uploads/decision_tree_6.png" alt></p>
+<p><img src="/uploads/decision_tree_6.png" alt></p>
 <p>这是非常严重的过拟合。为了避免这种情况的产生，我们必须增加与分支数（选定特征的取值数）相关的惩罚项，形成信息增益比：</p>
 <p><img src="https://latex.codecogs.com/gif.latex?g_R(D,A)=\frac{g(D,A)}{H_A(D)}"></p>
 <p>其中惩罚项是<img src="https://latex.codecogs.com/gif.latex?H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}log_2\frac{|D_i|}{|D|}" title="H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}log_2\frac{|D_i|}{|D|}">，<img src="https://latex.codecogs.com/gif.latex?n">是所选特征的取值数，<img src="https://latex.codecogs.com/gif.latex?D_i">是子空间，此例中<img src="https://latex.codecogs.com/gif.latex?\frac{|D_i|}{|D|}=\frac{1}{5}" title="\frac{|D_i|}{|D|}=\frac{1}{5}"></p>
