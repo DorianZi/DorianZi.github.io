@@ -100,13 +100,13 @@
 
 
 
-  <meta name="description" content="决策树决策树决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选取呢？">
+  <meta name="description" content="决策树决策树的定义决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Decision Tree">
 <meta property="og:url" content="https://dorianzi.github.io/2019/03/29/Decision-Tree/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="决策树决策树决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选取呢？">
+<meta property="og:description" content="决策树决策树的定义决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_1.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_2.png">
@@ -248,6 +248,12 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_2)>g(D_2,A_3)>g(D_2,A_1)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_2)=0.918">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_5.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_5.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g_R(D,A)=\frac{g(D,A)}{H_A(D)}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}log_2\frac{|D_i|}{|D|}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{|D_i|}{|D|}=\frac{1}{5}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\varepsilon">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\varepsilon">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A1,B1)=\frac{1}{4}">
@@ -257,10 +263,10 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A1|B1)=\frac{1}{2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A2|B1)=\frac{1}{2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A=A_i|B=B_i)=\frac{P(A=A_i,B=B_i)}{P(B=B_i)}">
-<meta property="og:updated_time" content="2019-03-30T04:49:10.082Z">
+<meta property="og:updated_time" content="2019-03-30T09:24:26.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Decision Tree">
-<meta name="twitter:description" content="决策树决策树决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选取呢？">
+<meta name="twitter:description" content="决策树决策树的定义决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选">
 <meta name="twitter:image" content="https://dorianzi.github.io/uploads/decision_tree_1.png">
 
 
@@ -626,7 +632,7 @@
       
 
       
-        <h2 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h2><h3 id="决策树-1"><a href="#决策树-1" class="headerlink" title="决策树"></a>决策树</h3><p>决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类</p>
+        <h2 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h2><h3 id="决策树的定义"><a href="#决策树的定义" class="headerlink" title="决策树的定义"></a>决策树的定义</h3><p>决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类</p>
 <p>考虑下面的样本：</p>
 <p><img src="\uploads/decision_tree_1.png" alt></p>
 <p>人们的决策过程：</p>
@@ -727,11 +733,16 @@
 <p><img src="\uploads/decision_tree_5.png" alt></p>
 <p>的确如此！</p>
 <p>我们比较此图和初始的流程图，可知，采用信息增益，可以尽可能等减少分支和叶子，迅速决策。</p>
-<h2 id="决策树生成算法"><a href="#决策树生成算法" class="headerlink" title="决策树生成算法"></a>决策树生成算法</h2><p>常见的决策树生成算法有ID3算法和C4.5算法</p>
-<p>ID3算法使用的是信息增益，其运算过程正是上节所描述的例子！</p>
-<p>C4.5与ID3的区别仅仅是使用<font size="4">信息增益比</font> 而非信息增益。</p>
-<p>（未完待续。。。）</p>
-<p>当然，需要<font size="5">注意</font>的是：无论使用哪种算法，对于大数据来说，我们的决策树的层数可能非常多，如果我们分解到没有特征可分的地步会过拟合，且时间消耗非常大。 通常的做法是设置一个信息增益阈值<img src="https://latex.codecogs.com/gif.latex?\varepsilon" title="\varepsilon">，当某个特征引入后信息增益小于该阈值<img src="https://latex.codecogs.com/gif.latex?\varepsilon" title="\varepsilon">，我们就可以停止树分裂，并把原始数据集中<font size="4">数量最多</font>的那个类别作为叶子节点</p>
+<h2 id="决策树生成算法"><a href="#决策树生成算法" class="headerlink" title="决策树生成算法"></a>决策树生成算法</h2><p>常见的决策树生成算法有ID3算法，C4.5算法和CART算法</p>
+<h3 id="ID3算法"><a href="#ID3算法" class="headerlink" title="ID3算法"></a>ID3算法</h3><p>ID3算法使用的是信息增益，其运算过程正是上节所描述的例子！</p>
+<h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p>C4.5与ID3的区别仅仅是使用<font size="4">信息增益比</font> 而非信息增益。为什么要用信息增益比呢？</p>
+<p>因为在使用信息增益，会导致特征选择时偏向于选择取值较多的那个特征，而那个特征可能是没有意义的。比如编号，身份证号，星期几。如下的用星期作为特征，可以产生5个分支，使用ID3算法的信息增益可以将所有信息熵衰减掉，直接生成五个叶子：</p>
+<p><img src="\uploads/decision_tree_5.png" alt></p>
+<p>这是非常严重的过拟合。为了避免这种情况的产生，我们必须增加与分支数（选定特征的取值数）相关的惩罚项，形成信息增益比：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?g_R(D,A)=\frac{g(D,A)}{H_A(D)}"></p>
+<p>其中惩罚项是<img src="https://latex.codecogs.com/gif.latex?H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}log_2\frac{|D_i|}{|D|}" title="H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}log_2\frac{|D_i|}{|D|}">，<img src="https://latex.codecogs.com/gif.latex?n">是所选特征的取值数，<img src="https://latex.codecogs.com/gif.latex?D_i">是子空间，此例中<img src="https://latex.codecogs.com/gif.latex?\frac{|D_i|}{|D|}=\frac{1}{5}" title="\frac{|D_i|}{|D|}=\frac{1}{5}"></p>
+<h3 id="CART算法"><a href="#CART算法" class="headerlink" title="CART算法"></a>CART算法</h3><p>将会在之后的文章中单独讲解</p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>当然，需要<font size="5">注意</font>的是：无论使用哪种算法，对于大数据来说，我们的决策树的层数可能非常多，如果我们分解到没有特征可分的地步会过拟合，且时间消耗非常大。 通常的做法是设置一个信息增益阈值<img src="https://latex.codecogs.com/gif.latex?\varepsilon" title="\varepsilon">，当某个特征引入后信息增益小于该阈值<img src="https://latex.codecogs.com/gif.latex?\varepsilon" title="\varepsilon">，我们就可以停止树分裂，并把原始数据集中<font size="4">数量最多</font>的那个类别作为叶子节点</p>
 <h2 id="附录：联合概率分布和条件概率分布的区别"><a href="#附录：联合概率分布和条件概率分布的区别" class="headerlink" title="附录：联合概率分布和条件概率分布的区别"></a>附录：联合概率分布和条件概率分布的区别</h2><p>考虑两个变量：天晴与否，花开与否</p>
 <p>它们组合成四种事件：<br>1）天晴了A1，花开了B1<br>2）天晴了A1，花没开B2<br>3）天没晴A2，花开了B1<br>4）天没晴A2，花没开B2</p>
 <p>联合概率分别描述这四种情况:</p>
@@ -1031,7 +1042,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树"><span class="nav-number">1.</span> <span class="nav-text">决策树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#决策树-1"><span class="nav-number">1.1.</span> <span class="nav-text">决策树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征选择"><span class="nav-number">1.2.</span> <span class="nav-text">特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信息熵"><span class="nav-number">1.2.1.</span> <span class="nav-text">信息熵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件熵"><span class="nav-number">1.2.2.</span> <span class="nav-text">条件熵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信息增益"><span class="nav-number">1.2.3.</span> <span class="nav-text">信息增益</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于信息增益进行特征选择"><span class="nav-number">1.2.4.</span> <span class="nav-text">基于信息增益进行特征选择</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树生成算法"><span class="nav-number">2.</span> <span class="nav-text">决策树生成算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录：联合概率分布和条件概率分布的区别"><span class="nav-number">3.</span> <span class="nav-text">附录：联合概率分布和条件概率分布的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树"><span class="nav-number">1.</span> <span class="nav-text">决策树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#决策树的定义"><span class="nav-number">1.1.</span> <span class="nav-text">决策树的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征选择"><span class="nav-number">1.2.</span> <span class="nav-text">特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信息熵"><span class="nav-number">1.2.1.</span> <span class="nav-text">信息熵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件熵"><span class="nav-number">1.2.2.</span> <span class="nav-text">条件熵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信息增益"><span class="nav-number">1.2.3.</span> <span class="nav-text">信息增益</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于信息增益进行特征选择"><span class="nav-number">1.2.4.</span> <span class="nav-text">基于信息增益进行特征选择</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树生成算法"><span class="nav-number">2.</span> <span class="nav-text">决策树生成算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ID3算法"><span class="nav-number">2.1.</span> <span class="nav-text">ID3算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C4-5算法"><span class="nav-number">2.2.</span> <span class="nav-text">C4.5算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CART算法"><span class="nav-number">2.3.</span> <span class="nav-text">CART算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">2.4.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录：联合概率分布和条件概率分布的区别"><span class="nav-number">3.</span> <span class="nav-text">附录：联合概率分布和条件概率分布的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
