@@ -248,7 +248,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_2)>g(D_2,A_3)>g(D_2,A_1)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_2)=0.918">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_5.png">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_5.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_6.png">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?g_R(D,A)=\frac{g(D,A)}{H_A(D)}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}log_2\frac{|D_i|}{|D|}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?n">
@@ -263,7 +263,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A1|B1)=\frac{1}{2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A2|B1)=\frac{1}{2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A=A_i|B=B_i)=\frac{P(A=A_i,B=B_i)}{P(B=B_i)}">
-<meta property="og:updated_time" content="2019-03-30T09:24:26.956Z">
+<meta property="og:updated_time" content="2019-03-30T09:30:44.438Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Decision Tree">
 <meta name="twitter:description" content="决策树决策树的定义决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选">
@@ -737,7 +737,7 @@
 <h3 id="ID3算法"><a href="#ID3算法" class="headerlink" title="ID3算法"></a>ID3算法</h3><p>ID3算法使用的是信息增益，其运算过程正是上节所描述的例子！</p>
 <h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p>C4.5与ID3的区别仅仅是使用<font size="4">信息增益比</font> 而非信息增益。为什么要用信息增益比呢？</p>
 <p>因为在使用信息增益，会导致特征选择时偏向于选择取值较多的那个特征，而那个特征可能是没有意义的。比如编号，身份证号，星期几。如下的用星期作为特征，可以产生5个分支，使用ID3算法的信息增益可以将所有信息熵衰减掉，直接生成五个叶子：</p>
-<p><img src="\uploads/decision_tree_5.png" alt></p>
+<p><img src="\uploads/decision_tree_6.png" alt></p>
 <p>这是非常严重的过拟合。为了避免这种情况的产生，我们必须增加与分支数（选定特征的取值数）相关的惩罚项，形成信息增益比：</p>
 <p><img src="https://latex.codecogs.com/gif.latex?g_R(D,A)=\frac{g(D,A)}{H_A(D)}"></p>
 <p>其中惩罚项是<img src="https://latex.codecogs.com/gif.latex?H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}log_2\frac{|D_i|}{|D|}" title="H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}log_2\frac{|D_i|}{|D|}">，<img src="https://latex.codecogs.com/gif.latex?n">是所选特征的取值数，<img src="https://latex.codecogs.com/gif.latex?D_i">是子空间，此例中<img src="https://latex.codecogs.com/gif.latex?\frac{|D_i|}{|D|}=\frac{1}{5}" title="\frac{|D_i|}{|D|}=\frac{1}{5}"></p>
