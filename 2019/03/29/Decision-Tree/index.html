@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="L6qAeUEWrk">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '6O9OK26379',
+      apiKey: 'd266e496228bce82728a87f4c2ea4800',
+      indexName: 'MyHexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="决策树决策树决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选取呢？">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Decision Tree">
+<meta property="og:url" content="https://dorianzi.github.io/2019/03/29/Decision-Tree/index.html">
+<meta property="og:site_name" content="Dorian Mode">
+<meta property="og:description" content="决策树决策树决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选取呢？">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_2.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(P(A))">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(P(A_1))+f(P(A_2))+...+f(P(A_n))=f(P(A_1)P(A_2)...P(A_n))">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(P(A))=-log\rho ">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\rho&space;=P(A)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(X)=P(X_1)f(P(X_1))+P(X_2)f(P(X_2))+...+P(X_n)f(P(X_n))">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=\rho_1&space;(-log\rho_1&space;)+\rho_2&space;(-log\rho_2&space;)+...+\rho_n&space;(-log\rho_n&space;)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{n}\rho&space;_ilog\rho&space;_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(X=x_i,Y=y_j)=\rho&space;_{ij},\&space;\&space;\&space;\&space;\&space;\&space;i=1,2,...,n;\&space;j=1,2,...,m">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(Y|X)=\sum_{i=1}^{n}\rho&space;_iH(Y|X=x_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\rho_i&space;=P(X=x_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(Y|X=x_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(Y|X=x_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?X=x_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(Y=y_j|X=x_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(Y|X=x_i)=-\sum_{j=1}^{m}P(Y=y_j|X=x_i)logP(Y=y_j|X=x_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{j=1}^{m}\frac{P(X=x_i,Y=y_j)}{P(X=x_i)}log\frac{P(X=x_i,Y=y_j)}{P(X=x_i)}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{j=1}^{m}\frac{\rho&space;_{ij}}{\rho&space;_{i}}log\frac{\rho&space;_{ij}}{\rho&space;_{i}}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(Y|X)=-\sum_{i=1}^{n}\rho&space;_i\sum_{j=1}^{m}\frac{\rho&space;_{ij}}{\rho&space;_i}log\frac{\rho&space;_{ij}}{\rho&space;_i}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{n}\sum_{j=1}^{m}\rho&space;_{ij}log\frac{\rho&space;_{ij}}{\rho&space;_i}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{n}\sum_{j=1}^{m}P(X=x_i,Y=y_j)log\frac{P(X=x_i,Y=y_j)}{P(X=x_i)}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{n}\sum_{j=1}^{m}P(X=x_i,Y=y_j)logP(Y=y_j|X=x_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D,A)=H(D)-H(D|A)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{9}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{6}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(D)=-\frac{9}{15}log_2\frac{9}{15}-\frac{6}{15}log_2\frac{6}{15}=0.971">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{3}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{3}{5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{3}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{3}{5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(D|A_1)=-(\frac{2}{15}log_2\frac{2}{5}+\frac{3}{15}log_2\frac{3}{5})-(\frac{3}{15}log_2\frac{3}{5}+\frac{2}{15}log_2\frac{2}{5})-(\frac{4}{15}log_2\frac{4}{5}+\frac{1}{15}log_2\frac{1}{5})=0.888">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D,A_1)=H(D)-H(D|A_1)=0.971-0.888=0.083">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{5}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{5}{5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{10}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{6}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{6}{10}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(D|A_2)=-(\frac{5}{15}log_2\frac{5}{5}+\frac{0}{15}log_2\frac{0}{5})-(\frac{4}{15}log_2\frac{4}{10}+\frac{6}{15}log_2\frac{6}{10})=0.674">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D,A_2)=H(D)-H(D|A_2)=0.971-0。647=0.324">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_3">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{6}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{6}{6}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{6}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{3}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{3}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{6}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{6}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(D|A_3)=-(\frac{6}{15}log_2\frac{6}{6}+\frac{0}{15}log_2\frac{0}{6})-(\frac{3}{15}log_2\frac{3}{9}+\frac{6}{15}log_2\frac{6}{9})=0.551">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D,A_3)=H(D)-H(D|A_3)=0.971-0。551=0.420">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_4">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{6}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{6}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{15}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(D|A_4)=-(\frac{1}{15}log_2\frac{1}{5}+\frac{4}{15}log_2\frac{4}{5})-(\frac{4}{15}log_2\frac{4}{6}+\frac{2}{15}log_2\frac{2}{6})-(\frac{4}{15}log_2\frac{4}{4}+\frac{0}{15}log_2\frac{0}{4})=0.608">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D,A_4)=H(D)-H(D|A_4)=0.971-0.608=0.363">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D,A_1)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D,A_2)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D,A_3)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D,A_4)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D,A_3)>g(D,A_4)>g(D,A_2)>g(D,A_1)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_2">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_3.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_2">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_4.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(D_2)=-(\frac{3}{9}log_2\frac{3}{9}+\frac{6}{9}log_2\frac{6}{9})=-0.918">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{3}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{3}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(D_2|A_1)=-(\frac{1}{9}log_2\frac{1}{4}+\frac{3}{9}log_2\frac{3}{4})-(\frac{0}{9}log_2\frac{2}{2}+\frac{2}{9}log_2\frac{2}{2})-(\frac{2}{9}log_2\frac{2}{3}+\frac{1}{9}log_2\frac{1}{3})=0.667">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_1)=H(D_2)-H(D_2|A_1)=0.918-0.667=0.251">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{3}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{3}{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{6}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{6}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{6}{6}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(D_2|A_2)=-(\frac{3}{9}log_2\frac{3}{3}+\frac{0}{9}log_2\frac{0}{3})-(\frac{0}{9}log_2\frac{0}{6}+\frac{6}{9}log_2\frac{6}{6})=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_2)=H(D_2)-H(D_2|A_2)=0.918-0=0.918">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_3">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{2}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{9}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{0}{1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(D_2|A_3)=-(\frac{0}{9}log_2\frac{0}{4}+\frac{4}{9}log_2\frac{4}{4})-(\frac{2}{9}log_2\frac{2}{4}+\frac{2}{9}log_2\frac{2}{4})-(\frac{1}{9}log_2\frac{1}{1}+\frac{0}{9}log_2\frac{0}{1})=0.444">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_3)=H(D_2)-H(D_2|A_3)=0.918-0.444=0.474">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_1)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_2)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_3)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_2)>g(D_2,A_3)>g(D_2,A_1)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(D_2,A_2)=0.918">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_5.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\varepsilon">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\varepsilon">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A1,B1)=\frac{1}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A1,B2)=\frac{1}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A2,B1)=\frac{1}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A2,B2)=\frac{1}{4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A1|B1)=\frac{1}{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A2|B1)=\frac{1}{2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(A=A_i|B=B_i)=\frac{P(A=A_i,B=B_i)}{P(B=B_i)}">
+<meta property="og:updated_time" content="2019-03-30T04:49:10.082Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Decision Tree">
+<meta name="twitter:description" content="决策树决策树决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类 考虑下面的样本：  人们的决策过程：  我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？ 而在实际操作中，我们是用什么算法策略决定每一步特征的选取呢？">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/decision_tree_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://dorianzi.github.io/2019/03/29/Decision-Tree/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Decision Tree | Dorian Mode</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bdd9553b00b737f4e03ff3fc43e220f2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/DorianZi/DorianZi.github.io/tree/master" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dorian Mode</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/03/29/Decision-Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dorian Zi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dorian Mode">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Decision Tree
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-29 17:30:39" itemprop="dateCreated datePublished" datetime="2019-03-29T17:30:39+08:00">2019-03-29</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h2><h3 id="决策树-1"><a href="#决策树-1" class="headerlink" title="决策树"></a>决策树</h3><p>决策树类似于人们进行决策的过程，从一个根节点开始，通过逐一特征的筛选，生成多个分支，每个叶子节点为一个分类</p>
+<p>考虑下面的样本：</p>
+<p><img src="\uploads/decision_tree_1.png" alt></p>
+<p>人们的决策过程：</p>
+<p><img src="\uploads/decision_tree_2.png" alt></p>
+<p>我们看到对于青年来说，只要工作情况就能决定是否房贷，房子和信贷情况并没有起到区分作用。对所有年龄层的来说，信贷情况都是多余的特征。这个决策过程看起来不错，不过这就是最佳路径了吗？</p>
+<p>而在实际操作中，我们是用什么算法策略决定每一步特征的选取呢？也就是说，我们进行特征选择是基于什么准则？</p>
+<h3 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h3><p>我们基于信息增益来选择特征。信息增益指的是信息熵的增益，为理解它需要提前了解两个概念：信息熵，条件熵</p>
+<h4 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a>信息熵</h4><p>一个事件发生的概率越低，它的不确定性就越强，信息量就越大，所以我们要用概率的函数来表示信息量,即<img src="https://latex.codecogs.com/gif.latex?f(P(A))">；多个独立事件发生的概率是它们各自概率的乘积，而信息量是他们各自信息量的和,即</p>
+<p><img src="https://latex.codecogs.com/gif.latex?f(P(A_1))&plus;f(P(A_2))&plus;...&plus;f(P(A_n))=f(P(A_1)P(A_2)...P(A_n))"></p>
+<p>满足这个条件的函数是对数，于是用对数表示信息量：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?f(P(A))=-log\rho "></p>
+<p>其中<img src="https://latex.codecogs.com/gif.latex?\rho&space;=P(A)" title="\rho =P(A)"></p>
+<p>上面说的是一个具体的事件或特征。对一个变量X来说，它可能取不同的值，它取任何一个值都是一个事件，且所有取值的事件互相独立。我们考虑X的信息就应该考虑它所有取值，那么合理的方式就是使用它所有取值信息量的期望：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(X)=P(X_1)f(P(X_1))&plus;P(X_2)f(P(X_2))&plus;...&plus;P(X_n)f(P(X_n))"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=\rho_1&space;(-log\rho_1&space;)&plus;\rho_2&space;(-log\rho_2&space;)&plus;...&plus;\rho_n&space;(-log\rho_n&space;)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{n}\rho&space;_ilog\rho&space;_i"></p>
+<p>我们将此称作信息熵。所以说信息熵指的是变量的属性。</p>
+<h4 id="条件熵"><a href="#条件熵" class="headerlink" title="条件熵"></a>条件熵</h4><p>现在在X基础上再加入另一个变量Y，它们的联合概率分布（与条件概率分别的区别见附录）为</p>
+<p><img src="https://latex.codecogs.com/gif.latex?P(X=x_i,Y=y_j)=\rho&space;_{ij},\&space;\&space;\&space;\&space;\&space;\&space;i=1,2,...,n;\&space;j=1,2,...,m"></p>
+<p>定义条件熵为Y在X条件下的熵：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(Y|X)=\sum_{i=1}^{n}\rho&space;_iH(Y|X=x_i)" title="H(Y|X)=\sum_{i=1}^{n}\rho _iH(Y|X=x_i)"></p>
+<p>其中<img src="https://latex.codecogs.com/gif.latex?\rho_i&space;=P(X=x_i)"></p>
+<p>观察条件熵的定义公式，从外往里看，它是X取值变动下对熵<img src="https://latex.codecogs.com/gif.latex?H(Y|X=x_i)">的加权和，而本身<img src="https://latex.codecogs.com/gif.latex?H(Y|X=x_i)">是固定<img src="https://latex.codecogs.com/gif.latex?X=x_i">下的，Y取值变动下每个条件概率<img src="https://latex.codecogs.com/gif.latex?P(Y=y_j|X=x_i)">的加权和。所以它是期望的期望，或者说是熵的熵，是信息量的嵌套加权。</p>
+<p>推导一下条件熵具体的计算方法：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(Y|X=x_i)=-\sum_{j=1}^{m}P(Y=y_j|X=x_i)logP(Y=y_j|X=x_i)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{j=1}^{m}\frac{P(X=x_i,Y=y_j)}{P(X=x_i)}log\frac{P(X=x_i,Y=y_j)}{P(X=x_i)}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{j=1}^{m}\frac{\rho&space;_{ij}}{\rho&space;_{i}}log\frac{\rho&space;_{ij}}{\rho&space;_{i}}"></p>
+<p>则：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(Y|X)=-\sum_{i=1}^{n}\rho&space;_i\sum_{j=1}^{m}\frac{\rho&space;_{ij}}{\rho&space;_i}log\frac{\rho&space;_{ij}}{\rho&space;_i}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{n}\sum_{j=1}^{m}\rho&space;_{ij}log\frac{\rho&space;_{ij}}{\rho&space;_i}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{n}\sum_{j=1}^{m}P(X=x_i,Y=y_j)log\frac{P(X=x_i,Y=y_j)}{P(X=x_i)}">&emsp;&emsp;&emsp;&emsp;①</p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{n}\sum_{j=1}^{m}P(X=x_i,Y=y_j)logP(Y=y_j|X=x_i)">&emsp;&emsp;&emsp;&emsp;②</p>
+<p>由②可见条件熵由联合概率和条件概率构成。由①可见，条件概率可以由联合概率和作为条件的事件概率求得</p>
+<h4 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h4><p>了解了信息熵（或者称经验熵）和条件熵，可以来理解信息增益了。</p>
+<p>信息增益的定义是，当一个特征A引入后，原来集合D的经验熵，变成了D对A的条件熵，这个变化过程熵减少了多少。用数学表示：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?g(D,A)=H(D)-H(D|A)"></p>
+<p>BTW，因为特征在不断引入，每次引入之后的条件熵就成为下一次特征引入前的经验熵。</p>
+<p>决策树的特征选择基于信息增益最大，也就是新特征的加入使得整个集合的信息量减少最多，概率就越大，这样就越接近最终分类结果。</p>
+<h4 id="基于信息增益进行特征选择"><a href="#基于信息增益进行特征选择" class="headerlink" title="基于信息增益进行特征选择"></a>基于信息增益进行特征选择</h4><p>现在开始通过计算信息增益来对上述样本进行特征选择。</p>
+<p>1.1）首先计算初始经验熵，初始只有一个特征D，就是放贷与否。放贷为<img src="https://latex.codecogs.com/gif.latex?\frac{9}{15}">，不放为<img src="https://latex.codecogs.com/gif.latex?\frac{6}{15}">，则经验熵为：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(D)=-\frac{9}{15}log_2\frac{9}{15}-\frac{6}{15}log_2\frac{6}{15}=0.971"></p>
+<p>1.2）假设引入<font size="5">“年龄段”</font>特征。则原来对样本的了解只有放贷与否，现在多了一个“年龄段”的区分度。设“年龄段”为<img src="https://latex.codecogs.com/gif.latex?A_1">,使用上述②式，计算条件熵：</p>
+<p>P(青年，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{15}">&emsp;&emsp;&emsp;P(放贷|青年)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{5}">&emsp;&emsp;&emsp;P(青年，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{3}{15}">&emsp;&emsp;&emsp;P(不放贷|青年)=<img src="https://latex.codecogs.com/gif.latex?\frac{3}{5}"></p>
+<p>P(中年，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{3}{15}">&emsp;&emsp;&emsp;P(放贷|中年)=<img src="https://latex.codecogs.com/gif.latex?\frac{3}{5}">&emsp;&emsp;&emsp;P(中年，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{15}">&emsp;&emsp;&emsp;P(不放贷|中年)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{5}"></p>
+<p>P(老年，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{15}">&emsp;&emsp;&emsp;P(放贷|老年)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{5}">&emsp;&emsp;&emsp;P(老年，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{1}{15}">&emsp;&emsp;&emsp;P(不放贷|老年)=<img src="https://latex.codecogs.com/gif.latex?\frac{1}{5}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(D|A_1)=-(\frac{2}{15}log_2\frac{2}{5}&plus;\frac{3}{15}log_2\frac{3}{5})-(\frac{3}{15}log_2\frac{3}{5}&plus;\frac{2}{15}log_2\frac{2}{5})-(\frac{4}{15}log_2\frac{4}{5}&plus;\frac{1}{15}log_2\frac{1}{5})=0.888"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?g(D,A_1)=H(D)-H(D|A_1)=0.971-0.888=0.083"></p>
+<p>1.3）假设引入<font size="5">“有工作与否”</font>特征。设“有工作与否”为<img src="https://latex.codecogs.com/gif.latex?A_2">,使用上述②式，计算条件熵：</p>
+<p>P(有工作，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{5}{15}">&emsp;&emsp;&emsp;P(放贷|有工作)=<img src="https://latex.codecogs.com/gif.latex?\frac{5}{5}">&emsp;&emsp;&emsp;P(有工作，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{15}">&emsp;&emsp;&emsp;P(不放贷|有工作)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{5}"></p>
+<p>P(没工作，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{15}">&emsp;&emsp;&emsp;P(放贷|没工作)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{10}">&emsp;&emsp;&emsp;P(没工作，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{6}{15}">&emsp;&emsp;&emsp;P(不放贷|没工作)=<img src="https://latex.codecogs.com/gif.latex?\frac{6}{10}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(D|A_2)=-(\frac{5}{15}log_2\frac{5}{5}&plus;\frac{0}{15}log_2\frac{0}{5})-(\frac{4}{15}log_2\frac{4}{10}&plus;\frac{6}{15}log_2\frac{6}{10})=0.674"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?g(D,A_2)=H(D)-H(D|A_2)=0.971-0。647=0.324"></p>
+<p>1.4）假设引入<font size="5">“有房子与否”</font>特征。设“有房子与否”为<img src="https://latex.codecogs.com/gif.latex?A_3">,使用上述②式，计算条件熵：</p>
+<p>P(有房子，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{6}{15}">&emsp;&emsp;&emsp;P(放贷|有房子)=<img src="https://latex.codecogs.com/gif.latex?\frac{6}{6}">&emsp;&emsp;&emsp;P(有房子，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{15}">&emsp;&emsp;&emsp;P(不放贷|有房子)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{6}"></p>
+<p>P(没房子，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{3}{15}">&emsp;&emsp;&emsp;P(放贷|没房子)=<img src="https://latex.codecogs.com/gif.latex?\frac{3}{9}">&emsp;&emsp;&emsp;P(没房子，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{6}{15}">&emsp;&emsp;&emsp;P(不放贷|没房子)=<img src="https://latex.codecogs.com/gif.latex?\frac{6}{9}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(D|A_3)=-(\frac{6}{15}log_2\frac{6}{6}&plus;\frac{0}{15}log_2\frac{0}{6})-(\frac{3}{15}log_2\frac{3}{9}&plus;\frac{6}{15}log_2\frac{6}{9})=0.551"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?g(D,A_3)=H(D)-H(D|A_3)=0.971-0。551=0.420"></p>
+<p>1.5）假设引入<font size="5">“信贷情况”</font>特征。设“信贷情况”为<img src="https://latex.codecogs.com/gif.latex?A_4">,使用上述②式，计算条件熵：</p>
+<p>P(信贷一般，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{1}{15}">&emsp;&emsp;&emsp;P(放贷|信贷一般)=<img src="https://latex.codecogs.com/gif.latex?\frac{1}{5}">&emsp;&emsp;&emsp;P(信贷一般，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{15}">&emsp;&emsp;&emsp;P(不放贷|信贷一般)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{5}"></p>
+<p>P(信贷好，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{15}">&emsp;&emsp;&emsp;P(放贷|信贷好)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{6}">&emsp;&emsp;&emsp;P(信贷好，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{15}">&emsp;&emsp;&emsp;P(不放贷|信贷好)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{6}"></p>
+<p>P(信贷非常好，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{15}">&emsp;&emsp;&emsp;P(放贷|信贷非常好)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{4}">&emsp;&emsp;&emsp;P(信贷非常好，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{15}">&emsp;&emsp;&emsp;P(不放贷|信贷非常好)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{4}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(D|A_4)=-(\frac{1}{15}log_2\frac{1}{5}&plus;\frac{4}{15}log_2\frac{4}{5})-(\frac{4}{15}log_2\frac{4}{6}&plus;\frac{2}{15}log_2\frac{2}{6})-(\frac{4}{15}log_2\frac{4}{4}&plus;\frac{0}{15}log_2\frac{0}{4})=0.608"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?g(D,A_4)=H(D)-H(D|A_4)=0.971-0.608=0.363"></p>
+<p>1.6）比较<img src="https://latex.codecogs.com/gif.latex?g(D,A_1)">，<img src="https://latex.codecogs.com/gif.latex?g(D,A_2)">，<img src="https://latex.codecogs.com/gif.latex?g(D,A_3)">，<img src="https://latex.codecogs.com/gif.latex?g(D,A_4)">&emsp;=&gt;&emsp;<img src="https://latex.codecogs.com/gif.latex?g(D,A_3)>g(D,A_4)>g(D,A_2)>g(D,A_1)"></p>
+<p>也就是这里我们选择特征<font size="5">“有房子与否”</font>，至此我们做出了第一个特征选择，在选择之后根据有房子与否的“是”与“否”岔开了两个路径,也就是分割出来了两个子空间<img src="https://latex.codecogs.com/gif.latex?D_1" title="D_1">和<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_1">，其中“是”空间的路径已经抵达了叶子；“否”空间还有待开发。</p>
+<p><img src="\uploads/decision_tree_3.png" alt></p>
+<p>2.1）针对分出来的子空间，继续进行特征选择。</p>
+<p>幸运的是，我们只有一个子空间<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">需要开发。<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">空间的数据缩小为：</p>
+<p><img src="\uploads/decision_tree_4.png" alt></p>
+<p>此时<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">空间处于初始状态，即没有选择任何特征，它的信息熵为:</p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(D_2)=-(\frac{3}{9}log_2\frac{3}{9}&plus;\frac{6}{9}log_2\frac{6}{9})=-0.918"></p>
+<p>2.2）假设引入<font size="5">“年龄段”</font>特征。设“年龄段”为<img src="https://latex.codecogs.com/gif.latex?A_1">,使用上述②式，在<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">数据空间计算条件熵：</p>
+<p>P(青年，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{1}{9}">&emsp;&emsp;&emsp;P(放贷|青年)=<img src="https://latex.codecogs.com/gif.latex?\frac{1}{4}">&emsp;&emsp;&emsp;P(青年，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{3}{9}">&emsp;&emsp;&emsp;P(不放贷|青年)=<img src="https://latex.codecogs.com/gif.latex?\frac{3}{4}"></p>
+<p>P(中年，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{9}">&emsp;&emsp;&emsp;P(放贷|中年)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{2}">&emsp;&emsp;&emsp;P(中年，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{9}">&emsp;&emsp;&emsp;P(不放贷|中年)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{2}"></p>
+<p>P(老年，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{9}">&emsp;&emsp;&emsp;P(放贷|老年)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{3}">&emsp;&emsp;&emsp;P(老年，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{1}{9}">&emsp;&emsp;&emsp;P(不放贷|老年)=<img src="https://latex.codecogs.com/gif.latex?\frac{1}{3}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(D_2|A_1)=-(\frac{1}{9}log_2\frac{1}{4}&plus;\frac{3}{9}log_2\frac{3}{4})-(\frac{0}{9}log_2\frac{2}{2}&plus;\frac{2}{9}log_2\frac{2}{2})-(\frac{2}{9}log_2\frac{2}{3}&plus;\frac{1}{9}log_2\frac{1}{3})=0.667"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?g(D_2,A_1)=H(D_2)-H(D_2|A_1)=0.918-0.667=0.251"></p>
+<p>2.3）假设引入<font size="5">“有工作与否”</font>特征。设“有工作与否”为<img src="https://latex.codecogs.com/gif.latex?A_2">,使用上述②式，计算条件熵：</p>
+<p>P(有工作，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{3}{9}">&emsp;&emsp;&emsp;P(放贷|有工作)=<img src="https://latex.codecogs.com/gif.latex?\frac{3}{3}">&emsp;&emsp;&emsp;P(有工作，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{9}">&emsp;&emsp;&emsp;P(不放贷|有工作)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{3}"></p>
+<p>P(没工作，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{9}">&emsp;&emsp;&emsp;P(放贷|没工作)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{6}">&emsp;&emsp;&emsp;P(没工作，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{6}{9}">&emsp;&emsp;&emsp;P(不放贷|没工作)=<img src="https://latex.codecogs.com/gif.latex?\frac{6}{6}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(D_2|A_2)=-(\frac{3}{9}log_2\frac{3}{3}&plus;\frac{0}{9}log_2\frac{0}{3})-(\frac{0}{9}log_2\frac{0}{6}&plus;\frac{6}{9}log_2\frac{6}{6})=0"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?g(D_2,A_2)=H(D_2)-H(D_2|A_2)=0.918-0=0.918"></p>
+<p>2.4）假设引入<font size="5">“信贷情况”</font>特征。设“信贷情况”为<img src="https://latex.codecogs.com/gif.latex?A_3">,使用上述②式，计算条件熵：</p>
+<p>P(信贷一般，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{9}">&emsp;&emsp;&emsp;P(放贷|信贷一般)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{4}">&emsp;&emsp;&emsp;P(信贷一般，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{9}">&emsp;&emsp;&emsp;P(不放贷|信贷一般)=<img src="https://latex.codecogs.com/gif.latex?\frac{4}{4}"></p>
+<p>P(信贷好，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{9}">&emsp;&emsp;&emsp;P(放贷|信贷好)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{4}">&emsp;&emsp;&emsp;P(信贷好，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{9}">&emsp;&emsp;&emsp;P(不放贷|信贷好)=<img src="https://latex.codecogs.com/gif.latex?\frac{2}{4}"></p>
+<p>P(信贷非常好，放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{1}{9}">&emsp;&emsp;&emsp;P(放贷|信贷非常好)=<img src="https://latex.codecogs.com/gif.latex?\frac{1}{1}">&emsp;&emsp;&emsp;P(信贷非常好，不放贷)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{9}">&emsp;&emsp;&emsp;P(不放贷|信贷非常好)=<img src="https://latex.codecogs.com/gif.latex?\frac{0}{1}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?H(D_2|A_3)=-(\frac{0}{9}log_2\frac{0}{4}&plus;\frac{4}{9}log_2\frac{4}{4})-(\frac{2}{9}log_2\frac{2}{4}&plus;\frac{2}{9}log_2\frac{2}{4})-(\frac{1}{9}log_2\frac{1}{1}&plus;\frac{0}{9}log_2\frac{0}{1})=0.444"></p>
+<p>=&gt;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?g(D_2,A_3)=H(D_2)-H(D_2|A_3)=0.918-0.444=0.474"></p>
+<p>2.5）比较<img src="https://latex.codecogs.com/gif.latex?g(D_2,A_1)">，<img src="https://latex.codecogs.com/gif.latex?g(D_2,A_2)">，<img src="https://latex.codecogs.com/gif.latex?g(D_2,A_3)">&emsp;=&gt;&emsp;<img src="https://latex.codecogs.com/gif.latex?g(D_2,A_2)>g(D_2,A_3)>g(D_2,A_1)"></p>
+<p>所以我们选择的特征是“有工作与否”，并且注意，该特征的信息增益是<img src="https://latex.codecogs.com/gif.latex?g(D_2,A_2)=0.918">，意味着，全部信息被衰减，流程图应该停止了。我们绘图看看是否如此：</p>
+<p><img src="\uploads/decision_tree_5.png" alt></p>
+<p>的确如此！</p>
+<p>我们比较此图和初始的流程图，可知，采用信息增益，可以尽可能等减少分支和叶子，迅速决策。</p>
+<h2 id="决策树生成算法"><a href="#决策树生成算法" class="headerlink" title="决策树生成算法"></a>决策树生成算法</h2><p>常见的决策树生成算法有ID3算法和C4.5算法</p>
+<p>ID3算法使用的是信息增益，其运算过程正是上节所描述的例子！</p>
+<p>C4.5与ID3的区别仅仅是使用<font size="4">信息增益比</font> 而非信息增益。</p>
+<p>（未完待续。。。）</p>
+<p>当然，需要<font size="5">注意</font>的是：无论使用哪种算法，对于大数据来说，我们的决策树的层数可能非常多，如果我们分解到没有特征可分的地步会过拟合，且时间消耗非常大。 通常的做法是设置一个信息增益阈值<img src="https://latex.codecogs.com/gif.latex?\varepsilon" title="\varepsilon">，当某个特征引入后信息增益小于该阈值<img src="https://latex.codecogs.com/gif.latex?\varepsilon" title="\varepsilon">，我们就可以停止树分裂，并把原始数据集中<font size="4">数量最多</font>的那个类别作为叶子节点</p>
+<h2 id="附录：联合概率分布和条件概率分布的区别"><a href="#附录：联合概率分布和条件概率分布的区别" class="headerlink" title="附录：联合概率分布和条件概率分布的区别"></a>附录：联合概率分布和条件概率分布的区别</h2><p>考虑两个变量：天晴与否，花开与否</p>
+<p>它们组合成四种事件：<br>1）天晴了A1，花开了B1<br>2）天晴了A1，花没开B2<br>3）天没晴A2，花开了B1<br>4）天没晴A2，花没开B2</p>
+<p>联合概率分别描述这四种情况:</p>
+<p><img src="https://latex.codecogs.com/gif.latex?P(A1,B1)=\frac{1}{4}">，&emsp;<img src="https://latex.codecogs.com/gif.latex?P(A1,B2)=\frac{1}{4}">，&emsp;<img src="https://latex.codecogs.com/gif.latex?P(A2,B1)=\frac{1}{4}">，&emsp;<img src="https://latex.codecogs.com/gif.latex?P(A2,B2)=\frac{1}{4}">，</p>
+<p>条件概率分布描述的是某个事件已经发生了，比如B1已经发生了，就扼杀了2)，4)的可能，我们就只能从1），3）两种情况去考虑：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?P(A1|B1)=\frac{1}{2}">，&emsp;<img src="https://latex.codecogs.com/gif.latex?P(A2|B1)=\frac{1}{2}"></p>
+<p>条件概率和联合概率的数学关系：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?P(A=A_i|B=B_i)=\frac{P(A=A_i,B=B_i)}{P(B=B_i)}"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《统计方法学》by 李航</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/29/KNN/" rel="next" title="KNN">
+                <i class="fa fa-chevron-left"></i> KNN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/eric_clapton.jpg" alt="Dorian Zi">
+            
+              <p class="site-author-name" itemprop="name">Dorian Zi</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/dorianzi" title="GitHub &rarr; https://github.com/dorianzi" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://kaggle.com/dorianzi" title="Kaggle &rarr; https://kaggle.com/dorianzi" rel="noopener" target="_blank"><i class="fa fa-fw fa-list-alt"></i>Kaggle</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://xiami.com/artist/mf8ydg642ef" title="Xiami &rarr; https://xiami.com/artist/mf8ydg642ef" rel="noopener" target="_blank"><i class="fa fa-fw fa-music"></i>Xiami</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://music.163.com/#/album?id=3080421" title="Netease &rarr; https://music.163.com/#/album?id=3080421" rel="noopener" target="_blank"><i class="fa fa-fw fa-headphones"></i>Netease</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://facebook.com/profile.php?id=100008679135728" title="FB Page &rarr; https://facebook.com/profile.php?id=100008679135728" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://instagram.com/dorian.zi/" title="Instagram &rarr; https://instagram.com/dorian.zi/" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://linkedin.com/in/dorian-zi-7620b6127/" title="Linkedin &rarr; https://linkedin.com/in/dorian-zi-7620b6127/" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+                </span>
+              
+            </div>
+          
+
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=481876106&auto=1&height=66"></iframe>
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树"><span class="nav-number">1.</span> <span class="nav-text">决策树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#决策树-1"><span class="nav-number">1.1.</span> <span class="nav-text">决策树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征选择"><span class="nav-number">1.2.</span> <span class="nav-text">特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信息熵"><span class="nav-number">1.2.1.</span> <span class="nav-text">信息熵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件熵"><span class="nav-number">1.2.2.</span> <span class="nav-text">条件熵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信息增益"><span class="nav-number">1.2.3.</span> <span class="nav-text">信息增益</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于信息增益进行特征选择"><span class="nav-number">1.2.4.</span> <span class="nav-text">基于信息增益进行特征选择</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树生成算法"><span class="nav-number">2.</span> <span class="nav-text">决策树生成算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录：联合概率分布和条件概率分布的区别"><span class="nav-number">3.</span> <span class="nav-text">附录：联合概率分布和条件概率分布的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dorian Zi</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '5b4b5d838e55b91b3713',
+    clientSecret: 'ca4bfc7fee3940ef0896565d06b76890fd29ce40',
+    repo: 'DorianZi.github.io',
+    owner: 'DorianZi',
+    admin: ['DorianZi'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=7.0.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
