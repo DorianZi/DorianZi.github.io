@@ -145,7 +145,9 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?Gini(D,A_3=1)}=0.27">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_3.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_4.png">
-<meta property="og:updated_time" content="2019-03-30T23:18:21.018Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_2=1">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_5.png">
+<meta property="og:updated_time" content="2019-03-30T23:43:36.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CART">
 <meta name="twitter:description" content="CART定义在上一篇决策树中，我们已经介绍了决策树的原理和ID3,C4.5算法。这一篇专门讲解CART算法。 ART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。 分类树CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样。 CART首先是二叉树，其次分裂评价标准是用基尼指数 基尼指数基尼指数可以用来描述一个">
@@ -543,13 +545,17 @@
 <p><img src="https://latex.codecogs.com/gif.latex?Gini(D,A_4=2)}=0.47"></p>
 <p>8）假设以“信贷情况一般”与否为分裂点，即<img src="https://latex.codecogs.com/gif.latex?A_4=3">，求基尼指数。</p>
 <p><img src="https://latex.codecogs.com/gif.latex?Gini(D,A_4=3)}=0.32"></p>
-<p>9）比较以上所有的Gini指数，<img src="https://latex.codecogs.com/gif.latex?Gini(D,A_3=1)}=0.27">最小，所以<font size="4">“有房子与否”</font> 为最优分裂点</p>
+<p>9）比较以上所有的Gini指数，<img src="https://latex.codecogs.com/gif.latex?Gini(D,A_3=1)}=0.27">最小，所以<font size="4">“有房子”</font>与否为最优分裂点</p>
 <p>10) 分裂之后的决策图如下：</p>
 <p><img src="/uploads/decision_tree_3.png" alt></p>
 <p>接下来我们继续寻找分裂点进行分裂</p>
 <p>目前数据集合被缩小为：</p>
 <p><img src="/uploads/decision_tree_4.png" alt></p>
-<p>11）<br>（待续…）</p>
+<p>11）以此时的集合为基础，循环到1)开始，计算除了“有房子”与否以外的特征作为分裂点的基尼指数。</p>
+<p>中间计算过程省略，直接给出结果：<img src="https://latex.codecogs.com/gif.latex?A_2=1">时最小，所以<font size="4">“有工作”</font>与否为最优分裂点。</p>
+<p>继续绘制决策图：</p>
+<p><img src="/uploads/decision_tree_5.png" alt></p>
+<p>决策完毕。</p>
 
       
     </div>
