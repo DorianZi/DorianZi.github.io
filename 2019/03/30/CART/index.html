@@ -147,7 +147,46 @@
 <meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_4.png">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_2=1">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/decision_tree_5.png">
-<meta property="og:updated_time" content="2019-03-30T23:43:36.532Z">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_1.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{j,s}{min}[\underset{c_1}{min}\sum_{x_i\epsilon&space;R_1(j,s)}^{&space;}(y_i-c_1)^2+\underset{c_2}{min}\sum_{x_i\epsilon&space;R_2(j,s)}^{&space;}(y_i-c_2)^2]">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?c_1,c_2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_i">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_2.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_4.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?[1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,9.5]">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?s=1.5">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_3.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?R_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?c_1=(4.5)/1=4.5">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?R_2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?c_2=(4.75+4.91+5.34+5.80+7.05+7.90+8.23+8.70+9.00)/9=6.853">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_5.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?loss(1.5)=(4.5-4.5)^2+[(4.75-6.853)^2+(4.91-6.853)^2+(5.34-6.853)^2+(5.80-6.853)^2+(7.05-6.853)^2+(7.90-6.853)^2+(8.23-6.853)^2+(8.70-6.853)^2+(9.00-6.853)^2]=22.648">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?s=2.5">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_6.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?R_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?c_1=(4.5+4.75)/2=4.625">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?R_2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?c_2=(4.91+5.34+5.80+7.05+7.90+8.23+8.70+9.00)/8=7.116">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_7.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?loss(2.5)=[(4.5-4.625)^2+(4.75-4.625)^2]+[(4.91-7.116)^2+(5.34-7.116)^2+(5.80-7.116)^2+(7.05-7.116)^2+(7.90-7.116)^2+(8.23-7.116)^2+(8.70-7.116)^2+(9.00-7.116)^2]=17.702">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?s=3.5,4.5,5.5,6.5,7.5,8.5,9.5">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_8.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_9.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_10.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_1">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_11.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_2">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_12.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_2">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_13.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_14.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_15.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D11,D12,D21,D22">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_16.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/CART_17.png">
+<meta property="og:updated_time" content="2019-03-31T10:40:10.609Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CART">
 <meta name="twitter:description" content="CART定义在上一篇决策树中，我们已经介绍了决策树的原理和ID3,C4.5算法。这一篇专门讲解CART算法。 ART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。 分类树CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样。 CART首先是二叉树，其次分裂评价标准是用基尼指数 基尼指数基尼指数可以用来描述一个">
@@ -526,7 +565,7 @@
 <p><img src="https://latex.codecogs.com/gif.latex?Gini(D,A)=\frac{|D_1|}{|D|}Gini(D_1)&plus;\frac{|D_2|}{|D|}Gini(D_2)"></p>
 <p>上面式子中，<img src="https://latex.codecogs.com/gif.latex?D_1">为A取a时的样本集合，<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">为其它样本的集合：<img src="https://latex.codecogs.com/gif.latex?D_2=D-D_1" title="D_2=D-D_1"></p>
 <p>可以看到特征A取值之后，影响了集合<img src="https://latex.codecogs.com/gif.latex?D">的密度，形成了<img src="https://latex.codecogs.com/gif.latex?D_1">和<img src="https://latex.codecogs.com/gif.latex?D_2">两部分的密度，所以需要加权。</p>
-<h3 id="特征分裂"><a href="#特征分裂" class="headerlink" title="特征分裂"></a>特征分裂</h3><p>我们依然考虑此数据集：</p>
+<h3 id="分类树特征分裂"><a href="#分类树特征分裂" class="headerlink" title="分类树特征分裂"></a>分类树特征分裂</h3><p>我们依然考虑此数据集：</p>
 <p><img src="/uploads/decision_tree_1.png" alt></p>
 <p>设<img src="https://latex.codecogs.com/gif.latex?A_1,A_2,A_3,A_4" title="A_1,A_2,A_3,A_4">表示年龄段，有工作与否，有自己房子，信贷情况4个特征。<img src="https://latex.codecogs.com/gif.latex?A_1=1,2,3">表示青年，中年，老年；<img src="https://latex.codecogs.com/gif.latex?A_2=1,2">表示有工作和没工作；<img src="https://latex.codecogs.com/gif.latex?A_3=1,2">表示有房子和没房子；<img src="https://latex.codecogs.com/gif.latex?A_4=1,2,3">表示信贷非常好，好，一般。</p>
 <p>1）假设以“青年”与否为分裂点，即<img src="https://latex.codecogs.com/gif.latex?A_1=1">，求基尼指数。</p>
@@ -556,6 +595,60 @@
 <p>继续绘制决策图：</p>
 <p><img src="/uploads/decision_tree_5.png" alt></p>
 <p>决策完毕。</p>
+<h2 id="回归树"><a href="#回归树" class="headerlink" title="回归树"></a>回归树</h2><p>回归树结合了线性回归和决策树，本质上是决策树，实现的是分段回归。</p>
+<p>对图示的数据点，线性回归为<font color="Red">红色</font>，回归树为<font color="Green">绿色</font></p>
+<p><img src="/uploads/CART_1.png" alt></p>
+<p>下面开始讲解回归树原理</p>
+<h3 id="回归树算法原理"><a href="#回归树算法原理" class="headerlink" title="回归树算法原理"></a>回归树算法原理</h3><p>首先对于特征进行二叉特征分裂，先尝试所有分裂点，再通过最小损失函数决定哪个分裂点是最佳的，并进行实质分裂。分裂出来两条分支，每个分支为一个子数据集（这就是为什么上图x坐标是分段的），每个子数据集上的样本的结果都等于它们的平均值（这就是为什么上图y坐标每一段都是同一个值）。然后在每一个子数据集重复上面的的分裂，直到停止条件。 停止条件是人为决定的，比如决定只分裂到第3层。</p>
+<h4 id="回归树损失函数"><a href="#回归树损失函数" class="headerlink" title="回归树损失函数"></a>回归树损失函数</h4><p>其中的损失函数通过最小二乘法获得，即当同一个点分裂为两个子数据集后，每个子数据集的最小二乘误差最小化，也就是两个子数据集的最小二乘误差的和要最小化。数学表达如下：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\underset{j,s}{min}[\underset{c_1}{min}\sum_{x_i\epsilon&space;R_1(j,s)}^{&space;}(y_i-c_1)^2&plus;\underset{c_2}{min}\sum_{x_i\epsilon&space;R_2(j,s)}^{&space;}(y_i-c_2)^2]"></p>
+<p>上式中<img src="https://latex.codecogs.com/gif.latex?c_1,c_2" title="c_1,c_2">为两个子集中计算结果值（即平均值），<img src="https://latex.codecogs.com/gif.latex?y_i" title="y_i">为实际结果值</p>
+<h4 id="回归树实例分析"><a href="#回归树实例分析" class="headerlink" title="回归树实例分析"></a>回归树实例分析</h4><p>考虑以下数据集，x为特征变量，y为结果</p>
+<p><img src="/uploads/CART_2.png" alt></p>
+<p>绘图为：</p>
+<p><img src="/uploads/CART_4.png" alt></p>
+<p>1）只有一个特征变量x,故对它进行分裂。</p>
+<p>考虑这9个分裂点<img src="https://latex.codecogs.com/gif.latex?[1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,9.5]"> ，之所以不使用1,2,3这种实际特征取值为分裂点，是为了划分子集的清晰。</p>
+<p>2） 假设分裂点为<img src="https://latex.codecogs.com/gif.latex?s=1.5" title="s=1.5">，获得两个子集：<br><img src="/uploads/CART_3.png" alt></p>
+<p>计算子集<img src="https://latex.codecogs.com/gif.latex?R_1" title="R_1">的结果：<img src="https://latex.codecogs.com/gif.latex?c_1=(4.5)/1=4.5" title="c_1=(4.5+4.75)/2=4.625"></p>
+<p>计算子集<img src="https://latex.codecogs.com/gif.latex?R_2" title="R_2">的结果：<img src="https://latex.codecogs.com/gif.latex?c_2=(4.75&plus;4.91&plus;5.34&plus;5.80&plus;7.05&plus;7.90&plus;8.23&plus;8.70&plus;9.00)/9=6.853"></p>
+<p>计算结果绘制到坐标图中：</p>
+<p><img src="/uploads/CART_5.png" alt></p>
+<p>计算这次分裂的损失量：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?loss(1.5)=(4.5-4.5)^2&plus;[(4.75-6.853)^2&plus;(4.91-6.853)^2&plus;(5.34-6.853)^2&plus;(5.80-6.853)^2&plus;(7.05-6.853)^2&plus;(7.90-6.853)^2&plus;(8.23-6.853)^2&plus;(8.70-6.853)^2&plus;(9.00-6.853)^2]=22.648"></p>
+<p>3） 假设分裂点为<img src="https://latex.codecogs.com/gif.latex?s=2.5">，获得两个子集：<br><img src="/uploads/CART_6.png" alt></p>
+<p>计算子集<img src="https://latex.codecogs.com/gif.latex?R_1" title="R_1">的结果：<img src="https://latex.codecogs.com/gif.latex?c_1=(4.5&plus;4.75)/2=4.625"></p>
+<p>计算子集<img src="https://latex.codecogs.com/gif.latex?R_2" title="R_2">的结果：<img src="https://latex.codecogs.com/gif.latex?c_2=(4.91&plus;5.34&plus;5.80&plus;7.05&plus;7.90&plus;8.23&plus;8.70&plus;9.00)/8=7.116"></p>
+<p>计算结果绘制到坐标图中：</p>
+<p><img src="/uploads/CART_7.png" alt></p>
+<p>计算这次分裂的损失量：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?loss(2.5)=[(4.5-4.625)^2&plus;(4.75-4.625)^2]&plus;[(4.91-7.116)^2&plus;(5.34-7.116)^2&plus;(5.80-7.116)^2&plus;(7.05-7.116)^2&plus;(7.90-7.116)^2&plus;(8.23-7.116)^2&plus;(8.70-7.116)^2&plus;(9.00-7.116)^2]=17.702"></p>
+<p>4）继续计算分裂点<img src="https://latex.codecogs.com/gif.latex?s=3.5,4.5,5.5,6.5,7.5,8.5,9.5">时候的结果，得到所有结果为下表：</p>
+<p><img src="/uploads/CART_8.png" alt></p>
+<p>比较所有损失，当s=5.5的时候分裂，损失最少，所以从<font size="4">s=5.5</font>进行第一次分裂，分裂之后的坐标图为：</p>
+<p><img src="/uploads/CART_9.png" alt></p>
+<p>5）至此，数据被分裂为两个子集：</p>
+<p><img src="/uploads/CART_10.png" alt></p>
+<p>对<img src="https://latex.codecogs.com/gif.latex?D_1" title="D_1">进行1)~4)的分裂过程，得到：</p>
+<p><img src="/uploads/CART_11.png" alt></p>
+<p>当s=3.5的时候分裂，损失最少，所以从<font size="4">s=3.5</font>对<img src="https://latex.codecogs.com/gif.latex?D_1" title="D_1">进行分裂</p>
+<p>对<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">进行1)~4)的分裂过程，得到：</p>
+<p><img src="/uploads/CART_12.png" alt></p>
+<p>当s=7.5的时候分裂，损失最少，所以从<font size="4">s=7.5</font>对<img src="https://latex.codecogs.com/gif.latex?D_2" title="D_2">进行分裂</p>
+<p>绘制坐标图</p>
+<p><img src="/uploads/CART_13.png" alt></p>
+<p>我们看一下此刻的树图：</p>
+<p><img src="/uploads/CART_14.png" alt></p>
+<p>我们的回归树已经构建了2层了（称深度为2），如果觉得目前的回归精度满足要求，可以就此打住，我们的回归树就构建完成了。<br>不过，为了精度再高一点，我们再构建一层。</p>
+<p>6）第三层构建开始，目前4个子集为：</p>
+<p><img src="/uploads/CART_15.png" alt></p>
+<p>对4个子集<img src="https://latex.codecogs.com/gif.latex?D11,D12,D21,D22" title="D11,D12,D21,D22">分别进行1）~ 4）的循环。省略中间过程，直接给结果：</p>
+<p><img src="/uploads/CART_16.png" alt></p>
+<p>D11: 选择s=1.5分裂<br>D12: 选择s=4.5分裂<br>D21: 选择s=6.5分裂<br>D22: 选择s=8.5分裂</p>
+<p>绘制坐标图：</p>
+<p><img src="/uploads/CART_17.png" alt></p>
+<p>完毕。</p>
+<p>BTW,事实上D11和D21已经过拟合，因为它本身只有两个边界点，从结果上看loss也已经为0了</p>
 
       
     </div>
@@ -846,7 +939,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CART定义"><span class="nav-number">1.</span> <span class="nav-text">CART定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类树"><span class="nav-number">1.1.</span> <span class="nav-text">分类树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基尼指数"><span class="nav-number">1.1.1.</span> <span class="nav-text">基尼指数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征分裂"><span class="nav-number">1.1.2.</span> <span class="nav-text">特征分裂</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CART定义"><span class="nav-number">1.</span> <span class="nav-text">CART定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类树"><span class="nav-number">1.1.</span> <span class="nav-text">分类树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基尼指数"><span class="nav-number">1.1.1.</span> <span class="nav-text">基尼指数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类树特征分裂"><span class="nav-number">1.1.2.</span> <span class="nav-text">分类树特征分裂</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回归树"><span class="nav-number">1.2.</span> <span class="nav-text">回归树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#回归树算法原理"><span class="nav-number">1.2.1.</span> <span class="nav-text">回归树算法原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#回归树损失函数"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">回归树损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回归树实例分析"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">回归树实例分析</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
