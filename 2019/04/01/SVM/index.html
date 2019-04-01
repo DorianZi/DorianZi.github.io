@@ -100,18 +100,49 @@
 
 
 
-  <meta name="description" content="(待更新…)">
+  <meta name="description" content="支持向量机的直观解释有两类数据需要分类器进行分类：  使用感知机可以实现，但是感知机有无数个解，因为感知机只关注样本数据有没有分错，所以无数条直线可以绘制出来，比如A和B 本文我们将使用SVM(support vector machine 支持向量机)来解决它。支持向量机不仅关注样本分类正确性，而且关注测试数据的容错性，简单的说，它会找出唯一的最优直线。或者说最优超平面，什么是最优超平面呢？ 直观">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SVM 支持向量机">
 <meta property="og:url" content="https://dorianzi.github.io/2019/04/01/SVM/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="(待更新…)">
+<meta property="og:description" content="支持向量机的直观解释有两类数据需要分类器进行分类：  使用感知机可以实现，但是感知机有无数个解，因为感知机只关注样本数据有没有分错，所以无数条直线可以绘制出来，比如A和B 本文我们将使用SVM(support vector machine 支持向量机)来解决它。支持向量机不仅关注样本分类正确性，而且关注测试数据的容错性，简单的说，它会找出唯一的最优直线。或者说最优超平面，什么是最优超平面呢？ 直观">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-01T02:15:27.768Z">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/SVM_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/SVM_2.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(x_1,y_1),(x_2,y_2),...,(x_n,y_n)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x_i=\begin{bmatrix}&space;x_{i1}\\&space;x_{i2}\\&space;...\\&space;x_{in}&space;\end{bmatrix}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w^{T}x+b=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w^{T}=(w_1,w_2,...,w_n)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_1x_1+w_2x_2+b=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_1x+w_2y+b=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w,b">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w,b">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?d=\frac{|w^Tx+b|}{\|w\|}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=y\frac{w^Tx+b}{\|w\|}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x_s">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\gamma&space;=y_s\frac{w^Tx_s+b}{\|w\|}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_i\frac{w^Tx_i+b}{\|w\|}\geq&space;\gamma">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_s(w^Tx_s+b)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w,b">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\lambda&space;w^Tx+\lambda&space;b=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_s(w^Tx_s+b)=1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\|w\|">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{2}\|w\|^2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_i\frac{w^Tx_i+b}{\|w\|}\geq&space;\gamma">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_iw^Tx_i+b\geq&space;1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{w,b}{min}&space;\quad&space;\frac{1}{2}\|w\|^2&space;\\&space;s.t.\quad&space;y_i(w^Tx_i+b)\geq&space;1,\quad&space;i=1,2,...,n">
+<meta property="og:updated_time" content="2019-04-01T15:37:04.276Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SVM 支持向量机">
-<meta name="twitter:description" content="(待更新…)">
+<meta name="twitter:description" content="支持向量机的直观解释有两类数据需要分类器进行分类：  使用感知机可以实现，但是感知机有无数个解，因为感知机只关注样本数据有没有分错，所以无数条直线可以绘制出来，比如A和B 本文我们将使用SVM(support vector machine 支持向量机)来解决它。支持向量机不仅关注样本分类正确性，而且关注测试数据的容错性，简单的说，它会找出唯一的最优直线。或者说最优超平面，什么是最优超平面呢？ 直观">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/SVM_1.png">
 
 
 
@@ -476,7 +507,30 @@
       
 
       
-        <p>(待更新…)</p>
+        <h1 id="支持向量机的直观解释"><a href="#支持向量机的直观解释" class="headerlink" title="支持向量机的直观解释"></a>支持向量机的直观解释</h1><p>有两类数据需要分类器进行分类：</p>
+<p><img src="/uploads/SVM_1.png" alt></p>
+<p>使用<a href="https://dorianzi.github.io/2019/03/29/Perceptron">感知机</a>可以实现，但是感知机有无数个解，因为感知机只关注样本数据有没有分错，所以无数条直线可以绘制出来，比如A和B</p>
+<p>本文我们将使用SVM(support vector machine 支持向量机)来解决它。支持向量机不仅关注样本分类正确性，而且关注测试数据的容错性，简单的说，它会找出唯一的最优直线。或者说最优超平面，什么是最优超平面呢？ 直观地说，如图中A就是最优分类，它相比B以及其它任何分类面来说，距离两个类别的数据最远，对样本的分类最可信，对测试数据的容纳性最大。</p>
+<p>距离两个类别的最近的样本点的距离之和，我们称作“分类间隔”，也就是图中两个虚线之间的距离。最优解对应的两虚线所穿过的样本点，就是SVM中的支持样本点，称为“支持向量”。最优解也就是我们的决策面就是两个虚线之间的中点：</p>
+<p><img src="/uploads/SVM_2.png" alt></p>
+<h1 id="数学推导"><a href="#数学推导" class="headerlink" title="数学推导"></a>数学推导</h1><p>怎么从众多超平面里面找到最优的哪一个呢？</p>
+<p>设我们的数据点为<img src="https://latex.codecogs.com/gif.latex?(x_1,y_1),(x_2,y_2),...,(x_n,y_n)">,其中<img src="https://latex.codecogs.com/gif.latex?x_i=\begin{bmatrix}&space;x_{i1}\\&space;x_{i2}\\&space;...\\&space;x_{in}&space;\end{bmatrix}">为数据坐标，<img src="https://latex.codecogs.com/gif.latex?y_i" title="y_i">为label，我们认为设定取值为-1或1，表示两个类别。</p>
+<p>设最优解超平面的数学表示为<img src="https://latex.codecogs.com/gif.latex?w^{T}x&plus;b=0">，其中<img src="https://latex.codecogs.com/gif.latex?x" title="x">同上面的数据点，为n维列向量, <img src="https://latex.codecogs.com/gif.latex?w^{T}=(w_1,w_2,...,w_n)" title="w^{T}=(w_1,w_2,...,w_n)">为各个维度的参数。</p>
+<p>在二维面里，其实展开就是<img src="https://latex.codecogs.com/gif.latex?w_1x_1&plus;w_2x_2&plus;b=0" title="w_1x_1+w_2x_2+b=0">，当然习惯x-y表示二维坐标的朋友可以看做<img src="https://latex.codecogs.com/gif.latex?w_1x&plus;w_2y&plus;b=0" title="w_1x+w_2y+b=0"></p>
+<p>我们找最优超平面就是通过规划条件求解参数<img src="https://latex.codecogs.com/gif.latex?w,b" title="w,b"></p>
+<p>接下来，基于“分类间隔最大”的目标来求超平面，首先我们看看分类间隔如何用<img src="https://latex.codecogs.com/gif.latex?w,b" title="w,b">表示:</p>
+<p>由点到面的距离公式并带入label值，我们得到点<img src="https://latex.codecogs.com/gif.latex?x">到超平面的几何距离为：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?d=\frac{|w^Tx&plus;b|}{\|w\|}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=y\frac{w^Tx&plus;b}{\|w\|}"></p>
+<p>从这个距离里面，我们有两个信息可以挖掘：</p>
+<p>1）仅对于支持向量点<img src="https://latex.codecogs.com/gif.latex?x_s" title="x_s">到超平面的几何距离<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=y_s\frac{w^Tx_s&plus;b}{\|w\|}">，我们要尽可能最大化<br>2）对任何样本点（包括支持向量点）<img src="https://latex.codecogs.com/gif.latex?x_i">到超平面的几何距离，要求<img src="https://latex.codecogs.com/gif.latex?y_i\frac{w^Tx_i&plus;b}{\|w\|}\geq&space;\gamma"></p>
+<p><font size="4">先看1)</font>，我们需要最大化的这个距离包含这么多部分，我们应该改变哪个部分呢？让我们来探索一下：</p>
+<p>瞧瞧这一部分：<img src="https://latex.codecogs.com/gif.latex?y_s(w^Tx_s&plus;b)">，我们姑且叫它“函数距离”。有没有发现函数距离是可以随意改变的? —— 只要倍数加大<img src="https://latex.codecogs.com/gif.latex?w,b" title="w,b">的值，这时候平面仍是那个平面，因为倍乘之后的超平面<img src="https://latex.codecogs.com/gif.latex?\lambda&space;w^Tx&plus;\lambda&space;b=0" title="\lambda w^Tx+\lambda b=0">仍然是之前那个平面，但是函数距离变大了！这告诉我们，通过约束我们可以将函数距离固定。这里我们就不妨固定<img src="https://latex.codecogs.com/gif.latex?y_s(w^Tx_s&plus;b)=1">吧！</p>
+<p>所以<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">，现在我们只需要最小化<img src="https://latex.codecogs.com/gif.latex?\|w\|" title="\|w\|">就好了。为了之后计算方便（请继续看），我们将该目标转换为：最小化<img src="https://latex.codecogs.com/gif.latex?\frac{1}{2}\|w\|^2" title="\frac{1}{2}\|w\|^2">。他们是等价的，这一点我想无须再证明一遍。</p>
+<p><font size="4">再看2)</font>，因为<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">，则 <img src="https://latex.codecogs.com/gif.latex?y_i\frac{w^Tx_i&plus;b}{\|w\|}\geq&space;\gamma"> &emsp;=&gt; &emsp;<img src="https://latex.codecogs.com/gif.latex?y_iw^Tx_i&plus;b\geq&space;1"></p>
+<p>综上，我们的问题转换为:</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\underset{w,b}{min}&space;\quad&space;\frac{1}{2}\|w\|^2&space;\\&space;s.t.\quad&space;y_i(w^Tx_i&plus;b)\geq&space;1,\quad&space;i=1,2,...,n"></p>
+<p>(未完待续。。。)</p>
 
       
     </div>
@@ -569,8 +623,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -749,6 +812,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机的直观解释"><span class="nav-number">1.</span> <span class="nav-text">支持向量机的直观解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学推导"><span class="nav-number">2.</span> <span class="nav-text">数学推导</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
