@@ -103,7 +103,7 @@
   <meta name="description" content="SVD分解即奇异值分解， 可以从特征值分解推导而来。先理解特征值分解 特征值和特征向量对矩阵A，存在特征向量和特征值满足： 如果把矩阵A理解为线性变换，那么上式表示：可以找到向量使得A只能对它进行倍的拉伸。 以基变换来理解。我们先构建一个“绝对”坐标系（如下图）。为了便于计算，设置原基为和，正好与“绝对”坐标系重叠。 通过矩阵换基，可直接计算得到实际上是将原基变换为新基和：   换基不影响坐标值，">
 <meta name="keywords" content="Algorithm,SVD">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SVD Decomposition">
+<meta property="og:title" content="SVD Decomposition 矩阵的奇异值分解">
 <meta property="og:url" content="https://dorianzi.github.io/2019/03/09/matrix_SVD_decomposition/index.html">
 <meta property="og:site_name" content="Dorian Mode">
 <meta property="og:description" content="SVD分解即奇异值分解， 可以从特征值分解推导而来。先理解特征值分解 特征值和特征向量对矩阵A，存在特征向量和特征值满足： 如果把矩阵A理解为线性变换，那么上式表示：可以找到向量使得A只能对它进行倍的拉伸。 以基变换来理解。我们先构建一个“绝对”坐标系（如下图）。为了便于计算，设置原基为和，正好与“绝对”坐标系重叠。 通过矩阵换基，可直接计算得到实际上是将原基变换为新基和：   换基不影响坐标值，">
@@ -185,9 +185,9 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?=\lambda_{1}u_{1}v^{T}_{1}+\lambda_{2}u_{2}v^{T}_{2}+...+\lambda_{n}u_{n}v^{T}_{n}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{\tilde{A}}=\underset{m\times&space;k}{(u_{1},u_{2},...,u_{k})}&space;\underset{k\times&space;k}{\begin{bmatrix}&space;\lambda_{1}&&space;&&space;&&space;0&space;\\&space;&&space;\lambda_{2}&&space;&&space;\\&space;&&space;&&space;...&&space;\\&space;&&space;&&space;&&space;\lambda_{k}\end{bmatrix}}&space;\underset{k\times&space;n}{\begin{pmatrix}&space;v^{T}_{1}\\&space;v^{T}_{2}\\&space;...\\&space;v^{T}_{k}&space;\end{pmatrix}&space;}">
 <meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/raw/master/res/svd_cut.png">
-<meta property="og:updated_time" content="2019-03-23T14:25:21.054Z">
+<meta property="og:updated_time" content="2019-04-01T02:13:58.635Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SVD Decomposition">
+<meta name="twitter:title" content="SVD Decomposition 矩阵的奇异值分解">
 <meta name="twitter:description" content="SVD分解即奇异值分解， 可以从特征值分解推导而来。先理解特征值分解 特征值和特征向量对矩阵A，存在特征向量和特征值满足： 如果把矩阵A理解为线性变换，那么上式表示：可以找到向量使得A只能对它进行倍的拉伸。 以基变换来理解。我们先构建一个“绝对”坐标系（如下图）。为了便于计算，设置原基为和，正好与“绝对”坐标系重叠。 通过矩阵换基，可直接计算得到实际上是将原基变换为新基和：   换基不影响坐标值，">
 <meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?\alpha">
 
@@ -206,7 +206,7 @@
   };
 </script>
 
-  <title>SVD Decomposition | Dorian Mode</title>
+  <title>SVD Decomposition 矩阵的奇异值分解 | Dorian Mode</title>
   
 
 
@@ -468,7 +468,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SVD Decomposition
+          <h1 class="post-title" itemprop="name headline">SVD Decomposition 矩阵的奇异值分解
 
               
             
@@ -656,8 +656,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/04/matrix-QR-decomposition/" rel="next" title="QR Decomposition">
-                <i class="fa fa-chevron-left"></i> QR Decomposition
+              <a href="/2019/03/04/matrix-QR-decomposition/" rel="next" title="QR Decomposition 矩阵的QR分解">
+                <i class="fa fa-chevron-left"></i> QR Decomposition 矩阵的QR分解
               </a>
             
           </div>
@@ -666,8 +666,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/10/image_compression_with_SVD/" rel="prev" title="Image Compression by SVD">
-                Image Compression by SVD <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/10/image_compression_with_SVD/" rel="prev" title="Image Compression by SVD 基于奇异值分解的图像压缩">
+                Image Compression by SVD 基于奇异值分解的图像压缩 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -743,7 +743,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -764,7 +764,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>

@@ -103,7 +103,7 @@
   <meta name="description" content="KNNKNN即K-NearestNeighbor分类器，是最简单的最初级的分类器。其核心思想是找到与待分类点最接近的K个样本点，然后把K个样本点中指向最多的那个类别认为是待分类点的类别。图示如下：  绿色圆圈为待分类的数据，蓝色方块为样本中的一类，红色三角为另一类。令K=4，也就是选取最近的4个样本数据，发现蓝色方块类别更多，则将待分类的数据分类到蓝色方块。 我们考虑“最近”一般采用欧式距离或曼哈">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KNN">
+<meta property="og:title" content="KNN K近邻分类器">
 <meta property="og:url" content="https://dorianzi.github.io/2019/03/29/KNN/index.html">
 <meta property="og:site_name" content="Dorian Mode">
 <meta property="og:description" content="KNNKNN即K-NearestNeighbor分类器，是最简单的最初级的分类器。其核心思想是找到与待分类点最接近的K个样本点，然后把K个样本点中指向最多的那个类别认为是待分类点的类别。图示如下：  绿色圆圈为待分类的数据，蓝色方块为样本中的一类，红色三角为另一类。令K=4，也就是选取最近的4个样本数据，发现蓝色方块类别更多，则将待分类的数据分类到蓝色方块。 我们考虑“最近”一般采用欧式距离或曼哈">
@@ -111,9 +111,9 @@
 <meta property="og:image" content="https://dorianzi.github.io/uploads/KNN_1.png">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?d(x,y)=\sqrt{\sum_{i=1}^{n}(x_i-y_i)^2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?d(x,y)=\sqrt{\sum_{i=1}^{n}|x_i-y_i|}">
-<meta property="og:updated_time" content="2019-03-29T02:34:18.552Z">
+<meta property="og:updated_time" content="2019-04-01T02:13:41.194Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KNN">
+<meta name="twitter:title" content="KNN K近邻分类器">
 <meta name="twitter:description" content="KNNKNN即K-NearestNeighbor分类器，是最简单的最初级的分类器。其核心思想是找到与待分类点最接近的K个样本点，然后把K个样本点中指向最多的那个类别认为是待分类点的类别。图示如下：  绿色圆圈为待分类的数据，蓝色方块为样本中的一类，红色三角为另一类。令K=4，也就是选取最近的4个样本数据，发现蓝色方块类别更多，则将待分类的数据分类到蓝色方块。 我们考虑“最近”一般采用欧式距离或曼哈">
 <meta name="twitter:image" content="https://dorianzi.github.io/uploads/KNN_1.png">
 
@@ -132,7 +132,7 @@
   };
 </script>
 
-  <title>KNN | Dorian Mode</title>
+  <title>KNN K近邻分类器 | Dorian Mode</title>
   
 
 
@@ -394,7 +394,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">KNN
+          <h1 class="post-title" itemprop="name headline">KNN K近邻分类器
 
               
             
@@ -522,8 +522,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/29/Perceptron/" rel="next" title="Perceptron Classifier">
-                <i class="fa fa-chevron-left"></i> Perceptron Classifier
+              <a href="/2019/03/29/Perceptron/" rel="next" title="Perceptron Classifier 感知机分类器">
+                <i class="fa fa-chevron-left"></i> Perceptron Classifier 感知机分类器
               </a>
             
           </div>
@@ -532,8 +532,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/29/Decision-Tree/" rel="prev" title="Decision Tree">
-                Decision Tree <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/29/Decision-Tree/" rel="prev" title="Decision Tree 决策树">
+                Decision Tree 决策树 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -609,7 +609,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -630,7 +630,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
