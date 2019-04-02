@@ -145,7 +145,28 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_1=w_2=\frac{1}{2},\&space;b=-2">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{2}x^{(1)}+\frac{1}{2}x^{(2)}-2=0">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?x1,x3">
-<meta property="og:updated_time" content="2019-04-02T04:16:56.607Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(x)=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(x,\lambda)=f(x)+\lambda&space;g(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x,\lambda">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(x)\leq&space;0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(x)">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/SVM_4.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(x,\lambda)=f(x)+\lambda&space;g(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(x)<&space;0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{\partial&space;L(x,\lambda)}{\partial&space;x}=\frac{\partial&space;f(x)}{\partial&space;x}+\lambda&space;\frac{\partial&space;g(x)}{\partial&space;x}=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\lambda&space;>0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(x,\lambda)=f(x)+\lambda&space;g(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\lambda&space;=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g(x)<0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?min\&space;L(x,\lambda)=f(x)+\lambda&space;g(x)&space;\\&space;s.t.&space;\left\{\begin{matrix}&space;g(x)\leq&space;0&space;\\&space;\lambda\geq&space;0\\&space;\lambda&space;g(x)=0&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(x,\lambda)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(x,\lambda)">
+<meta property="og:updated_time" content="2019-04-02T20:57:30.900Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SVM 支持向量机">
 <meta name="twitter:description" content="支持向量机的直观解释有两类数据需要分类器进行分类：  使用感知机可以实现，但是感知机有无数个解，因为感知机只关注样本数据有没有分错，所以无数条直线可以绘制出来，比如A和B 本文我们将使用SVM(support vector machine 支持向量机)来解决它。支持向量机不仅关注样本分类正确性，而且关注测试数据的容错性，简单的说，它会找出唯一的最优直线。或者说最优超平面，什么是最优超平面呢？ 直观">
@@ -472,7 +493,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Techinc/" itemprop="url" rel="index"><span itemprop="name">Techinc</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
 
                 
                 
@@ -531,21 +552,12 @@
 <p><img src="https://latex.codecogs.com/gif.latex?=y\frac{w^Tx&plus;b}{\|w\|}"></p>
 <p>从这个距离里面，我们有两个信息可以挖掘：</p>
 <p>1）仅对于支持向量点<img src="https://latex.codecogs.com/gif.latex?x_s" title="x_s">到超平面的几何距离<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=y_s\frac{w^Tx_s&plus;b}{\|w\|}">，我们要尽可能最大化<br>2）对任何样本点（包括支持向量点）<img src="https://latex.codecogs.com/gif.latex?x_i">到超平面的几何距离，要求<img src="https://latex.codecogs.com/gif.latex?y_i\frac{w^Tx_i&plus;b}{\|w\|}\geq&space;\gamma"></p>
-<p><font size="4">先看1)</font>，我们需要最大化的这个距离包含这么多部分，我们应该改变哪个部分呢？让我们来探索一下：</p>
-<p>瞧瞧这一部分：<img src="https://latex.codecogs.com/gif.latex?y_s(w^Tx_s&plus;b)">，我们姑且叫它“函数距离”。有没有发现函数距离是可以随意改变的? —— 只要倍数加大<img src="https://latex.codecogs.com/gif.latex?w,b" title="w,b">的值，这时候平面仍是那个平面，因为倍乘之后的超平面<img src="https://latex.codecogs.com/gif.latex?\lambda&space;w^Tx&plus;\lambda&space;b=0" title="\lambda w^Tx+\lambda b=0">仍然是之前那个平面，但是函数距离变大了！这告诉我们，通过约束我们可以将函数距离固定。这里我们就不妨固定<img src="https://latex.codecogs.com/gif.latex?y_s(w^Tx_s&plus;b)=1">吧！</p>
-<p>所以<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">，现在我们只需要最小化<img src="https://latex.codecogs.com/gif.latex?\|w\|" title="\|w\|">就好了。为了之后计算方便（请继续看），我们将该目标转换为：最小化<img src="https://latex.codecogs.com/gif.latex?\frac{1}{2}\|w\|^2" title="\frac{1}{2}\|w\|^2">。他们是等价的，这一点我想无须再证明一遍。</p>
-<p><font size="4">再看2)</font>，因为<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">，则 <img src="https://latex.codecogs.com/gif.latex?y_i\frac{w^Tx_i&plus;b}{\|w\|}\geq&space;\gamma"> &emsp;=&gt; &emsp;<img src="https://latex.codecogs.com/gif.latex?y_i(w^Tx_i&plus;b)\geq&space;1"></p>
-<p>综上，我们的问题转换为:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\underset{w,b}{min}&space;\quad&space;\frac{1}{2}\|w\|^2&space;\\&space;s.t.\quad&space;y_i(w^Tx_i&plus;b)\geq&space;1,\quad&space;i=1,2,...,n"></p>
-<h2 id="实例计算"><a href="#实例计算" class="headerlink" title="实例计算"></a>实例计算</h2><p>类别一有2个点：<img src="https://latex.codecogs.com/gif.latex?x1=(3,3)^T,\&space;x2=(4,3)^T" title="x1=(3,3)^T,\ x2=(4,3)^T">，类别二有1个点：<img src="https://latex.codecogs.com/gif.latex?x3=(1,1)^T" title="x3=(1,1)^T">，求最大间隔分离超平面：</p>
-<p><img src="/uploads/SVM_3.png" alt></p>
-<p>解：</p>
-<p>按照上面的约束公式有：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\underset{w,b}{min}\frac{1}{2}(w_1^2&plus;w_2^2)\\&space;s.t.&space;\left\{\begin{matrix}&space;3w_1&plus;3w_2&plus;b\geq&space;1\\&space;4w_1&plus;3w_2&plus;b\geq&space;1\\&space;-w_1-w_2-b\geq&space;1&space;\end{matrix}\right."></p>
-<p>求得<img src="https://latex.codecogs.com/gif.latex?w_1=w_2=\frac{1}{2},\&space;b=-2" title="w_1=w_2=\frac{1}{2},\ b=-2">，所以最大间隔分离超平面为：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\frac{1}{2}x^{(1)}&plus;\frac{1}{2}x^{(2)}-2=0"></p>
-<p>其中<img src="https://latex.codecogs.com/gif.latex?x1,x3" title="x1,x3">为支持向量</p>
-<p>（未完待续。。。）</p>
+<font size="4">先看1)</font>，我们需要最大化的这个距离包含这么多部分，我们应该改变哪个部分呢？让我们来探索一下：<br><br>瞧瞧这一部分：<img src="https://latex.codecogs.com/gif.latex?y_s(w^Tx_s&plus;b)">，我们姑且叫它“函数距离”。有没有发现函数距离是可以随意改变的? —— 只要倍数加大<img src="https://latex.codecogs.com/gif.latex?w,b" title="w,b">的值，这时候平面仍是那个平面，因为倍乘之后的超平面<img src="https://latex.codecogs.com/gif.latex?\lambda&space;w^Tx&plus;\lambda&space;b=0" title="\lambda w^Tx+\lambda b=0">仍然是之前那个平面，但是函数距离变大了！这告诉我们，通过约束我们可以将函数距离固定。这里我们就不妨固定<img src="https://latex.codecogs.com/gif.latex?y_s(w^Tx_s&plus;b)=1">吧！<br><br>所以<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">，现在我们只需要最小化<img src="https://latex.codecogs.com/gif.latex?\|w\|" title="\|w\|">就好了。为了之后计算方便（请继续看），我们将该目标转换为：最小化<img src="https://latex.codecogs.com/gif.latex?\frac{1}{2}\|w\|^2" title="\frac{1}{2}\|w\|^2">。他们是等价的，这一点我想无须再证明一遍。<br><br><font size="4">再看2)</font>，因为<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">，则 <img src="https://latex.codecogs.com/gif.latex?y_i\frac{w^Tx_i&plus;b}{\|w\|}\geq&space;\gamma"> &emsp;=&gt; &emsp;<img src="https://latex.codecogs.com/gif.latex?y_i(w^Tx_i&plus;b)\geq&space;1"><br><br>综上，我们的问题转换为:<br><br><img src="https://latex.codecogs.com/gif.latex?\underset{w,b}{min}&space;\quad&space;\frac{1}{2}\|w\|^2&space;\\&space;s.t.\quad&space;y_i(w^Tx_i&plus;b)\geq&space;1,\quad&space;i=1,2,...,n"><br><br>## 实例计算<br>类别一有2个点：<img src="https://latex.codecogs.com/gif.latex?x1=(3,3)^T,\&space;x2=(4,3)^T" title="x1=(3,3)^T,\ x2=(4,3)^T">，类别二有1个点：<img src="https://latex.codecogs.com/gif.latex?x3=(1,1)^T" title="x3=(1,1)^T">，求最大间隔分离超平面：<br><br><img src="/uploads/SVM_3.png" alt><br><br>解：<br><br>按照上面的约束公式有：<br><br><img src="https://latex.codecogs.com/gif.latex?\underset{w,b}{min}\frac{1}{2}(w_1^2&plus;w_2^2)\\&space;s.t.&space;\left\{\begin{matrix}&space;3w_1&plus;3w_2&plus;b\geq&space;1\\&space;4w_1&plus;3w_2&plus;b\geq&space;1\\&space;-w_1-w_2-b\geq&space;1&space;\end{matrix}\right."><br><br>求得<img src="https://latex.codecogs.com/gif.latex?w_1=w_2=\frac{1}{2},\&space;b=-2" title="w_1=w_2=\frac{1}{2},\ b=-2">，所以最大间隔分离超平面为：<br><br><img src="https://latex.codecogs.com/gif.latex?\frac{1}{2}x^{(1)}&plus;\frac{1}{2}x^{(2)}-2=0"><br><br>其中<img src="https://latex.codecogs.com/gif.latex?x1,x3" title="x1,x3">为支持向量<br><br><br>## 对偶算法推导<br><br>上面的例子样本点太少，所以可以方便地计算，那么在大量数据的条件下，我们改怎么办？接下来的会通过这个路径解释:<br><br>拉格朗日乘子法-&gt;KKT条件-&gt;对偶算法<br><br>1）拉格朗日乘子法<br><br>当我们遇到含有等式约束的优化问题，可以借助拉格朗日乘子法。也就是说在<img src="https://latex.codecogs.com/gif.latex?g(x)=0" title="g(x)=0">条件下求<img src="https://latex.codecogs.com/gif.latex?f(x)" title="f(x)">的最小或最大值，可以通过构造<img src="https://latex.codecogs.com/gif.latex?L(x,\lambda)=f(x)&plus;\lambda&space;g(x)" title="L(x,\lambda)=f(x)+\lambda g(x)">，然后让它分别对<img src="https://latex.codecogs.com/gif.latex?x,\lambda" title="x,\lambda">的偏导数为0来求解极值。<br><br>2）KKT条件<br><br>而当约束含有是不等式的时候，我们需要在拉格朗日乘子法基础上构建KKT条件来帮助求解。这里我们要求的超平面问题就是此类问题。<br>为了方便说明我们统一考虑小于不等式约束求极小值的情况，因为即使是大于（极大值），也可以用两边取负数来变成小于（极小值）。问题表述为：在<img src="https://latex.codecogs.com/gif.latex?g(x)\leq&space;0" title="g(x)\leq 0">约束下求<img src="https://latex.codecogs.com/gif.latex?f(x)" title="f(x)">的极小值，画出图如下：<br><br><img src="/uploads/SVM_4.png" alt><br><br>它的解：a）要么在<font size="4">边界</font>上，也就是不等式变成等式，b）要么在<font size="4">可行解区域</font>。<br><br>a） 当解在边界上时，就是拉格朗日乘子法<img src="https://latex.codecogs.com/gif.latex?L(x,\lambda)=f(x)&plus;\lambda&space;g(x)" title="L(x,\lambda)=f(x)+\lambda g(x)">，但是它相比拉格朗日乘子法还多了一个信息，就排除了可行解区域，也就是说排除了<img src="https://latex.codecogs.com/gif.latex?g(x)<&space;0" title="g(x)< 0">的情况。也就时说越往椭圆的外面走，目标函数<img src="https://latex.codecogs.com/gif.latex?f(x)" title="f(x)">值越小，越接近极小值，那么走到边界的时候取到了约束条件下的最小值，而相反的是<img src="https://latex.codecogs.com/gif.latex?g(x)" title="g(x)">越往椭圆外走值越大，所以<img src="https://latex.codecogs.com/gif.latex?f(x)" title="f(x)">与<img src="https://latex.codecogs.com/gif.latex?g(x)" title="g(x)">在这个方向上的导数正负相反。又因为取最优解时，偏导数为0：<img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;L(x,\lambda)}{\partial&space;x}=\frac{\partial&space;f(x)}{\partial&space;x}&plus;\lambda&space;\frac{\partial&space;g(x)}{\partial&space;x}=0">，所以<img src="https://latex.codecogs.com/gif.latex?\lambda&space;>0" title="\lambda >0"><br><br>b）当解在可行解区域里时，相当于约束条件不起作用，也就是<img src="https://latex.codecogs.com/gif.latex?L(x,\lambda)=f(x)&plus;\lambda&space;g(x)" title="L(x,\lambda)=f(x)+\lambda g(x)">里面的<img src="https://latex.codecogs.com/gif.latex?\lambda&space;=0">，只是在最后如果求得的极值有多个的时候，要取满足<img src="https://latex.codecogs.com/gif.latex?g(x)<0" title="g(x)<0">的那一个<br><br>集合a)和b)两种情况，我们可以写出一个统一的表达：<br><br><img src="https://latex.codecogs.com/gif.latex?min\&space;L(x,\lambda)=f(x)&plus;\lambda&space;g(x)&space;\\&space;s.t.&space;\left\{\begin{matrix}&space;g(x)\leq&space;0&space;\\&space;\lambda\geq&space;0\\&space;\lambda&space;g(x)=0&space;\end{matrix}\right."><br><br>以上约束条件就是<font size="4">KKT条件</font>
+
+<p>到这，可能有人说，怎么条件看起来更复杂了？其实是因为这样对之后对偶算法推导是非常方便的，并且注意，之前的约束是对于可行解区域而言，现在的约束条件是针对最优解的，因为它包含了解是在边界还是在可行解区域的信息。</p>
+<p>3）拉格朗日对偶</p>
+<p>拉格朗日求解最优化的思想本来就是把约束条件整合到新的目标函数<img src="https://latex.codecogs.com/gif.latex?L(x,\lambda)">里面去，从而消去了约束条件，但是上节的操作虽然生成了<img src="https://latex.codecogs.com/gif.latex?L(x,\lambda)">，但是约束条件不仅没有消去，还产生了包含更多条件的KKT。所以我们需要进一步整合新的能够消去约束条件的目标函数，而KKT的那些条件正是可以通过对偶算法消去。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://zhuanlan.zhihu.com/p/24638007" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/24638007</a></p>
 
       
     </div>
@@ -690,9 +702,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -842,7 +852,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机的直观解释"><span class="nav-number">1.</span> <span class="nav-text">支持向量机的直观解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学推导"><span class="nav-number">2.</span> <span class="nav-text">数学推导</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实例计算"><span class="nav-number">2.1.</span> <span class="nav-text">实例计算</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机的直观解释"><span class="nav-number">1.</span> <span class="nav-text">支持向量机的直观解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学推导"><span class="nav-number">2.</span> <span class="nav-text">数学推导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
