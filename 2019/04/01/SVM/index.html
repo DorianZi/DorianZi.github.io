@@ -136,9 +136,16 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{2}\|w\|^2">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_i\frac{w^Tx_i+b}{\|w\|}\geq&space;\gamma">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_iw^Tx_i+b\geq&space;1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_i(w^Tx_i+b)\geq&space;1">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{w,b}{min}&space;\quad&space;\frac{1}{2}\|w\|^2&space;\\&space;s.t.\quad&space;y_i(w^Tx_i+b)\geq&space;1,\quad&space;i=1,2,...,n">
-<meta property="og:updated_time" content="2019-04-01T15:37:04.276Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x1=(3,3)^T,\&space;x2=(4,3)^T">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x3=(1,1)^T">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/SVM_3.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{w,b}{min}\frac{1}{2}(w_1^2+w_2^2)\\&space;s.t.&space;\left\{\begin{matrix}&space;3w_1+3w_2+b\geq&space;1\\&space;4w_1+3w_2+b\geq&space;1\\&space;-w_1-w_2-b\geq&space;1&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_1=w_2=\frac{1}{2},\&space;b=-2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{2}x^{(1)}+\frac{1}{2}x^{(2)}-2=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x1,x3">
+<meta property="og:updated_time" content="2019-04-02T04:16:56.607Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SVM 支持向量机">
 <meta name="twitter:description" content="支持向量机的直观解释有两类数据需要分类器进行分类：  使用感知机可以实现，但是感知机有无数个解，因为感知机只关注样本数据有没有分错，所以无数条直线可以绘制出来，比如A和B 本文我们将使用SVM(support vector machine 支持向量机)来解决它。支持向量机不仅关注样本分类正确性，而且关注测试数据的容错性，简单的说，它会找出唯一的最优直线。或者说最优超平面，什么是最优超平面呢？ 直观">
@@ -527,10 +534,18 @@
 <p><font size="4">先看1)</font>，我们需要最大化的这个距离包含这么多部分，我们应该改变哪个部分呢？让我们来探索一下：</p>
 <p>瞧瞧这一部分：<img src="https://latex.codecogs.com/gif.latex?y_s(w^Tx_s&plus;b)">，我们姑且叫它“函数距离”。有没有发现函数距离是可以随意改变的? —— 只要倍数加大<img src="https://latex.codecogs.com/gif.latex?w,b" title="w,b">的值，这时候平面仍是那个平面，因为倍乘之后的超平面<img src="https://latex.codecogs.com/gif.latex?\lambda&space;w^Tx&plus;\lambda&space;b=0" title="\lambda w^Tx+\lambda b=0">仍然是之前那个平面，但是函数距离变大了！这告诉我们，通过约束我们可以将函数距离固定。这里我们就不妨固定<img src="https://latex.codecogs.com/gif.latex?y_s(w^Tx_s&plus;b)=1">吧！</p>
 <p>所以<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">，现在我们只需要最小化<img src="https://latex.codecogs.com/gif.latex?\|w\|" title="\|w\|">就好了。为了之后计算方便（请继续看），我们将该目标转换为：最小化<img src="https://latex.codecogs.com/gif.latex?\frac{1}{2}\|w\|^2" title="\frac{1}{2}\|w\|^2">。他们是等价的，这一点我想无须再证明一遍。</p>
-<p><font size="4">再看2)</font>，因为<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">，则 <img src="https://latex.codecogs.com/gif.latex?y_i\frac{w^Tx_i&plus;b}{\|w\|}\geq&space;\gamma"> &emsp;=&gt; &emsp;<img src="https://latex.codecogs.com/gif.latex?y_iw^Tx_i&plus;b\geq&space;1"></p>
+<p><font size="4">再看2)</font>，因为<img src="https://latex.codecogs.com/gif.latex?\gamma&space;=\frac{1}{\|w\|}">，则 <img src="https://latex.codecogs.com/gif.latex?y_i\frac{w^Tx_i&plus;b}{\|w\|}\geq&space;\gamma"> &emsp;=&gt; &emsp;<img src="https://latex.codecogs.com/gif.latex?y_i(w^Tx_i&plus;b)\geq&space;1"></p>
 <p>综上，我们的问题转换为:</p>
 <p><img src="https://latex.codecogs.com/gif.latex?\underset{w,b}{min}&space;\quad&space;\frac{1}{2}\|w\|^2&space;\\&space;s.t.\quad&space;y_i(w^Tx_i&plus;b)\geq&space;1,\quad&space;i=1,2,...,n"></p>
-<p>(未完待续。。。)</p>
+<h2 id="实例计算"><a href="#实例计算" class="headerlink" title="实例计算"></a>实例计算</h2><p>类别一有2个点：<img src="https://latex.codecogs.com/gif.latex?x1=(3,3)^T,\&space;x2=(4,3)^T" title="x1=(3,3)^T,\ x2=(4,3)^T">，类别二有1个点：<img src="https://latex.codecogs.com/gif.latex?x3=(1,1)^T" title="x3=(1,1)^T">，求最大间隔分离超平面：</p>
+<p><img src="/uploads/SVM_3.png" alt></p>
+<p>解：</p>
+<p>按照上面的约束公式有：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\underset{w,b}{min}\frac{1}{2}(w_1^2&plus;w_2^2)\\&space;s.t.&space;\left\{\begin{matrix}&space;3w_1&plus;3w_2&plus;b\geq&space;1\\&space;4w_1&plus;3w_2&plus;b\geq&space;1\\&space;-w_1-w_2-b\geq&space;1&space;\end{matrix}\right."></p>
+<p>求得<img src="https://latex.codecogs.com/gif.latex?w_1=w_2=\frac{1}{2},\&space;b=-2" title="w_1=w_2=\frac{1}{2},\ b=-2">，所以最大间隔分离超平面为：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\frac{1}{2}x^{(1)}&plus;\frac{1}{2}x^{(2)}-2=0"></p>
+<p>其中<img src="https://latex.codecogs.com/gif.latex?x1,x3" title="x1,x3">为支持向量</p>
+<p>（未完待续。。。）</p>
 
       
     </div>
@@ -576,6 +591,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/02/Jazz-Cover-Fly-Me-To-The-Moon/" rel="prev" title="[Jazz Cover]Fly Me To The Moon">
+                [Jazz Cover]Fly Me To The Moon <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -650,7 +669,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -823,7 +842,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机的直观解释"><span class="nav-number">1.</span> <span class="nav-text">支持向量机的直观解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学推导"><span class="nav-number">2.</span> <span class="nav-text">数学推导</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机的直观解释"><span class="nav-number">1.</span> <span class="nav-text">支持向量机的直观解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学推导"><span class="nav-number">2.</span> <span class="nav-text">数学推导</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实例计算"><span class="nav-number">2.1.</span> <span class="nav-text">实例计算</span></a></li></ol></li></ol></div>
             
 
           </div>
