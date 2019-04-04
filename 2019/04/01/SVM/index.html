@@ -287,7 +287,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(x)=w^T\phi(X)+b">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?w=\sum_{i=1}^{n}\alpha_iy_i\phi(X_i)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?f(x)=[\sum_{i=1}^{n}\alpha_iy_i\phi(X_i)]^T\phi(X)+b&space;\\&space;=\sum_{i=1}^{n}[\alpha_iy_i(\phi(X_i)^T\phi(X))]+b&space;\\&space;=\sum_{i=1}^{n}[\alpha_iy_i<\phi(X_i),\phi(X)>]+b\\&space;=\sum_{i=1}^{n}[\alpha_iy_i{\color{Red}k(X_i,X)}]+b">
-<meta property="og:updated_time" content="2019-04-04T10:40:46.151Z">
+<meta property="og:updated_time" content="2019-04-04T12:55:37.465Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SVM 支持向量机">
 <meta name="twitter:description" content="支持向量机的直观解释有两类数据需要分类器进行分类：  使用感知机可以实现，但是感知机有无数个解，因为感知机只关注样本数据有没有分错，所以无数条直线可以绘制出来，比如A和B 本文我们将使用SVM(support vector machine 支持向量机)来解决它。支持向量机不仅关注样本分类正确性，而且关注测试数据的容错性，简单的说，它会找出唯一的最优直线。或者说最优超平面，什么是最优超平面呢？ 直观">
@@ -836,6 +836,7 @@
 <h3 id="常用核函数"><a href="#常用核函数" class="headerlink" title="常用核函数"></a>常用核函数</h3><p>现实中做工程，我们能拿到标注好label的数据集就很不错了，更别说核函数了。没有核函数怎么训练一个SVM分类器？——“猜”一个核函数</p>
 <p>并不是所有函数都可以作为核函数，只有满足Mercer’s condition（自行Google or Bing）的函数才能成为核函数。根据不同功能，我们有一些常用的核函数有：多项式核函数，高斯核函数，字符串核函数等。</p>
 <p>常用核函数部分，不作详细介绍，请自行Google or Bing</p>
+<p>以上。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://zhuanlan.zhihu.com/p/24638007" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/24638007</a><br><a href="https://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="noopener">https://blog.csdn.net/v_july_v/article/details/7624837</a><br>《统计学习方法》 by 李航</p>
 
       
