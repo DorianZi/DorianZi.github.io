@@ -1,5 +1,5 @@
 ---
-title: Boosting Tree 提升树
+title: GBDT 梯度提升树
 date: 2019-04-05 21:42:35
 tags: ["Algorithm"]
 categories: Technic
@@ -7,15 +7,26 @@ categories: Technic
 
 # 提升树引入
 
-提升树有分类提升树和回归提升树，相当于提升方法在[CART](https://dorianzi.github.io/2019/03/30/CART/#more)上的应用。
+提升树相当于提升方法在[CART](https://dorianzi.github.io/2019/03/30/CART/#more)上的应用。
+平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的
 
-提升树是多个树桩（一根两叶的树）的加法模型。所以做分类的话，适合二分类问题。对二分类问题来说，其实之前讲的[AdaBoost](https://dorianzi.github.io/2019/04/05/adaboost/#%E9%80%9A%E8%BF%87%E4%BE%8B%E5%AD%90%E7%90%86%E8%A7%A3AdaBoost)在二分类问题中就是分类提升树，所以可以认为分类提升树是AdaBoost的一种特例，这里就不讲了。下面主要介绍<font size="4">回归提升树</font>。
+GBDT有分类和回归两个方向的应用，本文主要介绍<font size="4">GBDT 回归提升树</font>。
 
-回归提升树的加法模型是每个树桩留下的残差变成下颗树的训练集，实现后面的树来补前面的树的误差，于是总误差得到缩减。
+# 关于函数梯度
 
-## 用实例讲解提升树算法
+GBDT的提升是加法模型，它不是定义一个固定结构的函数，然后通过样本拟合更新它的参数。它是函数本身的累加：<img src="https://latex.codecogs.com/gif.latex?F_m(X)=F_{m-1}(X)&plus;\Delta&space;F(X)" title="f_m(X)=f_{m-1}(X)+\Delta f(X)" />。所以如果要更快逼近最后的函数，我们就需要在正确的方向上变化，这个“正确的方向”当然就是损失函数减少最快的方向。所以我们需要用损失函数<img src="https://latex.codecogs.com/gif.latex?L(F(x))" title="L(f(x))" />对函数<img src="https://latex.codecogs.com/gif.latex?F(x)" title="f(x)" />求导，求得的导数，就是接下来<img src="https://latex.codecogs.com/gif.latex?F(x)" title="F(x)" />需要弥补的方向。这时候用一个函数能<img src="https://latex.codecogs.com/gif.latex?\Delta&space;F(X)" title="f_m(X)=f_{m-1}(X)+\Delta f(X)" />去拟合刚才求得的导数，那么函数就可以更新为<img src="https://latex.codecogs.com/gif.latex?F_m(X)=F_{m-1}(X)&plus;\Delta&space;F(X)" title="f_m(X)=f_{m-1}(X)+\Delta f(X)" />了。
 
-有以下数据需要用回归，并要求提升树拟合的平方损失误差小于0.2时，可以停止建树：
+导数值跟损失函数的选择有关系。如果选择平方损失误差<img src="https://latex.codecogs.com/gif.latex?L(y_i,F(x_i))=\frac{1}{2}[y_i-F(x_i)]^2" title="L(y_i,F(x_i))=\frac{1}{2}[y_i-F(x_i)]^2" />，那么它的导数就是：
+
+<img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;L(y_i,F(x_i))}{\partial&space;F(x_i)}&space;=y_i-F(x_i)" title="\frac{\partial L(y_i,F(x_i))}{\partial F(x_i)} =y_i-F(x_i)" />
+
+令人惊喜的是这正是真实值和估计值之间的残差。 BTW，上面之所以用了<img src="https://latex.codecogs.com/gif.latex?\frac{1}{2}" title="\frac{1}{2}" />是为了计算方便，常数项并不会影响平方损失误差，以及残差的比较。
+
+下面我们介绍的就是基于平方损失误差（也就是基于残差弥补）的GBDT回归实例。
+
+# 用实例讲解GBDT
+
+有以下数据需要用回归，并要求平方损失误差小于0.2时，可以停止建树：
 
 ![](/uploads/boosting_tree_1.png)
 
@@ -126,6 +137,8 @@ categories: Technic
 以上。
 
 
+# 参考
 
+https://blog.csdn.net/qq_22238533/article/details/79199605
 
 
