@@ -1,10 +1,8 @@
 ---
-title: Difference between PCA and SVD
+title: Relationship between PCA and SVD 主成分分析和奇异值分解的关系
 date: 2019-03-23 15:40:19
-tags:
-    - Algorithm
-    - SVD
-    - PCA
+categories: ["Technic"]
+tags: ["Algorithm", "SVD", "PCA"]
 ---
 
 我们有一个样本集：

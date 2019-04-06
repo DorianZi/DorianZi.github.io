@@ -1,9 +1,8 @@
 ---
-title: Image Compression by SVD
+title: Image Compression by SVD 基于奇异值分解的图像压缩
 date: 2019-03-10 07:50:00
-tags: 
-    - Algorithm
-    - SVD
+categories: ["Technic"]
+tags: ["Algorithm", "SVD"]
 ---
 
 # 基于SVD的图像压缩实践

@@ -1,9 +1,8 @@
 ---
-title: Recommender System by SVD
+title: Recommender System by SVD 基于SVD的推荐系统
 date: 2019-03-20 17:13:32
-tags: 
-    - Algorithm
-    - SVD
+categories: ["Technic"]
+tags: ["Algorithm", "SVD"]
 ---
 
 ## 引入
@@ -88,7 +87,7 @@ tags:
 上面求解的是向已知用户推荐item。如果现在有一个新的用户<img src="https://latex.codecogs.com/gif.latex?X=(2,0,5,2,0)" title="user\_new^{T}=(2,0,5,2,0)" />，它的数据并不在上面的样本矩阵里，怎么办？
 容易想到的是，直接加入原样本数据进行扩展再求解，但是这样做在大数据情况下时间消耗太大。我们需要基于已经有的模型对新加入的用户进行item推荐。
 
-首先，将新用户投影到降维后的user向量空间中去（为什么是这个算法？我也在找寻答案）：
+首先，将新用户投影到降维后的user向量空间中去（为什么是这个算法？~~我也在找寻答案~~ 请见<font size="4">**附录**</font>）：
 
 <img src="https://latex.codecogs.com/gif.latex?X_{k}^{T}&space;=&space;X^{T}\underset{n\times&space;k}{V}\underset{k\times&space;k}{\sum}^{-1}" />
 
@@ -97,6 +96,56 @@ tags:
 接下来通过欧式距离或者其它方式,找出<img src="https://latex.codecogs.com/gif.latex?user\_1^{T}" /> ~ <img src="https://latex.codecogs.com/gif.latex?user\_1^{T}" />中与<img src="https://latex.codecogs.com/gif.latex?X_{2}^{T}}" />相似度最该的且对item_2和item_5评过分的user, 然后把该user对item_2和item_5中评分更高的item推荐给<img src="https://latex.codecogs.com/gif.latex?X" title="X" />用户
 
 以上。
+
+## 附录
+将SVD分解的原始矩阵A和分解矩阵U都写成行向量形式：
+
+<img src="https://latex.codecogs.com/gif.latex?A=U\sum&space;V^{T}"  />
+
+=>
+
+<img src="https://latex.codecogs.com/gif.latex?\begin{pmatrix}&space;A_{1}\\&space;A_{2}\\&space;...\\&space;A_{m}\\&space;\end{pmatrix}=&space;\begin{pmatrix}&space;u_{1}\\&space;u_{2}\\&space;...\\&space;u_{m}\\&space;\end{pmatrix}&space;\sum&space;V^{T}&space;=&space;\begin{pmatrix}&space;u_{1}\sum&space;V^{T}\\&space;u_{2}\sum&space;V^{T}\\&space;...\\&space;u_{m}\sum&space;V^{T}\\&space;\end{pmatrix}"  />
+
+=>
+
+<img src="https://latex.codecogs.com/gif.latex?A_{i}&space;=&space;u_{i}\sum&space;V^{T}\&space;,\&space;\&space;\&space;\&space;i=1,2,...,m" />
+
+=>
+
+<img src="https://latex.codecogs.com/gif.latex?u_{i}=A_{i}(V^{T})^{-1}(\sum)&space;^{-1}" title="u_{i}=A_{i}(V^{T})^{-1}(\sum) ^{-1}" />
+
+=>
+
+<img src="https://latex.codecogs.com/gif.latex?u_{i}=A_{i}V(\sum)&space;^{-1}" title="u_{i}=A_{i}V(\sum) ^{-1}" />
+
+上述即原始user向量向新特征下的user向量的转换公式。
+
+将SVD分解的原始矩阵A和分解矩阵<img src="https://latex.codecogs.com/gif.latex?V^{T}" />都写成列向量形式：
+
+<img src="https://latex.codecogs.com/gif.latex?A=U\sum&space;V^{T}"  />
+
+=>
+
+<img src="https://latex.codecogs.com/gif.latex?(A_{1},A_{2},...,A_{n})=U\sum&space;(v_{1},v_{2},...,v_{n})"  />
+
+=>
+
+<img src="https://latex.codecogs.com/gif.latex?A_{i}=U\sum&space;v_{i}\&space;,\&space;\&space;\&space;\&space;i=1,2,...,n"  />
+
+=>
+
+<img src="https://latex.codecogs.com/gif.latex?v_{i}=(\sum&space;)^{-1}U^{-1}A_{i}" />
+
+=>
+
+<img src="https://latex.codecogs.com/gif.latex?v^{T}_{i}=A^{T}_{i}(U^{-1})^{T}((\sum&space;)^{-1})^{T}" />
+
+=>
+
+<img src="https://latex.codecogs.com/gif.latex?v^{T}_{i}=A^{T}_{i}U(\sum&space;)^{-1}" />
+
+上述即原始item向量向新特征下的item向量的转换公式。
+
 
 ## 参考
 http://etd.lib.metu.edu.tr/upload/12612129/index.pdf

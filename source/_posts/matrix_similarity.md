@@ -1,8 +1,8 @@
 ---
-title: Matrix Similarity
+title: Matrix Similarity 矩阵相似
 date: 2019-03-04 00:00:00
-tags: 
-    - Algorithm
+categories: ["Technic"]
+tags: ["Algorithm"]
 ---
 
 # 相似矩阵

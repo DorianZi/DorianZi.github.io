@@ -13,7 +13,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://dorianzi.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -81,3 +81,11 @@ deploy:
   type: git
   repo: https://github.com/DorianZi/DorianZi.github.io.git
   branch: master
+
+# Dorian Added
+algolia:
+  applicationID: '6O9OK26379'
+  apiKey: 'd266e496228bce82728a87f4c2ea4800'
+  adminApiKey: 'aad76cb40596e26ced8dc5e2c6557f69'
+  indexName: 'MyHexo'
+  chunkSize: 5000

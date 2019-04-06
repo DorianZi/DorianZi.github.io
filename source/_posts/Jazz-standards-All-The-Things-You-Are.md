@@ -1,26 +1,28 @@
 ---
-title: '[Jazz standards]All The Things You Are'
+title: '[Jazz Cover]All The Things You Are'
 date: 2019-03-22 14:42:19
-tags: 
-     - Music
-     - Jazz
-     - Guitar
+categories: ["Music"]
+tags: ["Jazz"]
 ---
 
 # 演示视频
 
-（录制中...）
+<iframe src="https://player.youku.com/embed/XNDEwOTEzNjI1Ng==" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 # 曲谱来自The Real Book
 ![All The Things You Are](/uploads/All.the.things.you.are.png)
 
 # 和声分析
 
-All The Things You Are 是著名的爵士标准曲。对我来说，它的魔力在于：
+All The Things You Are 是著名的爵士标准曲。
+
+它会改变传统音乐听者（特别是流行音乐听者）对音乐的看法： 原来音乐不需要固定一个key,原来美妙的是和声及其连接方式，而key只是和声连接的附带结果
+
+在吉他演奏上，对我来说，它的魔力在于：
 
 a) 它是练习2-5-1 progression的典范
 
-b) 它是变调的典范
+b) 它是变调的典范。 
 
 c) 令人情不自禁的Swing
 

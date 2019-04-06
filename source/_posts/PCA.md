@@ -1,9 +1,8 @@
 ---
-title: PCA
+title: PCA 主成分分析
 date: 2019-03-19 10:53:44
-tags: 
-    - Algorithm
-    - PCA
+categories: ["Technic"]
+tags: ["Algorithm", "PCA"]
 ---
 
 # PCA主成分分析
