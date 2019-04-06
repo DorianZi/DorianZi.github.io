@@ -100,62 +100,58 @@
 
 
 
-  <meta name="description" content="提升方法对一个复杂任务来说，多个专家加权判断比一个专家单独判断效果要好，在机器学习中也一样。并且在机器学习中，训练一个高精度的模型比训练多个稍微粗糙的模型要困难得多，于是boosting(提升)方法被提出了。 提升方法在训练中主要需要解决两个问题： 1）数据的权重：基于什么原则向训练数据赋予权重； 2）分类器的权重：多个不同的弱分类器如何结合成为一个强分类器 AdaBoost很好地回答了上面两个问">
+  <meta name="description" content="提升树引入提升树有分类提升树和回归提升树，相当于提升方法在CART上的应用。 提升树是多个树桩（一根两叶的树）的加法模型。所以做分类的话，适合二分类问题。对二分类问题来说，其实之前讲的AdaBoost在二分类问题中就是分类提升树，所以可以认为分类提升树是AdaBoost的一种特例，这里就不讲了。下面主要介绍回归提升树。 回归提升树的加法模型是每个树桩留下的残差变成下颗树的训练集，实现后面的树来补前">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AdaBoost 提升算法">
-<meta property="og:url" content="https://dorianzi.github.io/2019/04/05/adaboost/index.html">
+<meta property="og:title" content="Boosting Tree 提升树">
+<meta property="og:url" content="https://dorianzi.github.io/2019/04/05/Boosting-Tree/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="提升方法对一个复杂任务来说，多个专家加权判断比一个专家单独判断效果要好，在机器学习中也一样。并且在机器学习中，训练一个高精度的模型比训练多个稍微粗糙的模型要困难得多，于是boosting(提升)方法被提出了。 提升方法在训练中主要需要解决两个问题： 1）数据的权重：基于什么原则向训练数据赋予权重； 2）分类器的权重：多个不同的弱分类器如何结合成为一个强分类器 AdaBoost很好地回答了上面两个问">
+<meta property="og:description" content="提升树引入提升树有分类提升树和回归提升树，相当于提升方法在CART上的应用。 提升树是多个树桩（一根两叶的树）的加法模型。所以做分类的话，适合二分类问题。对二分类问题来说，其实之前讲的AdaBoost在二分类问题中就是分类提升树，所以可以认为分类提升树是AdaBoost的一种特例，这里就不讲了。下面主要介绍回归提升树。 回归提升树的加法模型是每个树桩留下的残差变成下颗树的训练集，实现后面的树来补前">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/adaboost_1.png">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_1=(w_{11},w_{12},...,w_{110})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_{1i}=0.1,\&space;\&space;i=1,2,...,10">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_1">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/adaboost_2.png">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?G_1(x)=\left\{\begin{matrix}&space;1,\&space;\&space;\&space;\&space;x<2.5\\&space;-1,\&space;\&space;x>2.5&space;\end{matrix}\right.">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?G_1(x)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?e_1=P(G_1(x_i)\neq&space;y_i)=0.3">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_1=\frac{1}{2}ln\frac{1-e_1}{e_1}=0.4236">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_1(x)=0.4236G_1(x)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?C(x)=sign[f_1(x)]">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/adaboost_3.png">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_{mi}=\frac{w_{(m-1)i}e^{-\alpha_{m-1}y_iG_{m-1}(x_i)}}{\sum_{i=1}^{10}w_{(m-1)i}e^{-\alpha_{m-1}y_iG_{m-1}(x_i)}}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_iG_{m-1}(x_i)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{m-1}y_iG_{m-1}(x_i)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_2=(w_{21},w_{22},...,w_{210})\\=(0.07143,0.07143,0.07143,0.07143,0.07143,0.07143,0.16667,0.16667,0.16667,0.07143)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_2">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/adaboost_4.png">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?G_2(x)=\left\{\begin{matrix}&space;1,\&space;\&space;\&space;\&space;x<8.5\\&space;-1,\&space;\&space;x>8.5&space;\end{matrix}\right.">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?G_2(x)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?e_2=P(G_2(x_i)\neq&space;y_i)=0.21429">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_2=\frac{1}{2}ln\frac{1-e_2}{e_2}=0.6496">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_2(x)=0.4236G_1(x)+0.6496G_2(x)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?C(x)=sign[f_2(x)]">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/adaboost_5.png">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_{3i}=\frac{w_{2i}e^{-\alpha_2y_iG_2(x_i)}}{\sum_{i=1}^{10}w_{2i}e^{-\alpha_2y_iG_2(x_i)}}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_3=(w_{31},w_{32},...,w_{310})\\=(0.0455,0.0455,0.0455,0.1667,0.1667,0.1667,0.1060,0.1060,0.1060,0.0455)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?D_3">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/adaboost_6.png">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?G_3(x)=\left\{\begin{matrix}&space;-1,\&space;\&space;x<5.5\\&space;1,\&space;\&space;\&space;\&space;x>5.5&space;\end{matrix}\right.">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?G_3(x)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?e_3=P(G_3(x_i)\neq&space;y_i)=0.1819">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_3=\frac{1}{2}ln\frac{1-e_3}{e_3}=0.7514">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_3(x)=0.4236G_1(x)+0.6496G_2(x)+0.7514G_3(x)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?C(x)=sign[f_3(x)]">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/adaboost_7.png">
-<meta property="og:updated_time" content="2019-04-05T08:48:53.770Z">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/boosting_tree_1.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?R_1=\{x|x<1.5\},\&space;R_2=\{x|x>1.5\},">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?m(s)=\underset{c_1}{min}\sum_{x_i\epsilon&space;R_1}^{&space;}(y_i-c_1)^2+\underset{c_2}{min}\sum_{x_i\epsilon&space;R_2}^{&space;}(y_i-c_2)^2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?c_1,c_2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?c_1=\frac{1}{N_1}\sum_{x_i\epsilon&space;R_1}^{&space;}y_i,\&space;c_2=\frac{1}{N_2}\sum_{x_i\epsilon&space;R_1}^{&space;}y_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?c_1=5.56,\&space;c_2=7.50">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?m(1.5)=15.72">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/boosting_tree_2.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?m(6.5)=1.93">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?c_1=6.24,\&space;c_2=8.91">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_1(x)=&space;\left\{\begin{matrix}&space;6.24,\&space;\&space;x<6.5\\&space;8.91,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_1(x)=T_1(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?r_{2i}=y_i-f_1(x_i),\&space;\&space;i=1,2,...,10">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/boosting_tree_3.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(y,f_1(x))=\sum_{i=1}^{10}(y_i-f_1(x_i))^2=1.93">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/boosting_tree_3.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/boosting_tree_4.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?m(3.5)=0.79">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?c_1=-0.52,\&space;c_2=0.22">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_2(x)=&space;\left\{\begin{matrix}&space;-0.52,\&space;\&space;x<3.5\\&space;0.22,\&space;\&space;\&space;\&space;x\geq&space;0.5&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_2(x)=f_1(x)+T_2(x)=\left\{\begin{matrix}&space;5.72,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x<3.5\\&space;6.46,\&space;\&space;3.5\leq&space;x<6.5\\&space;9.13,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?r_{3i}=y_i-f_2(x_i),\&space;\&space;i=1,2,...,10">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/boosting_tree_5.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(y,f_2(x))=\sum_{i=1}^{10}(y_i-f_2(x_i))^2=0.79">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_3(x)=\left\{\begin{matrix}&space;0.15,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.22,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_4(x)=\left\{\begin{matrix}&space;-0.16,\&space;\&space;x<4.5\\&space;0.11,\&space;\&space;\&space;\&space;\&space;x\geq&space;4.5&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;0.07,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.11,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;-0.15,\&space;\&space;x<2.5\\&space;0.04,\&space;\&space;\&space;\&space;\&space;x\geq&space;2.5&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_6(x)=T_1(x)+T_2(x)+...+T_6(x)\\&space;=\left\{\begin{matrix}&space;5.63,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x<2.5\\&space;5.82,\&space;\&space;2.5\leq&space;x<3.5\\&space;6.56,\&space;\&space;3.5\leq&space;x<4.5\\&space;6.83,\&space;\&space;4.5\leq&space;x<6.5\\&space;8.95,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_6(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(y,f_6(x))=\sum_{i=1}^{10}(y_i-f_6(x_i))^2=0.17">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_6(x)">
+<meta property="og:updated_time" content="2019-04-06T01:47:22.758Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AdaBoost 提升算法">
-<meta name="twitter:description" content="提升方法对一个复杂任务来说，多个专家加权判断比一个专家单独判断效果要好，在机器学习中也一样。并且在机器学习中，训练一个高精度的模型比训练多个稍微粗糙的模型要困难得多，于是boosting(提升)方法被提出了。 提升方法在训练中主要需要解决两个问题： 1）数据的权重：基于什么原则向训练数据赋予权重； 2）分类器的权重：多个不同的弱分类器如何结合成为一个强分类器 AdaBoost很好地回答了上面两个问">
-<meta name="twitter:image" content="https://dorianzi.github.io/uploads/adaboost_1.png">
+<meta name="twitter:title" content="Boosting Tree 提升树">
+<meta name="twitter:description" content="提升树引入提升树有分类提升树和回归提升树，相当于提升方法在CART上的应用。 提升树是多个树桩（一根两叶的树）的加法模型。所以做分类的话，适合二分类问题。对二分类问题来说，其实之前讲的AdaBoost在二分类问题中就是分类提升树，所以可以认为分类提升树是AdaBoost的一种特例，这里就不讲了。下面主要介绍回归提升树。 回归提升树的加法模型是每个树桩留下的残差变成下颗树的训练集，实现后面的树来补前">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/boosting_tree_1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/2019/04/05/adaboost/">
+  <link rel="canonical" href="https://dorianzi.github.io/2019/04/05/Boosting-Tree/">
 
 
 
@@ -165,7 +161,7 @@
   };
 </script>
 
-  <title>AdaBoost 提升算法 | Dorian Mode</title>
+  <title>Boosting Tree 提升树 | Dorian Mode</title>
   
 
 
@@ -410,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/04/05/adaboost/">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/04/05/Boosting-Tree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dorian Zi">
@@ -427,7 +423,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">AdaBoost 提升算法
+          <h1 class="post-title" itemprop="name headline">Boosting Tree 提升树
 
               
             
@@ -453,7 +449,7 @@
                 
               
 
-              <time title="Created: 2019-04-05 09:07:25" itemprop="dateCreated datePublished" datetime="2019-04-05T09:07:25+08:00">2019-04-05</time>
+              <time title="Created: 2019-04-05 21:42:35" itemprop="dateCreated datePublished" datetime="2019-04-05T21:42:35+08:00">2019-04-05</time>
             
 
             
@@ -523,74 +519,64 @@
       
 
       
-        <h1 id="提升方法"><a href="#提升方法" class="headerlink" title="提升方法"></a>提升方法</h1><p>对一个复杂任务来说，多个专家加权判断比一个专家单独判断效果要好，在机器学习中也一样。并且在机器学习中，训练一个高精度的模型比训练多个稍微粗糙的模型要困难得多，于是boosting(提升)方法被提出了。</p>
-<p>提升方法在训练中主要需要解决两个问题：</p>
-<p>1）数据的权重：基于什么原则向训练数据赋予权重；</p>
-<p>2）分类器的权重：多个不同的弱分类器如何结合成为一个强分类器</p>
-<p>AdaBoost很好地回答了上面两个问题。</p>
-<h1 id="AdaBoost提升方法"><a href="#AdaBoost提升方法" class="headerlink" title="AdaBoost提升方法"></a>AdaBoost提升方法</h1><p>AdaBoost对上面两个问题的回答是：</p>
-<p>1）数据的权重：在本轮训练中分类错误的数据被赋予更高的权重，以便在下一轮训练中被重点关照</p>
-<p>2）分类器的权重：根据误差率赋予弱分类器权重，然后采用加权表决的方法获得强分类器</p>
-<h2 id="通过例子理解AdaBoost"><a href="#通过例子理解AdaBoost" class="headerlink" title="通过例子理解AdaBoost"></a>通过例子理解AdaBoost</h2><p>有以下样本集，x为特征，y为分类值，共有-1,1两类，要求用AdaBoost训练一个强分类器</p>
-<p><img src="/uploads/adaboost_1.png" alt></p>
-<p><font color="Blue" size="4">第1轮训练</font><br>1）初始化训练数据的权重：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?D_1=(w_{11},w_{12},...,w_{110})" title="D_1=(w_{11},w_{12},...,w_{110})"></p>
-<p>其中<img src="https://latex.codecogs.com/gif.latex?w_{1i}=0.1,\&space;\&space;i=1,2,...,10" title="w_{1i}=0.1,\ \ i=1,2,...,10"></p>
-<p>2）基于<img src="https://latex.codecogs.com/gif.latex?D_1" title="D_1">，计算<font color="Red">特征x</font>的哪个阈值使得分类误差最低。注意，一个阈值需要计算正向和反向<font color="Red">两种情况</font>：</p>
-<p><img src="/uploads/adaboost_2.png" alt></p>
-<p>注意，计算时应乘以权重。</p>
-<p>可见，当特征x的阈值为2.5或8.5时，误差率最低，为0.3，选择其中任何一个都可以，<strong>本轮选择v=2.5</strong>构建弱分类器：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?G_1(x)=\left\{\begin{matrix}&space;1,\&space;\&space;\&space;\&space;x<2.5\\&space;-1,\&space;\&space;x>2.5&space;\end{matrix}\right."></p>
-<p>3) <img src="https://latex.codecogs.com/gif.latex?G_1(x)" title="G_1(x)">在训练数据集上的误差率为:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?e_1=P(G_1(x_i)\neq&space;y_i)=0.3" title="e_1=P(G_1(x_i)\neq y_i)=0.3"></p>
-<p>4）通过误差率计算弱分类器的权重系数：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\alpha_1=\frac{1}{2}ln\frac{1-e_1}{e_1}=0.4236"></p>
-<p>5) 通过弱分类器加权获得强分类器：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?f_1(x)=0.4236G_1(x)" title="f_1(x)=0.4236G_1(x)"></p>
-<p>加上信号函数才变成我们要的分类器决策函数：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?C(x)=sign[f_1(x)]" title="C(x)=sign[f_1(x)]"></p>
-<p>6）测试一下强分类器对样本数据的分类能力：</p>
-<p><img src="/uploads/adaboost_3.png" alt></p>
-<p>有3个误分点，还需要继续boost</p>
-<p>7）因为需要继续boost,根据本轮生成的弱分类器的错误率在强分类器里的权重，重新计算各数据的权重，供下轮训练使用：</p>
-<p>更数据权重的公式为：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?w_{mi}=\frac{w_{(m-1)i}e^{-\alpha_{m-1}y_iG_{m-1}(x_i)}}{\sum_{i=1}^{10}w_{(m-1)i}e^{-\alpha_{m-1}y_iG_{m-1}(x_i)}}" title="w_{mi}=\frac{w_{(m-1)i}e^{-\alpha_{m-1}y_iG_{m-1}(x_i)}}{\sum_{i=1}^{10}w_{(m-1)i}e^{-\alpha_{m-1}y_iG_{m-1}(x_i)}}"></p>
-<p>m表示下一轮是第m轮训练，i表示第i个数据。研究一下上面的公式，<img src="https://latex.codecogs.com/gif.latex?y_iG_{m-1}(x_i)">的正负代表该点（第i点）是否分类正确，所以它是用来当前点是被分对还是分错的，然后乘上本轮若分类器权重：<img src="https://latex.codecogs.com/gif.latex?\alpha_{m-1}y_iG_{m-1}(x_i)">，就相当于在全局强分类器的角度看待当前点分类的对错。然后用自然对数底e作幂来获得当前数据权重更新的信息。至于为什么用自然对数，是基于数学家们的验证，这里不作证明。</p>
-<p>据上公式，求第2轮的所有数据的权重:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?D_2=(w_{21},w_{22},...,w_{210})\\=(0.07143,0.07143,0.07143,0.07143,0.07143,0.07143,0.16667,0.16667,0.16667,0.07143)" title="D_2=(w_{21},w_{22},...,w_{210})"></p>
-<p><font color="Blue" size="4">第2轮训练</font><br>8）相当于回到2）开始循环，基于<img src="https://latex.codecogs.com/gif.latex?D_2">，计算特征x的哪个阈值使得分类误差最低：</p>
-<p><img src="/uploads/adaboost_4.png" alt></p>
-<p>可见在8.5时候误分率最低，为0.21429，则<strong>本轮选择v=8.5</strong>构建弱分类器：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?G_2(x)=\left\{\begin{matrix}&space;1,\&space;\&space;\&space;\&space;x<8.5\\&space;-1,\&space;\&space;x>8.5&space;\end{matrix}\right."></p>
-<p>9) <img src="https://latex.codecogs.com/gif.latex?G_2(x)">在训练数据集上的误差率为:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?e_2=P(G_2(x_i)\neq&space;y_i)=0.21429" title="e_1=P(G_1(x_i)\neq y_i)=0.3"></p>
-<p>10）通过误差率计算弱分类器的权重系数：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\alpha_2=\frac{1}{2}ln\frac{1-e_2}{e_2}=0.6496"></p>
-<p>11) 通过弱分类器加权获得强分类器：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?f_2(x)=0.4236G_1(x)+0.6496G_2(x)"></p>
-<p>加上信号函数才变成我们要的分类器决策函数：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?C(x)=sign[f_2(x)]"></p>
-<p>12）测试一下强分类器对样本数据的分类能力：</p>
-<p><img src="/uploads/adaboost_5.png" alt></p>
-<p>还有3个误分点，还需要继续boost</p>
-<p>13）因为需要继续boost,根据本轮生成的弱分类器的错误率在强分类器里的权重，重新计算各数据的权重，供下轮训练使用：</p>
-<p>根据<img src="https://latex.codecogs.com/gif.latex?w_{3i}=\frac{w_{2i}e^{-\alpha_2y_iG_2(x_i)}}{\sum_{i=1}^{10}w_{2i}e^{-\alpha_2y_iG_2(x_i)}}">，求第3轮的所有数据的权重:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?D_3=(w_{31},w_{32},...,w_{310})\\=(0.0455,0.0455,0.0455,0.1667,0.1667,0.1667,0.1060,0.1060,0.1060,0.0455)"></p>
-<p><font color="Blue" size="4">第3轮训练</font><br>14）相当于再次回到2）开始循环，基于<img src="https://latex.codecogs.com/gif.latex?D_3">，计算特征x的哪个阈值使得分类误差最低：</p>
-<p><img src="/uploads/adaboost_6.png" alt></p>
-<p>可见在5.5时候误分率最低，为0.1819，则<strong>本轮选择v=5.5</strong>构建弱分类器：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?G_3(x)=\left\{\begin{matrix}&space;-1,\&space;\&space;x<5.5\\&space;1,\&space;\&space;\&space;\&space;x>5.5&space;\end{matrix}\right."></p>
-<p>15) <img src="https://latex.codecogs.com/gif.latex?G_3(x)">在训练数据集上的误差率为:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?e_3=P(G_3(x_i)\neq&space;y_i)=0.1819"></p>
-<p>16）通过误差率计算弱分类器的权重系数：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\alpha_3=\frac{1}{2}ln\frac{1-e_3}{e_3}=0.7514"></p>
-<p>17) 通过弱分类器加权获得强分类器：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?f_3(x)=0.4236G_1(x)+0.6496G_2(x)+0.7514G_3(x)"></p>
-<p>加上信号函数才变成我们要的分类器决策函数：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?C(x)=sign[f_3(x)]"></p>
-<p>18）测试一下强分类器对样本数据的分类能力：</p>
-<p><img src="/uploads/adaboost_7.png" alt></p>
-<p>有0个误分点，boost结束！</p>
+        <h1 id="提升树引入"><a href="#提升树引入" class="headerlink" title="提升树引入"></a>提升树引入</h1><p>提升树有分类提升树和回归提升树，相当于提升方法在<a href="https://dorianzi.github.io/2019/03/30/CART/#more">CART</a>上的应用。</p>
+<p>提升树是多个树桩（一根两叶的树）的加法模型。所以做分类的话，适合二分类问题。对二分类问题来说，其实之前讲的<a href="https://dorianzi.github.io/2019/04/05/adaboost/#%E9%80%9A%E8%BF%87%E4%BE%8B%E5%AD%90%E7%90%86%E8%A7%A3AdaBoost">AdaBoost</a>在二分类问题中就是分类提升树，所以可以认为分类提升树是AdaBoost的一种特例，这里就不讲了。下面主要介绍<font size="4">回归提升树</font>。</p>
+<p>回归提升树的加法模型是每个树桩留下的残差变成下颗树的训练集，实现后面的树来补前面的树的误差，于是总误差得到缩减。</p>
+<h2 id="用实例讲解提升树算法"><a href="#用实例讲解提升树算法" class="headerlink" title="用实例讲解提升树算法"></a>用实例讲解提升树算法</h2><p>有以下数据需要用回归，并要求提升树拟合的平方损失误差小于0.2时，可以停止建树：</p>
+<p><img src="/uploads/boosting_tree_1.png" alt></p>
+<font size="4" color="Blue">第一棵树</font>
+
+<p>1） 遍历各个切分点s=1.5,2.5,…,9.5找到平方损失误差最小值的切分点：</p>
+<p>比如s=1.5,分割成了两个子集：<img src="https://latex.codecogs.com/gif.latex?R_1=\{x|x<1.5\},\&space;R_2=\{x|x>1.5\}," title="R_1=\{x|x<1.5\},\ R_2=\{x|x>1.5\},"></p>
+<p>通过公式<img src="https://latex.codecogs.com/gif.latex?m(s)=\underset{c_1}{min}\sum_{x_i\epsilon&space;R_1}^{&space;}(y_i-c_1)^2&plus;\underset{c_2}{min}\sum_{x_i\epsilon&space;R_2}^{&space;}(y_i-c_2)^2" title="\underset{c_1}{min}\sum_{x_i\epsilon R_1}^{ }(y_i-c_1)^2+\underset{c_2}{min}\sum_{x_i\epsilon R_2}^{ }(y_i-c_2)^2">求平方损失误差</p>
+<p>而其中<img src="https://latex.codecogs.com/gif.latex?c_1,c_2" title="c_1,c_2">为各自子集的平均值<img src="https://latex.codecogs.com/gif.latex?c_1=\frac{1}{N_1}\sum_{x_i\epsilon&space;R_1}^{&space;}y_i,\&space;c_2=\frac{1}{N_2}\sum_{x_i\epsilon&space;R_1}^{&space;}y_i" title="c_1=\frac{1}{N_1}\sum_{x_i\epsilon R_1}^{ }y_i,\ c_2=\frac{1}{N_2}\sum_{x_i\epsilon R_1}^{ }y_i">时，可以使得每个子集的平方损失误差最小。</p>
+<p>求平均值为：<img src="https://latex.codecogs.com/gif.latex?c_1=5.56,\&space;c_2=7.50" title="c_1=5.56,\ c_2=7.50">，进而求得平方损失误差为<img src="https://latex.codecogs.com/gif.latex?m(1.5)=15.72" title="m(1.5)=15.72"></p>
+<p>同样的方法求得其它切分点的平方损失误差，列表入下：</p>
+<p><img src="/uploads/boosting_tree_2.png" alt></p>
+<p>可见，当s=6.5时, <img src="https://latex.codecogs.com/gif.latex?m(6.5)=1.93" title="m(6.5)=1.93">为所有切分点里平方损失误差最小的</p>
+<p>2) 选择切分点s=6.5构建第一颗回归树，各分支数值使用<img src="https://latex.codecogs.com/gif.latex?c_1=6.24,\&space;c_2=8.91" title="c_1=6.24,\ c_2=8.91">：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?T_1(x)=&space;\left\{\begin{matrix}&space;6.24,\&space;\&space;x<6.5\\&space;8.91,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right." title="T_1(x)= \left\{\begin{matrix} 6.24,\ \ x<6.5\\ 8.91,\ \ x\geq 6.5 \end{matrix}\right."></p>
+<p>第一轮过后，我们提升树为:</p>
+<p><img src="https://latex.codecogs.com/gif.latex?f_1(x)=T_1(x)" title="f_1(x)=T_1(x)"></p>
+<p>3) 求提升树拟合数据的残差和平方损失误差：</p>
+<p>提升树拟合数据的残差计算：<img src="https://latex.codecogs.com/gif.latex?r_{2i}=y_i-f_1(x_i),\&space;\&space;i=1,2,...,10" title="r_2i=y_i-f_1(x_i),\ \ i=1,2,...,10"></p>
+<p>各个点的计算结果：</p>
+<p><img src="/uploads/boosting_tree_3.png" alt></p>
+<p>提升树拟合数据的平方损失误差计算：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?L(y,f_1(x))=\sum_{i=1}^{10}(y_i-f_1(x_i))^2=1.93" title="L(y,f_1(x))=\sum_{i=1}^{10}(y_i-f_1(x_i))^2=1.93"></p>
+<p>大于0.2，则还需要继续建树。</p>
+<font size="4" color="Blue">第二棵树</font>
+
+<p>4) 确定需要拟合的训练数据为上一棵树的残差：</p>
+<p><img src="/uploads/boosting_tree_3.png" alt></p>
+<p>5） 遍历各个切分点s=1.5,2.5,…,9.5找到平方损失误差最小值的切分点：</p>
+<p>同样的方法求得其它切分点的平方损失误差，列表入下：</p>
+<p><img src="/uploads/boosting_tree_4.png" alt></p>
+<p>可见，当s=3.5时, <img src="https://latex.codecogs.com/gif.latex?m(3.5)=0.79">为所有切分点里平方损失误差最小的</p>
+<p>6) 选择切分点s=3.5构建第二颗回归树，各分支数值使用<img src="https://latex.codecogs.com/gif.latex?c_1=-0.52,\&space;c_2=0.22"> ：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?T_2(x)=&space;\left\{\begin{matrix}&space;-0.52,\&space;\&space;x<3.5\\&space;0.22,\&space;\&space;\&space;\&space;x\geq&space;0.5&space;\end{matrix}\right."></p>
+<p>第二轮过后，我们提升树为:</p>
+<p><img src="https://latex.codecogs.com/gif.latex?f_2(x)=f_1(x)&plus;T_2(x)=\left\{\begin{matrix}&space;5.72,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x<3.5\\&space;6.46,\&space;\&space;3.5\leq&space;x<6.5\\&space;9.13,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right."></p>
+<p>7) 求提升树拟合数据的残差和平方损失误差：</p>
+<p>提升树拟合数据的残差计算：<img src="https://latex.codecogs.com/gif.latex?r_{3i}=y_i-f_2(x_i),\&space;\&space;i=1,2,...,10"></p>
+<p>各个点的计算结果，同时对比初始值和上一颗树的残差：</p>
+<p><img src="/uploads/boosting_tree_5.png" alt></p>
+<p>可以看见，随着树的增多，残差一直在减少。</p>
+<p>到目前为止，提升树拟合数据的平方损失误差计算：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?L(y,f_2(x))=\sum_{i=1}^{10}(y_i-f_2(x_i))^2=0.79"></p>
+<p>多说一句，这里是从全局提升树的角度去计算损失，其实和上面第5）步中从最后一颗树的角度去计算损失，结果是一样的</p>
+<p>目前损失大于0.2的阈值，还需要继续建树</p>
+<font size="4" color="Blue">…</font> &emsp;<br><br><font size="4" color="Blue">…</font> &emsp;<br><br><font size="4" color="Blue">第六棵树</font>
+
+<p>到第六颗树的时候，我们已经累计获得了：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?T_3(x)=\left\{\begin{matrix}&space;0.15,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.22,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right."> &emsp;&emsp; <img src="https://latex.codecogs.com/gif.latex?T_4(x)=\left\{\begin{matrix}&space;-0.16,\&space;\&space;x<4.5\\&space;0.11,\&space;\&space;\&space;\&space;\&space;x\geq&space;4.5&space;\end{matrix}\right." title="T_4(x)=\left\{\begin{matrix} -0.16,\ \ x<4.5\\ 0.11,\ \ \ \ \ x\geq 4.5 \end{matrix}\right."></p>
+<p><img src="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;0.07,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.11,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right."> &emsp;&emsp; <img src="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;-0.15,\&space;\&space;x<2.5\\&space;0.04,\&space;\&space;\&space;\&space;\&space;x\geq&space;2.5&space;\end{matrix}\right."></p>
+<p>此时提升树为：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?f_6(x)=T_1(x)&plus;T_2(x)&plus;...&plus;T_6(x)\\&space;=\left\{\begin{matrix}&space;5.63,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x<2.5\\&space;5.82,\&space;\&space;2.5\leq&space;x<3.5\\&space;6.56,\&space;\&space;3.5\leq&space;x<4.5\\&space;6.83,\&space;\&space;4.5\leq&space;x<6.5\\&space;8.95,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right."></p>
+<p>此时用<img src="https://latex.codecogs.com/gif.latex?f_6(x)">拟合训练数据的平方损失误差为：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?L(y,f_6(x))=\sum_{i=1}^{10}(y_i-f_6(x_i))^2=0.17"></p>
+<p>平方损失误差小于0.2的阈值，停止建树。</p>
+<p><img src="https://latex.codecogs.com/gif.latex?f_6(x)"> 为我们最终所求的提升树。</p>
 <p>以上。</p>
 
       
@@ -633,8 +619,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/02/Jazz-Cover-Fly-Me-To-The-Moon/" rel="next" title="[Jazz Cover]Fly Me To The Moon">
-                <i class="fa fa-chevron-left"></i> [Jazz Cover]Fly Me To The Moon
+              <a href="/2019/04/05/Logistic-Regression/" rel="next" title="Boosting Tree 提升树">
+                <i class="fa fa-chevron-left"></i> Boosting Tree 提升树
               </a>
             
           </div>
@@ -642,10 +628,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/05/Logistic-Regression/" rel="prev" title="Boosting Tree 提升树">
-                Boosting Tree 提升树 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -891,7 +873,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#提升方法"><span class="nav-number">1.</span> <span class="nav-text">提升方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AdaBoost提升方法"><span class="nav-number">2.</span> <span class="nav-text">AdaBoost提升方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过例子理解AdaBoost"><span class="nav-number">2.1.</span> <span class="nav-text">通过例子理解AdaBoost</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#提升树引入"><span class="nav-number">1.</span> <span class="nav-text">提升树引入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用实例讲解提升树算法"><span class="nav-number">1.1.</span> <span class="nav-text">用实例讲解提升树算法</span></a></li></ol></li></ol></div>
             
 
           </div>
