@@ -100,20 +100,38 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Dorian Mode">
-<meta property="og:url" content="https://dorianzi.github.io/archives/page/3/index.html">
+  <meta name="description" content="EM算法原理EM（Expectation Maximization）期望最大化。主要通过极大似然估计来实现隐含条件的概率估计。 通过实例来理解简单实例有两枚不规则的硬币，进行试验：先随机选一个硬币，然后抛掷5次，记录正面和反面的次数。这样的试验一共进行了5轮，我们知道的信息只有这5轮的结果为：  问：如何估计这两枚硬币的正面出现的概率？ 这个例子里面的隐含条件是“随机选一个硬币”选中的是哪一个硬币">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EM 算法">
+<meta property="og:url" content="https://dorianzi.github.io/2019/04/07/EM/index.html">
 <meta property="og:site_name" content="Dorian Mode">
+<meta property="og:description" content="EM算法原理EM（Expectation Maximization）期望最大化。主要通过极大似然估计来实现隐含条件的概率估计。 通过实例来理解简单实例有两枚不规则的硬币，进行试验：先随机选一个硬币，然后抛掷5次，记录正面和反面的次数。这样的试验一共进行了5轮，我们知道的信息只有这5轮的结果为：  问：如何估计这两枚硬币的正面出现的概率？ 这个例子里面的隐含条件是“随机选一个硬币”选中的是哪一个硬币">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/EM_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/EM_2.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?{\color{Red}&space;0.33}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?{\color{Red}&space;0.6}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?{\color{Blue}&space;0.4}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?{\color{Blue}&space;0.5}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\left\{\begin{matrix}&space;\frac{0.00512}{0.00512+0.03087}=0.14\\&space;\\&space;\frac{0.03087}{0.00512+0.03087}=0.86&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?0.14*3=0.42">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?0.14*2=0.28">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/EM_3.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{4.22}{4.22+7.98}={\color{Red}0.35}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{6.78}{6.78+6.02}={\color{Red}0.53}">
+<meta property="og:updated_time" content="2019-04-07T01:26:14.227Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dorian Mode">
+<meta name="twitter:title" content="EM 算法">
+<meta name="twitter:description" content="EM算法原理EM（Expectation Maximization）期望最大化。主要通过极大似然估计来实现隐含条件的概率估计。 通过实例来理解简单实例有两枚不规则的硬币，进行试验：先随机选一个硬币，然后抛掷5次，记录正面和反面的次数。这样的试验一共进行了5轮，我们知道的信息只有这5轮的结果为：  问：如何估计这两枚硬币的正面出现的概率？ 这个例子里面的隐含条件是“随机选一个硬币”选中的是哪一个硬币">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/EM_1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/archives/page/3/">
+  <link rel="canonical" href="https://dorianzi.github.io/2019/04/07/EM/">
 
 
 
@@ -123,7 +141,7 @@
   };
 </script>
 
-  <title>Archive | Dorian Mode</title>
+  <title>EM 算法 | Dorian Mode</title>
   
 
 
@@ -181,7 +199,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/DorianZi/DorianZi.github.io/tree/master" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
@@ -271,7 +289,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -348,140 +366,249 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        Um..! 22 posts in total. Keep on posting.
-      </span>
-      
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/04/07/EM/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dorian Zi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dorian Mode">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/03/04/matrix-QR-decomposition/" itemprop="url">
-            
-              <span itemprop="name">QR Decomposition 矩阵的QR分解</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">EM 算法
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-04T01:52:44+08:00" content="2019-03-04">
-          03-04
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-04-07 07:08:13" itemprop="dateCreated datePublished" datetime="2019-04-07T07:08:13+08:00">2019-04-07</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+          
+          <!--Dorian Added Start-->
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Algorithm/" <i class="fa fa-tag"> Algorithm</a>
+              
+            </div>
+          
+          <!--Dorian Added End-->
+        
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/04/matrix_similarity/" itemprop="url">
-            
-              <span itemprop="name">Matrix Similarity 矩阵相似</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-04T00:00:00+08:00" content="2019-03-04">
-          03-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <h1 id="EM算法原理"><a href="#EM算法原理" class="headerlink" title="EM算法原理"></a>EM算法原理</h1><p>EM（Expectation Maximization）期望最大化。主要通过极大似然估计来实现隐含条件的概率估计。</p>
+<h1 id="通过实例来理解"><a href="#通过实例来理解" class="headerlink" title="通过实例来理解"></a>通过实例来理解</h1><h2 id="简单实例"><a href="#简单实例" class="headerlink" title="简单实例"></a>简单实例</h2><p>有两枚不规则的硬币，进行试验：先随机选一个硬币，然后抛掷5次，记录正面和反面的次数。这样的试验一共进行了5轮，我们知道的信息只有这5轮的结果为：</p>
+<p><img src="/uploads/EM_1.png" alt></p>
+<p>问：如何估计这两枚硬币的正面出现的概率？</p>
+<p>这个例子里面的隐含条件是“随机选一个硬币”选中的是<font size="4"><strong>哪一个硬币</strong></font>。如果知道每次选中是哪一个硬币，那么通过频率我们可以很快算出每个硬币出现正面的概率。但是现在我们不知道它每次选中的是哪一个硬币。我们采用的方法是：</p>
+<p>1）<font size="4"><strong>猜</strong></font>。</p>
+<p>当然不是猜每次选中的是哪一个硬币，那只是个中间变量，最终是为了求正面概率，所以我们直接猜最终要求的每个硬币出现正面的概率。我们猜1号硬币的正面概率是0.2，2号硬币的正面概率是0.7</p>
+<p>2）<font size="4"><strong>顺猜而为</strong></font>。</p>
+<p>现在假设我们刚才的试验的前提是概率就是0.2和0.7，然后出现了上面试验的结果。为什么会偏偏出现这个结果，而不是另外的结果呢？我能看到这个结果，一定不是巧合，而是因为这个结果很容易出现，就算别人再来做一遍，也是有比较大可能会看到这个结果的（此为<a href="https://dorianzi.github.io/2019/03/27/MLE/#more">最大似然估计</a>的思维）。所以来试试分析：</p>
+<p>我们试一下如果每轮分别是选的1号硬币和2号硬币，出现本轮正反组合的概率是多少。比如第1轮，如果选的是1号硬币，那么它出现“正正反正反”的概率是0.00512，很难出现。如果选的是2号硬币，那么它出现“正正反正反”的概率是0.03087，相对更容易出现。现在的事实是，我们观测到“正正反正饭”这个结果了，所以我们估计于本轮选择的2号硬币。</p>
+<p>据此算法，得出5轮下来对硬币选择的估计如下：</p>
+<p><img src="/uploads/EM_2.png" alt></p>
+<p>3）<font size="4"><strong>反算猜测值</strong></font>。</p>
+<p>好，现在我们已经对每次选择的硬币是哪一个有了第一次的估计结果。现在我们基于这个硬币选择的方式，再来算一下每个硬币的证明出现的概率，看看它跟我们最开始猜的是否接近。</p>
+<p>一共进行了25次抛掷：<br>1号硬币被抛掷了15次，有5次正面：通过频率算概率为<img src="https://latex.codecogs.com/gif.latex?{\color{Red}&space;0.33}"><br>2号硬币被抛掷了10次，有5次正面：通过频率算概率为<img src="https://latex.codecogs.com/gif.latex?{\color{Red}&space;0.6}"></p>
+<p>相当于将我们猜的概率更新为0.33， 0.6</p>
+<p>4）接下，使用更新后的概率猜测0.33和0.6继续进行上面的“顺才而为”和“反算猜测值”，并循环至收敛，就能得到最终的概率估计。</p>
+<p>一定可以收敛吗？是的，不过这里不作证明了。</p>
+<p>最终会收敛到：</p>
+<p>1号硬币出现正面的概率：<img src="https://latex.codecogs.com/gif.latex?{\color{Blue}&space;0.4}" title="{\color{Blue} 0.4}"><br>2号硬币出现正面的概率：<img src="https://latex.codecogs.com/gif.latex?{\color{Blue}&space;0.5}" title="{\color{Blue} 0.5}"></p>
+<h2 id="进阶实例"><a href="#进阶实例" class="headerlink" title="进阶实例"></a>进阶实例</h2><p>上面的例子中，当进行到1号硬币和2号硬币的选择时，我们依照出现的容易程度选择了其一而完全抛弃了其二，这样对信息是由损失的。为了用上所有的信息，我们不轻易抛弃任何一个结果。这样我们可以使用期望来计算：</p>
+<p>如第1轮中，1号硬币被选择的概率是0.00512，2号硬币被选择的概率是0.03087，它们二者归一化的比例是14%和86%.<br>计算方法：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\left\{\begin{matrix}&space;\frac{0.00512}{0.00512&plus;0.03087}=0.14\\&space;\\&space;\frac{0.03087}{0.00512&plus;0.03087}=0.86&space;\end{matrix}\right." title="\left\{\begin{matrix} \frac{0.00512}{0.00512+0.03087}=0.14\\ \\ \frac{0.03087}{0.00512+0.03087}=0.86 \end{matrix}\right."></p>
+<p>也就是说，第一轮中5次里面任何1次：1号硬币的出现正的期望是0.14,2号硬币出现正的期望是0.86，它们加起来才是“1”次正；同理1号硬币的出现负的期望是0.14,2号硬币出现正的期望是0.86，它们加起来才是“1”次负</p>
+<p>根据期望计算，如果只计算1号硬币，则它第一轮出现<img src="https://latex.codecogs.com/gif.latex?0.14*3=0.42" title="0.14*3=0.42">次正，<img src="https://latex.codecogs.com/gif.latex?0.14*2=0.28" title="0.14*2=0.28">次负</p>
+<p>计算1号硬币的其它轮次的正负期望，并对2号硬币进行同样计算，得到统计表格如下：</p>
+<p><img src="/uploads/EM_3.png" alt></p>
+<p>也就是说：</p>
+<p>1号硬币总共4.22次正面，7.98次负面 =&gt; 出现正面的概率为<img src="https://latex.codecogs.com/gif.latex?\frac{4.22}{4.22&plus;7.98}={\color{Red}0.35}" title="\frac{4.22}{4.22+7.98}=0.35"></p>
+<p>2号硬币总共6.78次正面，6.02次负面 =&gt; 出现正面的概率为<img src="https://latex.codecogs.com/gif.latex?\frac{6.78}{6.78&plus;6.02}={\color{Red}0.53}"></p>
+<p>可见相比“抛弃”的做法，我们更充分利用信息，能更快接近真实概率</p>
+<p>以上。</p>
+
+      
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+
+      
+        <div class="post-tags">
+         <br>
+         <br>
+<!--  Dorian Removed Start    
+         
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+         
+       Dorian Removed End -->
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/05/GBDT/" rel="next" title="GBDT 梯度提升树">
+                <i class="fa fa-chevron-left"></i> GBDT 梯度提升树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -501,8 +628,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -680,6 +816,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#EM算法原理"><span class="nav-number">1.</span> <span class="nav-text">EM算法原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过实例来理解"><span class="nav-number">2.</span> <span class="nav-text">通过实例来理解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单实例"><span class="nav-number">2.1.</span> <span class="nav-text">简单实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶实例"><span class="nav-number">2.2.</span> <span class="nav-text">进阶实例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -836,6 +989,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -851,6 +1008,37 @@
 
   
 
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '5b4b5d838e55b91b3713',
+    clientSecret: 'ca4bfc7fee3940ef0896565d06b76890fd29ce40',
+    repo: 'DorianZi.github.io',
+    owner: 'DorianZi',
+    admin: ['DorianZi'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
 
 
   
