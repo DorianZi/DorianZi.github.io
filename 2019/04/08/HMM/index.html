@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="L6qAeUEWrk">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '6O9OK26379',
+      apiKey: 'd266e496228bce82728a87f4c2ea4800',
+      indexName: 'MyHexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="HMM的定义HMM即Hidden Markov Model，隐马尔可夫模型，是用来描述这样一种过程：有两类数据，一类是可以观测到的，为观测序列，一类是观测不到的，为隐藏状态序列，简称状态序列。比如知道一个人过去三天的活动序列是“逛街-&amp;gt;运动-&amp;gt;在家”，而想知道过去三天的天气序列是“晴-&amp;gt;多云-&amp;gt;雨”还是“多云-&amp;gt;晴-&amp;gt;雨”还是其它。这种情况我们可以构建HMM：将">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HMM 隐马尔可夫模型">
+<meta property="og:url" content="https://dorianzi.github.io/2019/04/08/HMM/index.html">
+<meta property="og:site_name" content="Dorian Mode">
+<meta property="og:description" content="HMM的定义HMM即Hidden Markov Model，隐马尔可夫模型，是用来描述这样一种过程：有两类数据，一类是可以观测到的，为观测序列，一类是观测不到的，为隐藏状态序列，简称状态序列。比如知道一个人过去三天的活动序列是“逛街-&amp;gt;运动-&amp;gt;在家”，而想知道过去三天的天气序列是“晴-&amp;gt;多云-&amp;gt;雨”还是“多云-&amp;gt;晴-&amp;gt;雨”还是其它。这种情况我们可以构建HMM：将">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\Pi=\begin{pmatrix}&space;I_1\\&space;I_2\\&space;...\\&space;I_n&space;\end{pmatrix}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A=\begin{bmatrix}&space;a_{11}&space;&&space;a_{12}&space;&&space;...&space;&&space;a_{1n}&space;\\&space;a_{21}&space;&&space;a_{22}&space;&&space;...&space;&&space;a_{2n}&space;\\&space;&&space;&&space;...&space;&&space;\\&space;a_{n1}&space;&&space;a_{n2}&space;&&space;...&space;&&space;a_{nn}&space;\end{bmatrix}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?B=\begin{bmatrix}&space;b_{11}&space;&&space;b_{12}&space;&&space;...&space;&&space;b_{1m}&space;\\&space;b_{21}&space;&&space;b_{22}&space;&&space;...&space;&&space;b_{2m}&space;\\&space;&&space;&&space;...&space;&&space;\\&space;b_{n1}&space;&&space;b_{n2}&space;&&space;...&space;&&space;b_{nm}&space;\end{bmatrix}">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/HMM_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/HMM_2.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/HMM_3.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\Pi&space;,A,B">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\Pi&space;,A,B">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/HMM_4.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?3^3=27">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(0.5*0.6)*(0.375*0.25)*(0.625*0.5)=0.0088">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\lambda=(\Pi&space;,A,B)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?O=(o_1,o_2,...,o_{T})">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(O|\lambda)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_1(i)=\pi_ib_i(o_1),\&space;\&space;i=1,2,...n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\pi">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_i(o)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\alpha_{t+1}(i)=b_i(o_{t+1})[\sum_{j=1}^{n}\alpha_t(j)a_{ji}],\&space;\&space;\&space;i=1,2,...n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_i(o_{t+1})">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?o_{t+1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?a_{ji}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(O|\lambda)=\sum_{i=1}^{n}\alpha_T(i)">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/HMM_5.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\lambda=(\Pi&space;,A,B)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?O=(o_1,o_2,...,o_{T})">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(O|\lambda)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_T(i)=1,\&space;\&space;\&space;i=1,2,...n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\beta_t(i)=&space;\sum_{j=1}^{n}[\alpha_{ij}b_j(o_{t+1})\beta_{t+1}(j)],\&space;\&space;\&space;i=1,2,...n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(O|\lambda)=\sum_{i=1}^{n}\pi_ib_i(o_1)\beta_1(i)">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/HMM_6.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?3^3=27">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/HMM_7.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(0.5*0.6)*(0.375*0.25)*(0.625*0.5)=0.0088">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\lambda=(A,B,\Pi)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?O=(o_1,o_2,...,o_T)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?I^*=\{i^*_1,i^*_2,...,i^*_T\}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\delta&space;_1(i)=\pi_ib_i(o_1),\&space;\&space;i=1,2...n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\psi&space;_1(i)=0,\&space;\&space;i=1,2...n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\pi_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_i(o_1)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?o_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\psi&space;_1(i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\delta&space;_t(i)=\underset{1\leq&space;j\leq&space;n}{max}[\delta_{t-1}(j)a_{ji}]b_i(0_t),\&space;\&space;i=1,2,...,n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\psi&space;_t(i)=arg\&space;\underset{1\leq&space;j\leq&space;n}{max}[\delta&space;_{t-1}(j)a_{ji}],\&space;\&space;i=1,2...,n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\delta&space;_t(i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{1\leq&space;j\leq&space;n}{max}[\delta_{t-1}(j)a_{ji}]">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_i(0_t)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?o_t">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\psi&space;_1(i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^*=\underset{1\leq&space;j\leq&space;n}{max}\delta&space;_T(i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?i^*_T=arg\&space;\underset{1\leq&space;j\leq&space;n}{max}[\delta&space;_T(i)]">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?i^*_t=\psi&space;_{t+1}(i^*_{t+1})">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?I^*=\{i^*_1,i^*_2,...i^*_T\}">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/HMM_8.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?{(O_1,I_1),(O_2,I_2),...,(O_D,I_D)}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?O_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?I_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?I_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?I_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?O_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\pi_{I_1}*b_{I_1}(O_1)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\pi_{I_1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\pi_{I_2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\pi_{I_3}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_{I_1}(O_1)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_{I_1}(O_2)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_{I_1}(O_3)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?O_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?I_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?I_{j}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?I_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_{I_i}(O_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?a_{ji}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?a_{j1}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?a_{j2}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_{I_i}(O_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_{I_i}(O_2)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_{I_i}(O_3)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?O=(o_1,o_2,...,o_{T})">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\pi_i,a_{ij},b_j(k)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?d=1,2,...,D">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\gamma&space;^{(d)}_t(i),\xi&space;^{(d)}_t(i,j),\&space;\&space;\&space;t=1,2...,T">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\pi_i=\frac{\sum_{d=1}^{D}\gamma&space;_1^{(d)}(i)}{D}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?a_{ij}=\frac{\sum_{d=1}^{D}&space;\sum_{t=1}^{T-1}\xi&space;_t^{(d)}(i,j)}{\sum_{d=1}^{D}&space;\sum_{t=1}^{T-1}\gamma&space;_t^{(d)}(j)}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?b_{j}(k)=\frac{\sum_{d=1}^{D}&space;\sum_{t=1,o_t^{(d)}=v_k}^{T}\gamma&space;_t^{(d)}(j)}{\sum_{d=1}^{D}&space;\sum_{t=1}^{T}\gamma&space;_t^{(d)}(j)}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\pi_i,a_{ij},b_j(k)">
+<meta property="og:updated_time" content="2019-04-08T13:33:32.845Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HMM 隐马尔可夫模型">
+<meta name="twitter:description" content="HMM的定义HMM即Hidden Markov Model，隐马尔可夫模型，是用来描述这样一种过程：有两类数据，一类是可以观测到的，为观测序列，一类是观测不到的，为隐藏状态序列，简称状态序列。比如知道一个人过去三天的活动序列是“逛街-&amp;gt;运动-&amp;gt;在家”，而想知道过去三天的天气序列是“晴-&amp;gt;多云-&amp;gt;雨”还是“多云-&amp;gt;晴-&amp;gt;雨”还是其它。这种情况我们可以构建HMM：将">
+<meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?\Pi=\begin{pmatrix}&space;I_1\\&space;I_2\\&space;...\\&space;I_n&space;\end{pmatrix}">
+
+
+
+
+
+
+  <link rel="canonical" href="https://dorianzi.github.io/2019/04/08/HMM/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>HMM 隐马尔可夫模型 | Dorian Mode</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bdd9553b00b737f4e03ff3fc43e220f2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/DorianZi/DorianZi.github.io/tree/master" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dorian Mode</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/04/08/HMM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dorian Zi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dorian Mode">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HMM 隐马尔可夫模型
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-04-08 03:48:27" itemprop="dateCreated datePublished" datetime="2019-04-08T03:48:27+08:00">2019-04-08</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+          
+          <!--Dorian Added Start-->
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Algorithm/" <i class="fa fa-tag"> Algorithm</a>
+              
+            </div>
+          
+          <!--Dorian Added End-->
+        
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="HMM的定义"><a href="#HMM的定义" class="headerlink" title="HMM的定义"></a>HMM的定义</h1><p>HMM即Hidden Markov Model，隐马尔可夫模型，是用来描述这样一种过程：有两类数据，一类是可以观测到的，为观测序列，一类是观测不到的，为隐藏状态序列，简称状态序列。比如知道一个人过去三天的活动序列是“逛街-&gt;运动-&gt;在家”，而想知道过去三天的天气序列是“晴-&gt;多云-&gt;雨”还是“多云-&gt;晴-&gt;雨”还是其它。这种情况我们可以构建HMM：将这个人的活动看做观测序列，天气看做隐藏状态序列，进而求各种状态序列的概率。当然也可以反过来知道状态序列，求这个人的某种活动序列的概率。 再比如在语音识别中就利用了HMM，认为语音为观测序列，它背后的文字为状态序列。</p>
+<p>在数学上表示HMM为：</p>
+<p>初始状态矩阵： <img src="https://latex.codecogs.com/gif.latex?\Pi=\begin{pmatrix}&space;I_1\\&space;I_2\\&space;...\\&space;I_n&space;\end{pmatrix}"></p>
+<p>状态转移矩阵： <img src="https://latex.codecogs.com/gif.latex?A=\begin{bmatrix}&space;a_{11}&space;&&space;a_{12}&space;&&space;...&space;&&space;a_{1n}&space;\\&space;a_{21}&space;&&space;a_{22}&space;&&space;...&space;&&space;a_{2n}&space;\\&space;&&space;&&space;...&space;&&space;\\&space;a_{n1}&space;&&space;a_{n2}&space;&&space;...&space;&&space;a_{nn}&space;\end{bmatrix}" title="A=\begin{bmatrix} a_{11} & a_{12} & ... & a_{1n} \\ a_{21} & a_{22} & ... & a_{2n} \\ & & ... & \\ a_{n1} & a_{n2} & ... & a_{nn} \end{bmatrix}"></p>
+<p>观测矩阵（或混淆矩阵）： <img src="https://latex.codecogs.com/gif.latex?B=\begin{bmatrix}&space;b_{11}&space;&&space;b_{12}&space;&&space;...&space;&&space;b_{1m}&space;\\&space;b_{21}&space;&&space;b_{22}&space;&&space;...&space;&&space;b_{2m}&space;\\&space;&&space;&&space;...&space;&&space;\\&space;b_{n1}&space;&&space;b_{n2}&space;&&space;...&space;&&space;b_{nm}&space;\end{bmatrix}"></p>
+<h2 id="HMM的例子"><a href="#HMM的例子" class="headerlink" title="HMM的例子"></a>HMM的例子</h2><p>通过一个例子解释它们的含义：</p>
+<p>一个包含三个状态的天气系统（晴天、多云、雨天）中，可以观察到4个等级的海藻湿润情况（干、稍干、潮湿、湿润）。</p>
+<p>初始化的的时候，晴，多云，雨出现的概率分别为0.5,0.15,0.35，则初始状态矩阵为:</p>
+<p><img src="/uploads/HMM_1.png" alt></p>
+<p>对于隐状态序列：上个状态为晴天的情况下，转移到当前状态也为晴天的概率为0.5，转移到多云的概率为0.375，转移到雨的概率为0.125（加起来为1）；上个状态为多云的情况下，转移到当期为晴天的概率为0.25，转移到多云的概率为0.125，转移到雨的概率为0.625….所以状态转移矩阵为：</p>
+<p><img src="/uploads/HMM_2.png" alt></p>
+<p>对于观测序列：若当前状态为晴，观测到海藻为干的概率是0.60，观测到海藻为稍干的概率是0.20 …;若当前状态为多云，观测到海藻为干的概率是0.25，观测到海藻为稍干的概率是0.25 ….所以观测矩阵为：</p>
+<p><img src="/uploads/HMM_3.png" alt></p>
+<h1 id="HMM的三个问题"><a href="#HMM的三个问题" class="headerlink" title="HMM的三个问题"></a>HMM的三个问题</h1><p>HMM被使用来解决三个方面的问题：</p>
+<p>1）评估观测序列。给定观测序列和多个确定的模型（<img src="https://latex.codecogs.com/gif.latex?\Pi&space;,A,B">）,求这个观测序列在每个模型出现的概率，以判断现在使用的是什么模型。比如上面的天气-海藻湿度问题，我们可能有春季模型，夏季模型，秋季模型，冬季模型。分别计算不同模型下当前观测序列出现的概率，选概率最大的，就能知道现在是什么季节。这里面会用到前向算法或者后向算法</p>
+<p>2）解码。给定观测序列和模型（<img src="https://latex.codecogs.com/gif.latex?\Pi&space;,A,B" title="\Pi ,A,B">）,求最可能出现的状态序列，比如语音识别，文本分词。会用到维特比算法</p>
+<p>3）学习。给定观测序列和模型的参数估计值（而非实际值），求模型的实际值。会用前向-后向算法，也称作Baum-Welch算法</p>
+<p>我们分别讲这三个问题的解决方法。</p>
+<h2 id="评估观测序列-一-：前向算法"><a href="#评估观测序列-一-：前向算法" class="headerlink" title="评估观测序列(一)：前向算法"></a>评估观测序列(一)：前向算法</h2><p>依然考虑上面的天气-海藻的例子。</p>
+<p>现在我们观测到连续三天的海藻状态是：dry-damp-soggy</p>
+<p><img src="/uploads/HMM_4.png" alt></p>
+<p>问在当前的模型下，出现这种观测序列的概率是多少？</p>
+<p>如果是<font size="4"><strong>暴力计算</strong></font>的话，我们可以穷举<img src="https://latex.codecogs.com/gif.latex?3^3=27" title="3^3=27">条路径的概率，然后把它们的概率相加，得到我们要的结果，比如其中的一条路径的概率计算如下：</p>
+<p>sunny(dry)-&gt;cloudy(damp)-&gt;rainy(soggy):&emsp; P[sunny(dry)-&gt;cloudy(damp)-&gt;rainy(soggy)]=[P(sunny)P(dry|sunny)]*[P(sunny-&gt;cloudy)P(damp|cloudy)]*[P(cloudy-&gt;rainy)P(soggy|rainy)]</p>
+<p>代入数值计算：<img src="https://latex.codecogs.com/gif.latex?(0.5*0.6)*(0.375*0.25)*(0.625*0.5)=0.0088"></p>
+<p>我们可以建立一个<font size="4"><strong>递归模型</strong></font>，来替代暴力计算。</p>
+<p>假设一个序列从1开始到T时刻结束：</p>
+<p><strong>输入：</strong>HMM模型<img src="https://latex.codecogs.com/gif.latex?\lambda=(\Pi&space;,A,B)" title="\lambda=(\Pi ,A,B)">，观测序列<img src="https://latex.codecogs.com/gif.latex?O=(o_1,o_2,...,o_{T})" title="O=(o_1,o_2,...,o_{T})"></p>
+<p><strong>输出：</strong>观测序列概率<img src="https://latex.codecogs.com/gif.latex?P(O|\lambda)" title="P(O|\lambda)"></p>
+<p>1) 计算时刻1的各个隐藏状态前向概率：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\alpha_1(i)=\pi_ib_i(o_1),\&space;\&space;i=1,2,...n" title="\alpha_1(i)=\pi_ib_i(o_1),\ \ i=1,2,...n"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?\pi" title="\pi">为初始隐状态的概率，i为隐状态的序号，<img src="https://latex.codecogs.com/gif.latex?b_i(o)" title="b_i(o)">来自混沌矩阵，为第i个隐状态条件下观测到o的概率</p>
+<p>2) 递推时刻2,3,…T时刻的前向概率：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\alpha_{t&plus;1}(i)=b_i(o_{t&plus;1})[\sum_{j=1}^{n}\alpha_t(j)a_{ji}],\&space;\&space;\&space;i=1,2,...n"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?b_i(o_{t+1})">来自混沌矩阵，为t+1时刻第i个隐状态下观测到的<img src="https://latex.codecogs.com/gif.latex?o_{t+1}">的概率；<img src="https://latex.codecogs.com/gif.latex?a_{ji}">来自隐状态转移矩阵，为第j个隐状态到第i个隐状态的转换概率</p>
+<p>3) 计算最终结果：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?P(O|\lambda)=\sum_{i=1}^{n}\alpha_T(i)" title="P(O|\lambda)=\sum_{i=1}^{n}\alpha_T(i)"></p>
+<p>意思是最终结果的输出为最后一个时刻T的局部概率值和。</p>
+<p>以上步骤就是前向算法。为了便于理解递归关系，选取t+1时刻对cloudy状态计算局部概率的图：</p>
+<p><img src="/uploads/HMM_5.png" alt></p>
+<p>在实际应用中，我们用不同的模型（如春、夏、秋、冬模型）来算出不同的最终结果概率，比较哪个最大（最大似然思想），则是我们要求的季节。</p>
+<h2 id="评估观测序列-二-：后向算法"><a href="#评估观测序列-二-：后向算法" class="headerlink" title="评估观测序列(二)：后向算法"></a>评估观测序列(二)：后向算法</h2><p>有了前向算法的基础，理解后向算法只要把状态序列的走向逆向就可以:</p>
+<p><strong>输入：</strong>HMM模型<img src="https://latex.codecogs.com/gif.latex?\lambda=(\Pi&space;,A,B)" title="\lambda=(\Pi ,A,B)">，观测序列<img src="https://latex.codecogs.com/gif.latex?O=(o_1,o_2,...,o_{T})" title="O=(o_1,o_2,...,o_{T})"></p>
+<p><strong>输出：</strong>观测序列概率<img src="https://latex.codecogs.com/gif.latex?P(O|\lambda)" title="P(O|\lambda)"></p>
+<p>1) 初始化时刻T的各个隐藏状态后向概率：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\beta_T(i)=1,\&space;\&space;\&space;i=1,2,...n" title="\beta_T(i)=1,\ \ \ i=1,2,...n"></p>
+<p>全部初始化为1</p>
+<p>2) 递推时刻T−1,T−2,…1时刻的后向概率：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\beta_t(i)=&space;\sum_{j=1}^{n}[\alpha_{ij}b_j(o_{t&plus;1})\beta_{t&plus;1}(j)],\&space;\&space;\&space;i=1,2,...n" title="\beta_t(i)= \sum_{j=1}^{n}\alpha_{ij}b_j(o_{t+1})\beta_{t+1}(j),\ \ \ i=1,2,...N"></p>
+<p>3) 计算最终结果：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?P(O|\lambda)=\sum_{i=1}^{n}\pi_ib_i(o_1)\beta_1(i)" title="P(O|\lambda)=\sum_{i=1}^{n}\pi_ib_i(o_1)\beta_1(i)"></p>
+<p>图示理解:</p>
+<p><img src="/uploads/HMM_6.png" alt></p>
+<h2 id="解码：维特比算法"><a href="#解码：维特比算法" class="headerlink" title="解码：维特比算法"></a>解码：维特比算法</h2><p>考虑这样一个问题：给出观测序列和模型，找出最可能的隐状态序列。</p>
+<p>如果是<font size="4"><strong>暴力计算</strong></font>的话，我们可以穷举<img src="https://latex.codecogs.com/gif.latex?3^3=27" title="3^3=27">条可以导致改观测序列的隐状态序列路径，找出哪条路径能最大概率地导致该观测序列，也就是我们要找的路径。</p>
+<p><img src="/uploads/HMM_7.png" alt></p>
+<p>比如其中的一条路径的概率计算如下:</p>
+<p>sunny(dry)-&gt;cloudy(damp)-&gt;rainy(soggy):&emsp; P[sunny(dry)-&gt;cloudy(damp)-&gt;rainy(soggy)]=[P(sunny)P(dry|sunny)]*[P(sunny-&gt;cloudy)P(damp|cloudy)]*[P(cloudy-&gt;rainy)P(soggy|rainy)]</p>
+<p>代入数值计算：<img src="https://latex.codecogs.com/gif.latex?(0.5*0.6)*(0.375*0.25)*(0.625*0.5)=0.0088"></p>
+<p>可以发现单独计算一条路径跟评估观测序列里面的做法是一样的。不一样的在后面我们需要比较各条路径，而评估观测序列是需要把各条路径概率相加。</p>
+<p>不用暴力计算，用<font size="4"><strong>维特比算法</strong></font>，流程如下：</p>
+<p><strong>输入：</strong>HMM模型<img src="https://latex.codecogs.com/gif.latex?\lambda=(A,B,\Pi)" title="\lambda=(A,B,\Pi)">，观测序列<img src="https://latex.codecogs.com/gif.latex?O=(o_1,o_2,...,o_T)" title="O=(o_1,o_2,...,o_T)"><br><strong>输出：</strong>最有可能的隐藏状态序列<img src="https://latex.codecogs.com/gif.latex?I^*=\{i^*_1,i^*_2,...,i^*_T\}" title="I^*=\{i^*_1,i^*_2,...,i^*_T\}"></p>
+<p>1）当t=1时，初始化局部状态：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\delta&space;_1(i)=\pi_ib_i(o_1),\&space;\&space;i=1,2...n" title="\delta _1(i)=\pi_ib_i(o_1),\ \ i=1,2...n"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?\psi&space;_1(i)=0,\&space;\&space;i=1,2...n" title="\psi _1(i)=0,\ \ i=1,2...n"></p>
+<p>其中i表示第i个隐状态，<br><img src="https://latex.codecogs.com/gif.latex?\pi_i">为第i个隐状态的初始概率，<img src="https://latex.codecogs.com/gif.latex?b_i(o_1)">表示第i个隐状态下观测到<img src="https://latex.codecogs.com/gif.latex?o_1" title="o_1">的概率；<img src="https://latex.codecogs.com/gif.latex?\psi&space;_1(i)">为目前为止的最大概率路径</p>
+<p>2) 进行动态规划递推时刻t=2,3,…T时刻的局部状态：<br><img src="https://latex.codecogs.com/gif.latex?\delta&space;_t(i)=\underset{1\leq&space;j\leq&space;n}{max}[\delta_{t-1}(j)a_{ji}]b_i(0_t),\&space;\&space;i=1,2,...,n" title="\delta _t(i)=\underset{1\leq j\leq n}{max}[\delta_{t-1}(j)a_{ji}]b_i(0_t),\ \ i=1,2,...,n"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?\psi&space;_t(i)=arg\&space;\underset{1\leq&space;j\leq&space;n}{max}[\delta&space;_{t-1}(j)a_{ji}],\&space;\&space;i=1,2...,n" title="\psi _t(i)=arg\ \underset{1\leq j\leq n}{max}[\delta _{t-1}(j)a_{ji}],\ \ i=1,2...,n"></p>
+<p>其中<img src="https://latex.codecogs.com/gif.latex?\delta&space;_t(i)">表示t时刻的能观测结果的隐状态序列组合的最大概率；<img src="https://latex.codecogs.com/gif.latex?\underset{1\leq&space;j\leq&space;n}{max}[\delta_{t-1}(j)a_{ji}]">表示到t-1时间为止的最大概率的路径的概率；<img src="https://latex.codecogs.com/gif.latex?b_i(0_t)">表示第i个隐状态下观测到<img src="https://latex.codecogs.com/gif.latex?o_t" title="o_1">的概率；<img src="https://latex.codecogs.com/gif.latex?\psi&space;_1(i)">为目前为止的最大概率路径</p>
+<p>3) 计算时刻T最大的δT(i),即为最可能隐藏状态序列出现的概率。计算时刻T最大的Ψt(i),即为时刻T最可能的隐藏状态。</p>
+<p><img src="https://latex.codecogs.com/gif.latex?P^*=\underset{1\leq&space;j\leq&space;n}{max}\delta&space;_T(i)" title="P^*=\underset{1\leq j\leq n}{max}\delta _T(i)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?i^*_T=arg\&space;\underset{1\leq&space;j\leq&space;n}{max}[\delta&space;_T(i)]" title="i^*_T=arg\ \underset{1\leq j\leq n}{max}[\delta _T(i)]"></p>
+<p>4) 利用局部状态Ψ(i)开始回溯。对于t=T−1,T−2,…,1：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?i^*_t=\psi&space;_{t&plus;1}(i^*_{t&plus;1})" title="i^*_t=\psi _{t+1}(i^*_{t+1})"></p>
+<p>这表示，我们需要往后走一步，才能得到当前这个隐状态序号。最终得到最有可能的隐藏状态序列:</p>
+<p><img src="https://latex.codecogs.com/gif.latex?I^*=\{i^*_1,i^*_2,...i^*_T\}" title="I^*=\{i^*_1,i^*_2,...i^*_T\}"></p>
+<p>通过图示理解上面的迭代过程：</p>
+<p><img src="/uploads/HMM_8.png" alt></p>
+<h2 id="学习：Baum-Welch算法"><a href="#学习：Baum-Welch算法" class="headerlink" title="学习：Baum-Welch算法"></a>学习：Baum-Welch算法</h2><p>学习的目标是求解未知的HMM的参数。</p>
+<p>已知D个时刻为T的观测序列和对应的隐藏状态序列，即<img src="https://latex.codecogs.com/gif.latex?{(O_1,I_1),(O_2,I_2),...,(O_D,I_D)}" title="{(O_1,I_1),(O_2,I_2),...,(O_D,I_D)}">是已知的，此时我们可以用最大似然来求解模型参数。也就是说<img src="https://latex.codecogs.com/gif.latex?O_1" title="O_1">在<img src="https://latex.codecogs.com/gif.latex?I_1" title="I_1">的状态下被观测到，是因为“<img src="https://latex.codecogs.com/gif.latex?I_1" title="I_1">本身的初始状态”乘以“<img src="https://latex.codecogs.com/gif.latex?I_1" title="I_1">情况下<img src="https://latex.codecogs.com/gif.latex?O_1" title="O_1">被观测到的概率”的结果，是最大的。 也就是说<img src="https://latex.codecogs.com/gif.latex?\pi_{I_1}*b_{I_1}(O_1)">比其它组合都大，最好的结果就是乘子的每一部分都是各自领域最大的：</p>
+<p>1） <img src="https://latex.codecogs.com/gif.latex?\pi_{I_1}">大于<img src="https://latex.codecogs.com/gif.latex?\pi_{I_2}">和<img src="https://latex.codecogs.com/gif.latex?\pi_{I_3}">等其它初始状态概率</p>
+<p>2）<img src="https://latex.codecogs.com/gif.latex?b_{I_1}(O_1)">大于<img src="https://latex.codecogs.com/gif.latex?b_{I_1}(O_2)">和<img src="https://latex.codecogs.com/gif.latex?b_{I_1}(O_3)">，…, 等其它观测概率</p>
+<p>同理，在非初始情况下，<img src="https://latex.codecogs.com/gif.latex?O_i">在<img src="https://latex.codecogs.com/gif.latex?I_i">的状态下被观测到，根据“乘子的每一部分都在各自领域最大”的推断，是因为从上一个隐状态<img src="https://latex.codecogs.com/gif.latex?I_{j}">转移到这一个<img src="https://latex.codecogs.com/gif.latex?I_i">的概率最大，同时观测到<img src="https://latex.codecogs.com/gif.latex?b_{I_i}(O_i)">的概率最大也就是:</p>
+<p>3）在状态转移矩阵A的一行里面，<img src="https://latex.codecogs.com/gif.latex?a_{ji}" title="a_{ji}">比其它值<img src="https://latex.codecogs.com/gif.latex?a_{j1}">，<img src="https://latex.codecogs.com/gif.latex?a_{j2}"> , …等都大</p>
+<p>4）在观测矩阵B的一行里面，<img src="https://latex.codecogs.com/gif.latex?b_{I_i}(O_i)">比其它<img src="https://latex.codecogs.com/gif.latex?b_{I_i}(O_2)">，<img src="https://latex.codecogs.com/gif.latex?b_{I_i}(O_3)">，…等都大</p>
+<p>以上，根据1）2）可以求初始矩阵，根据3）4）可以求状态转移矩阵A和观测矩阵B,当然可能不止一个解。</p>
+<p>上面的例子很美好，是因为它同时告诉了我们隐状态的序列和观测序列。如果只告诉我们观测序列，而隐状态序列未知，怎么求HMM模型的参数呢？</p>
+<p>首先，我们可以想到我们面临的状况很类似于EM算法的背景。在EM算法里面，我们在只知道试验结果而不知道隐含条件的情况下，能够通过反复猜想-估计得出目标概率。没错接下来要用的Baum-Welch算法实际上是基于EM算法，不过它提出的时间比EM算法早。Baum-Welch算法像EM算法一样，没有参数值，就猜出一个参数值，代入进去计算，不断反复，直至收敛到一个理想参数。</p>
+<p>中间公式的推导就不给出了，直接给出Baum-Welch（鲍姆-韦尔奇）算法的流程。</p>
+<p><strong>输入：</strong> D个观测序列样本<img src="https://latex.codecogs.com/gif.latex?O=(o_1,o_2,...,o_{T})" title="O=(o_1,o_2,...,o_{T})"></p>
+<p><strong>输出</strong>：HMM模型参数</p>
+<p>1）随机初始化所有的<img src="https://latex.codecogs.com/gif.latex?\pi_i,a_{ij},b_j(k)" title="\pi_i,a_{ij},b_j(k)"></p>
+<p>2）对于每个样本<img src="https://latex.codecogs.com/gif.latex?d=1,2,...,D" title="d=1,2,...,D">，用前向后向算法计算<img src="https://latex.codecogs.com/gif.latex?\gamma&space;^{(d)}_t(i),\xi&space;^{(d)}_t(i,j),\&space;\&space;\&space;t=1,2...,T" title="\gamma ^{(d)}_t(i),\xi ^{(d)}_t(i,j),\ \ \ t=1,2...,T"></p>
+<p>3）更新模型参数：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\pi_i=\frac{\sum_{d=1}^{D}\gamma&space;_1^{(d)}(i)}{D}" title="\pi_i=\frac{\sum_{d=1}^{D}\gamma _1^{(d)}(i)}{D}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?a_{ij}=\frac{\sum_{d=1}^{D}&space;\sum_{t=1}^{T-1}\xi&space;_t^{(d)}(i,j)}{\sum_{d=1}^{D}&space;\sum_{t=1}^{T-1}\gamma&space;_t^{(d)}(j)}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?b_{j}(k)=\frac{\sum_{d=1}^{D}&space;\sum_{t=1,o_t^{(d)}=v_k}^{T}\gamma&space;_t^{(d)}(j)}{\sum_{d=1}^{D}&space;\sum_{t=1}^{T}\gamma&space;_t^{(d)}(j)}"></p>
+<p>4) 如果<img src="https://latex.codecogs.com/gif.latex?\pi_i,a_{ij},b_j(k)" title="\pi_i,a_{ij},b_j(k)">的值已经收敛，则算法结束，否则回到第2）步继续迭代。</p>
+<p>以上。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.52nlp.cn/category/hidden-markov-model" target="_blank" rel="noopener">http://www.52nlp.cn/category/hidden-markov-model</a><br><a href="https://www.cnblogs.com/pinard/p/6955871.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6955871.html</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+
+      
+        <div class="post-tags">
+         <br>
+         <br>
+<!--  Dorian Removed Start    
+         
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+         
+       Dorian Removed End -->
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/07/EM/" rel="next" title="EM 算法">
+                <i class="fa fa-chevron-left"></i> EM 算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/eric_clapton.jpg" alt="Dorian Zi">
+            
+              <p class="site-author-name" itemprop="name">Dorian Zi</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/dorianzi" title="GitHub &rarr; https://github.com/dorianzi" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://kaggle.com/dorianzi" title="Kaggle &rarr; https://kaggle.com/dorianzi" rel="noopener" target="_blank"><i class="fa fa-fw fa-list-alt"></i>Kaggle</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://xiami.com/artist/mf8ydg642ef" title="Xiami &rarr; https://xiami.com/artist/mf8ydg642ef" rel="noopener" target="_blank"><i class="fa fa-fw fa-music"></i>Xiami</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://music.163.com/#/album?id=3080421" title="Netease &rarr; https://music.163.com/#/album?id=3080421" rel="noopener" target="_blank"><i class="fa fa-fw fa-headphones"></i>Netease</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://facebook.com/profile.php?id=100008679135728" title="FB Page &rarr; https://facebook.com/profile.php?id=100008679135728" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://instagram.com/dorian.zi/" title="Instagram &rarr; https://instagram.com/dorian.zi/" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://linkedin.com/in/dorian-zi-7620b6127/" title="Linkedin &rarr; https://linkedin.com/in/dorian-zi-7620b6127/" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+                </span>
+              
+            </div>
+          
+
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=481876106&auto=1&height=66"></iframe>
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HMM的定义"><span class="nav-number">1.</span> <span class="nav-text">HMM的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HMM的例子"><span class="nav-number">1.1.</span> <span class="nav-text">HMM的例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HMM的三个问题"><span class="nav-number">2.</span> <span class="nav-text">HMM的三个问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#评估观测序列-一-：前向算法"><span class="nav-number">2.1.</span> <span class="nav-text">评估观测序列(一)：前向算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评估观测序列-二-：后向算法"><span class="nav-number">2.2.</span> <span class="nav-text">评估观测序列(二)：后向算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解码：维特比算法"><span class="nav-number">2.3.</span> <span class="nav-text">解码：维特比算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习：Baum-Welch算法"><span class="nav-number">2.4.</span> <span class="nav-text">学习：Baum-Welch算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dorian Zi</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '5b4b5d838e55b91b3713',
+    clientSecret: 'ca4bfc7fee3940ef0896565d06b76890fd29ce40',
+    repo: 'DorianZi.github.io',
+    owner: 'DorianZi',
+    admin: ['DorianZi'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=7.0.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
