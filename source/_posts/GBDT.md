@@ -140,5 +140,5 @@ GBDT的提升是加法模型，它不是定义一个固定结构的函数，然�
 # 参考
 
 https://blog.csdn.net/qq_22238533/article/details/79199605
-
+http://docs.salford-systems.com/GreedyFuncApproxSS.pdf
 
