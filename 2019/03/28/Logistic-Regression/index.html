@@ -132,29 +132,29 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta_{1}x_{1}+\theta_{1}x_{2}+...+\theta_{1}x_{n}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(Y=0|X,\theta)=1-P(Y=1|X,\theta)=1-\frac{1}{1+e^{-\theta^{T}X}},&space;\&space;\&space;\&space;(X=X4,X5,X6)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(Y|X,\theta)=(\frac{1}{1+e^{-\theta^{T}X}})^{Y}(1-\frac{1}{1+e^{-\theta^{T}X}})^{1-Y}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(\theta)=-P(Y=1|X,\theta)P(Y=0|X,\theta)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\prod_{Y=0}^{1}P(Y|X,\theta)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\prod_{Y=0}^{1}(\frac{1}{1+e^{-\theta^{T}X}})^{Y}(1-\frac{1}{1+e^{-\theta^{T}X}})^{1-Y}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?l(\theta)=ln(L(\theta))=-\sum_{Y=0}^{1}ln[(\frac{1}{1+e^{-\theta^{T}X}})^{Y}(1-\frac{1}{1+e^{-\theta^{T}X}})^{1-Y}]">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=\sum_{Y=0}^{1}[-Yln(\frac{1}{1+e^{-\theta&space;^{T}X}})-(1-Y)ln(1-\frac{1}{1+e^{-\theta&space;^{T}X}})]">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?z=\theta^{T}X">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\prod_{i=1}^{m}P(y^{(i)}|x^{(i)},\theta)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(\theta)=-\prod_{i=1}^{m}P(y^{(i)}|x^{(i)},\theta)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\prod_{i=1}^{m}(\frac{1}{1+e^{-\theta^{T}x^{(i)}}})^{y^{(i)}}(1-\frac{1}{1+e^{-\theta^{T}x^{(i)}}})^{1-y^{(i)}}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?l(\theta)=ln(L(\theta))=-\sum_{i=1}^{m}ln[(\frac{1}{1+e^{-\theta^{T}x^{(i)}}})^{y^{(i)}}(1-\frac{1}{1+e^{-\theta^{T}x^{(i)}}})^{1-y^{(i)}}]">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=\sum_{i=1}^{m}[-y^{(i)}ln(\frac{1}{1+e^{-\theta&space;^{T}x^{(i)}}})-(1-y^{(i)})ln(1-\frac{1}{1+e^{-\theta&space;^{T}x^{(i)}}})]">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?z=\theta^{T}x^{(i)}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?h(z)=\frac{1}{1+e^{-z}}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta_{j}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{\partial&space;z}{\partial\theta_{j}}=\frac{\partial&space;(\theta^{T}X)}{\partial\theta_{j}}=\frac{\partial&space;(\theta_{1}x_{1}+\theta_{1}x_{2}+...+\theta_{1}x_{n})}{\partial\theta_{j}}=x_{j}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{\partial&space;z}{\partial\theta_{j}}=\frac{\partial&space;(\theta^{T}x^{(i)})}{\partial\theta_{j}}=\frac{\partial&space;(\theta_{1}x^{(i)}_{1}+\theta_{1}x^{(i)}_{2}+...+\theta_{1}x^{(i)}_{n})}{\partial\theta_{j}}=x^{(i)}_{j}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{\partial&space;h(z)}{\partial&space;z}=[(1+e^{-z})^{-1}]'=-\frac{(e^{-z})'}{(1+e^{-z})^2}=\frac{e^{-z}}{(1+e^{-z})^{2}}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?=\frac{1+e^{-z}-1}{(1+e^{-z})^{2}}=\frac{1+e^{-z}}{(1+e^{-z})^2}-\frac{1}{(1+e^{-z})^2}=\frac{1}{1+e^{-z}}-\frac{1}{(1+e^{-z})^2}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?=h(z)[1-h(z)]">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta_{j}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?h(z)=\frac{1}{1+e^{-z}}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?l(\theta)=-\sum_{Y=0}^{1}[Yln(h(z))+(1-Y)ln(1-h(z))]">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?l(\theta)=-\sum_{i=1}^{m}[y^{(i)}ln(h(z))+(1-y^{(i)})ln(1-h(z))]">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{\partial&space;l(\theta)}{\partial&space;\theta_{j}}=\frac{\partial&space;l(\theta)}{\partial&space;h}\frac{\partial&space;h}{\partial&space;z}\frac{\partial&space;z}{\partial&space;\theta_{j}}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}[Y\frac{1}{h(z)}-(1-Y)\frac{1}{1-h(z)}]\times&space;h(z)[1-h(z)]\times&space;x_{j}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}\{Y[1-h(z)]-(1-Y)h(z)\}\times&space;x_{j}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}[Y-h(z)]\times&space;x_{j}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}[Y-h(\theta^{T}X)]\times&space;x_{j}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta_{j}:=\theta_{j}-\alpha&space;\sum_{Y=0}^{1}[Y-h(\theta^{T}X)]\times&space;x_{j}">
-<meta property="og:updated_time" content="2019-04-06T02:03:45.882Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}[y^{(i)}\frac{1}{h(z)}-(1-y^{(i)})\frac{1}{1-h(z)}]\times&space;h(z)[1-h(z)]\times&space;x^{(i)}_{j}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}\{y^{(i)}[1-h(z)]-(1-y^{(i)})h(z)\}\times&space;x^{(i)}_{j}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}[y^{(i)}-h(z)]\times&space;x^{(i)}_{j}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}[y^{(i)}-h(\theta^{T}x^{(i)})]\times&space;x^{(i)}_{j}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\theta_{j}:=\theta_{j}-\alpha&space;\sum_{i=1}^{m}[y^{(i)}-h(\theta^{T}x^{(i)})]\times&space;x^{(i)}_{j}">
+<meta property="og:updated_time" content="2019-04-12T02:47:19.671Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Logistic Regression Classifier 逻辑回归分类器">
 <meta name="twitter:description" content="问题的提出我们考虑一个股票推荐的数据集，它每行是一个样本。每个样本有四个特征，推荐结果只有“推荐”与“不推荐”两类：  基于以上的数据集，我们训练一个分类器。首先将推荐结果量化表示：1表示推荐，0表示不推荐。 那么对前3个样本中的任何一个，我们希望分类器应该能将它分类到1，而对后3个样本中的任何一个，我们希望分类器应该能将它分类到0。 从这里开始，假如用线性回归的思维，我们可以训练出一个这样的模型">
@@ -554,29 +554,28 @@
 <p><img src="https://latex.codecogs.com/gif.latex?P(Y=0|X,\theta)=1-P(Y=1|X,\theta)=1-\frac{1}{1&plus;e^{-\theta^{T}X}},&space;\&space;\&space;\&space;(X=X4,X5,X6)">&emsp;&emsp;&emsp;&emsp;②</p>
 <p>这里我们可以do a trick，将①和②合并（之后会用到）：</p>
 <p><img src="https://latex.codecogs.com/gif.latex?P(Y|X,\theta)=(\frac{1}{1&plus;e^{-\theta^{T}X}})^{Y}(1-\frac{1}{1&plus;e^{-\theta^{T}X}})^{1-Y}">&emsp;&emsp;&emsp;&emsp;③</p>
-<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p>现在我们已经得到了概率模型。此时我们可以通过<font size="5">极大似然</font>的思维方式得到损失函数，即既然已经分类出来了，那么就不满足概率仅仅大于0.5，而是让分到这个类的概率尽可能大。也就是说如果分类器够完美的话，会使得①尽可能大，也会使得②尽可能大。又因为①和②作为概率都是正数，所以我们只要让①×②最大就好。所以①×②是我们需要最大化的目标函数，在前面加个<font size="5">负号</font>，则是需要最小化的损失函数：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?L(\theta)=-P(Y=1|X,\theta)P(Y=0|X,\theta)"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?=-\prod_{Y=0}^{1}P(Y|X,\theta)"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?=-\prod_{Y=0}^{1}(\frac{1}{1&plus;e^{-\theta^{T}X}})^{Y}(1-\frac{1}{1&plus;e^{-\theta^{T}X}})^{1-Y}"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?l(\theta)=ln(L(\theta))=-\sum_{Y=0}^{1}ln[(\frac{1}{1&plus;e^{-\theta^{T}X}})^{Y}(1-\frac{1}{1&plus;e^{-\theta^{T}X}})^{1-Y}]"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?=\sum_{Y=0}^{1}[-Yln(\frac{1}{1&plus;e^{-\theta&space;^{T}X}})-(1-Y)ln(1-\frac{1}{1&plus;e^{-\theta&space;^{T}X}})]"></p>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p>现在我们已经得到了概率模型。此时我们可以通过<font size="5">极大似然</font>的思维方式得到损失函数，即既然已经分类出来了，那么就不满足概率仅仅大于0.5，而是让分到这个类的概率尽可能大，如果我们的训练样本数为m个，那么我们希望m个概率的乘积尽可能大。所以似然函数是<img src="https://latex.codecogs.com/gif.latex?\prod_{i=1}^{m}P(y^{(i)}|x^{(i)},\theta)">，我们需要最大化它。取负号就是最小化它，于是它损失函数就是损失函数：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?L(\theta)=-\prod_{i=1}^{m}P(y^{(i)}|x^{(i)},\theta)"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\prod_{i=1}^{m}(\frac{1}{1&plus;e^{-\theta^{T}x^{(i)}}})^{y^{(i)}}(1-\frac{1}{1&plus;e^{-\theta^{T}x^{(i)}}})^{1-y^{(i)}}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?l(\theta)=ln(L(\theta))=-\sum_{i=1}^{m}ln[(\frac{1}{1&plus;e^{-\theta^{T}x^{(i)}}})^{y^{(i)}}(1-\frac{1}{1&plus;e^{-\theta^{T}x^{(i)}}})^{1-y^{(i)}}]"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=\sum_{i=1}^{m}[-y^{(i)}ln(\frac{1}{1&plus;e^{-\theta&space;^{T}x^{(i)}}})-(1-y^{(i)})ln(1-\frac{1}{1&plus;e^{-\theta&space;^{T}x^{(i)}}})]"></p>
 <h3 id="损失函数求导"><a href="#损失函数求导" class="headerlink" title="损失函数求导"></a>损失函数求导</h3><p>为了方便求导，设:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?z=\theta^{T}X"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?z=\theta^{T}x^{(i)}"></p>
 <p><img src="https://latex.codecogs.com/gif.latex?h(z)=\frac{1}{1&plus;e^{-z}}"></p>
-<p>上两式求分别对<img src="https://latex.codecogs.com/gif.latex?\theta_{j}">求导：<br><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;z}{\partial\theta_{j}}=\frac{\partial&space;(\theta^{T}X)}{\partial\theta_{j}}=\frac{\partial&space;(\theta_{1}x_{1}&plus;\theta_{1}x_{2}&plus;...&plus;\theta_{1}x_{n})}{\partial\theta_{j}}=x_{j}"></p>
+<p>上两式求分别对<img src="https://latex.codecogs.com/gif.latex?\theta_{j}">求导：<br><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;z}{\partial\theta_{j}}=\frac{\partial&space;(\theta^{T}x^{(i)})}{\partial\theta_{j}}=\frac{\partial&space;(\theta_{1}x^{(i)}_{1}&plus;\theta_{1}x^{(i)}_{2}&plus;...&plus;\theta_{1}x^{(i)}_{n})}{\partial\theta_{j}}=x^{(i)}_{j}"></p>
 <p><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;h(z)}{\partial&space;z}=[(1&plus;e^{-z})^{-1}]'=-\frac{(e^{-z})'}{(1&plus;e^{-z})^2}=\frac{e^{-z}}{(1&plus;e^{-z})^{2}}"></p>
 <p><img src="https://latex.codecogs.com/gif.latex?=\frac{1&plus;e^{-z}-1}{(1&plus;e^{-z})^{2}}=\frac{1&plus;e^{-z}}{(1&plus;e^{-z})^2}-\frac{1}{(1&plus;e^{-z})^2}=\frac{1}{1&plus;e^{-z}}-\frac{1}{(1&plus;e^{-z})^2}"></p>
 <p><img src="https://latex.codecogs.com/gif.latex?=h(z)[1-h(z)]"></p>
 <p>注：这里对<img src="https://latex.codecogs.com/gif.latex?\theta_{j}">是因为<img src="https://latex.codecogs.com/gif.latex?\theta">是一个向量，我们最终是要求出该向量的所有维度的值。</p>
 <p>将<img src="https://latex.codecogs.com/gif.latex?h(z)=\frac{1}{1&plus;e^{-z}}">代入损失函数:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?l(\theta)=-\sum_{Y=0}^{1}[Yln(h(z))&plus;(1-Y)ln(1-h(z))]"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?l(\theta)=-\sum_{i=1}^{m}[y^{(i)}ln(h(z))&plus;(1-y^{(i)})ln(1-h(z))]"></p>
 <p>好了，准备就绪，开始对损失函数求导：<br><img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;l(\theta)}{\partial&space;\theta_{j}}=\frac{\partial&space;l(\theta)}{\partial&space;h}\frac{\partial&space;h}{\partial&space;z}\frac{\partial&space;z}{\partial&space;\theta_{j}}"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}[Y\frac{1}{h(z)}-(1-Y)\frac{1}{1-h(z)}]\times&space;h(z)[1-h(z)]\times&space;x_{j}"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}\{Y[1-h(z)]-(1-Y)h(z)\}\times&space;x_{j}"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}[Y-h(z)]\times&space;x_{j}"></p>
-<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}[Y-h(\theta^{T}X)]\times&space;x_{j}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}[y^{(i)}\frac{1}{h(z)}-(1-y^{(i)})\frac{1}{1-h(z)}]\times&space;h(z)[1-h(z)]\times&space;x^{(i)}_{j}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}\{y^{(i)}[1-h(z)]-(1-y^{(i)})h(z)\}\times&space;x^{(i)}_{j}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}[y^{(i)}-h(z)]\times&space;x^{(i)}_{j}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}[y^{(i)}-h(\theta^{T}x^{(i)})]\times&space;x^{(i)}_{j}"></p>
 <p>至此，我们得到参数更新的迭代公式为：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\theta_{j}:=\theta_{j}-\alpha&space;\sum_{Y=0}^{1}[Y-h(\theta^{T}X)]\times&space;x_{j}"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?\theta_{j}:=\theta_{j}-\alpha&space;\sum_{i=1}^{m}[y^{(i)}-h(\theta^{T}x^{(i)})]\times&space;x^{(i)}_{j}"></p>
 <p>接下来怎么办？——更新参数，训练分类器。训练过程由软件完成，这里就不手动推导了。</p>
 
       
@@ -706,7 +705,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
