@@ -100,13 +100,13 @@
 
 
 
-  <meta name="description" content="最大熵模型的思想是：数据集没有约束（或满足了已知约束之后）的情况下，认为数据的概率分布是均匀的，没有偏向说哪些数据是概率更大的，这种情况也代表整个数据集是熵最大的。这是在缺乏信息的情况下能够做到的最合理的“认为”，此时通过求熵最大，来求得模型参数。这样求得的模型在进行预测时，尽管精度不保证更高，但它能覆盖到更多的情况，因为它在训练时候没有“偏见”。 举个例子，一个六面筛子，在没有任何信息的情况下，">
+  <meta name="description" content="最大熵模型的思想是：数据集没有约束（或满足了已知约束之后）的情况下，认为数据的概率分布是均匀的，没有偏向说哪些数据是概率更大的，这种情况也代表整个数据集是熵最大的。这是在缺乏信息的情况下能够做到的最合理的“认为”，此时通过求熵最大，来求得模型参数。这样求得的模型在进行预测时，尽管精度不保证更高，但它能覆盖到更多的情况，因为它在训练时候没有“偏见”。 举个例子，一个六面色子，在没有任何信息的情况下，">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Maximum Entropy Model 最大熵模型">
 <meta property="og:url" content="https://dorianzi.github.io/2019/04/12/Maximum-Entropy-Model/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="最大熵模型的思想是：数据集没有约束（或满足了已知约束之后）的情况下，认为数据的概率分布是均匀的，没有偏向说哪些数据是概率更大的，这种情况也代表整个数据集是熵最大的。这是在缺乏信息的情况下能够做到的最合理的“认为”，此时通过求熵最大，来求得模型参数。这样求得的模型在进行预测时，尽管精度不保证更高，但它能覆盖到更多的情况，因为它在训练时候没有“偏见”。 举个例子，一个六面筛子，在没有任何信息的情况下，">
+<meta property="og:description" content="最大熵模型的思想是：数据集没有约束（或满足了已知约束之后）的情况下，认为数据的概率分布是均匀的，没有偏向说哪些数据是概率更大的，这种情况也代表整个数据集是熵最大的。这是在缺乏信息的情况下能够做到的最合理的“认为”，此时通过求熵最大，来求得模型参数。这样求得的模型在进行预测时，尽管精度不保证更高，但它能覆盖到更多的情况，因为它在训练时候没有“偏见”。 举个例子，一个六面色子，在没有任何信息的情况下，">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{6}">
 <meta property="og:image" content="https://latex.codecogs.com/png.latex?\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(N)},y^{(N)})\}">
@@ -176,10 +176,10 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{align*}&space;P(y_1|x)=&\frac{exp\left(wf(x,y_1)\right)}{\sum_{y}exp\left(wf(x,y)\right)}\\&space;=&\frac{exp\left(wf(x,y_1)\right)}{exp\left(wf(x,y_0)\right)+exp\left(wf(x,y_1)\right)}\\&space;=&\frac{exp\left(wf(x,y_1)\right)}{exp\left(0\right)+exp\left(wf(x,y_1)\right)}\\&space;=&\frac{exp\left(wg(x)\right)}{1+exp\left(wg(x)\right)}\\&space;=&\frac{1}{1+exp\left(-wg(x)\right)}\\&space;\end{align*}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?y=y_0">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{align*}&space;P(y_0|x)=&\frac{exp\left(wf(x,y_0)\right)}{\sum_{y}exp\left(wf(x,y)\right)}\\&space;=&\frac{exp\left(wf(x,y_0)\right)}{exp\left(wf(x,y_0)\right)+exp\left(wf(x,y_1)\right)}\\&space;=&\frac{exp\left(0\right)}{exp\left(0\right)+exp\left(wf(x,y_1)\right)}\\&space;=&\frac{1}{1+exp\left(wg(x)\right)}\\&space;=&\frac{exp\left(-wg(x)\right)}{exp\left(-wg(x)\right)+1}\\&space;=&\frac{exp\left(-wg(x)\right)+1-1}{exp\left(-wg(x)\right)+1}\\&space;=&1-\frac{1}{exp\left(-wg(x)\right)+1}\\&space;=&1-P(y_1|x)&space;\end{align*}">
-<meta property="og:updated_time" content="2019-04-14T12:27:16.955Z">
+<meta property="og:updated_time" content="2019-04-14T12:30:37.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Maximum Entropy Model 最大熵模型">
-<meta name="twitter:description" content="最大熵模型的思想是：数据集没有约束（或满足了已知约束之后）的情况下，认为数据的概率分布是均匀的，没有偏向说哪些数据是概率更大的，这种情况也代表整个数据集是熵最大的。这是在缺乏信息的情况下能够做到的最合理的“认为”，此时通过求熵最大，来求得模型参数。这样求得的模型在进行预测时，尽管精度不保证更高，但它能覆盖到更多的情况，因为它在训练时候没有“偏见”。 举个例子，一个六面筛子，在没有任何信息的情况下，">
+<meta name="twitter:description" content="最大熵模型的思想是：数据集没有约束（或满足了已知约束之后）的情况下，认为数据的概率分布是均匀的，没有偏向说哪些数据是概率更大的，这种情况也代表整个数据集是熵最大的。这是在缺乏信息的情况下能够做到的最合理的“认为”，此时通过求熵最大，来求得模型参数。这样求得的模型在进行预测时，尽管精度不保证更高，但它能覆盖到更多的情况，因为它在训练时候没有“偏见”。 举个例子，一个六面色子，在没有任何信息的情况下，">
 <meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?\frac{1}{6}">
 
 
@@ -556,7 +556,7 @@
 
       
         <p>最大熵模型的思想是：数据集没有约束（或满足了已知约束之后）的情况下，认为数据的概率分布是均匀的，没有偏向说哪些数据是概率更大的，这种情况也代表整个数据集是熵最大的。这是在缺乏信息的情况下能够做到的最合理的“认为”，此时通过求熵最大，来求得模型参数。这样求得的模型在进行预测时，尽管精度不保证更高，但它能覆盖到更多的情况，因为它在训练时候没有“偏见”。</p>
-<p>举个例子，一个六面筛子，在没有任何信息的情况下，假定所有数字被掷到的概率相等，为<img src="https://latex.codecogs.com/gif.latex?\frac{1}{6}" title="\frac{1}{6}">，这个假设是最合理的，也是使得熵最大的。</p>
+<p>举个例子，一个六面色子，在没有任何信息的情况下，假定所有数字被掷到的概率相等，为<img src="https://latex.codecogs.com/gif.latex?\frac{1}{6}" title="\frac{1}{6}">，这个假设是最合理的，也是使得熵最大的。</p>
 <h1 id="最大熵模型"><a href="#最大熵模型" class="headerlink" title="最大熵模型"></a>最大熵模型</h1><p>设有样本集<img src="https://latex.codecogs.com/png.latex?\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(N)},y^{(N)})\}" title="\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(N)},y^{(N)})\}">，其中类别是<img src="https://latex.codecogs.com/png.latex?\(y^{(1)},y^{(2)}),...,y^{(N)})">（不一定是N个类别，里面可以有相等值），需要求解合理分类器。</p>
 <p>选择使用最大熵模型，也就是选择了软分类器。软分类器的意思是通过求解不同类别的概率<img src="https://latex.codecogs.com/png.latex?P(Y=y^{(j)}|X=x^{(i)}),\&space;\&space;\&space;j=1,2,...,m" title="P(Y=y^{(j)}|X=x^{(i)}),\ \ \ j=1,2,...,m">并从中挑选出概率最大的那个，来决定最终分类的类别。所以这里我们的目标是写出<img src="https://latex.codecogs.com/png.latex?P(y|x)" title="P(Y|X)">函数的表达式。而最大熵的思想是：通过最大化训练集的条件熵，可以获得最优的<img src="https://latex.codecogs.com/png.latex?P(y|x)" title="P(Y|X)">表达式——</p>
 <p><img src="https://latex.codecogs.com/png.latex?\underset{P&space;\epsilon&space;C&space;}{max}\&space;H(P)=-\sum_{x,y}\tilde{P}(x)P(y|x)logP(y|x)" title="\underset{P \epsilon C }{max}\ H(P)=-\sum_{x,y}\tilde{P}(x)P(y|x)logP(y|x)"></p>
