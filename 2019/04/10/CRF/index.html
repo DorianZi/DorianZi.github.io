@@ -151,14 +151,11 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?P(y|x)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\prod_{x,y}^{&space;}P(y|x)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?log\prod_{x,y}^{&space;}P(y|x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\prod_{x,y}^{&space;}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\tilde{P}(x,y)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?log\prod_{x,y}^{&space;}P(y|x)^{\tilde{P}(x,y)}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\tilde{P}(x,y)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?log\prod_{x,y}^{&space;}P(y|x)^{\tilde{P}(x,y)}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\prod_{x,y}^{&space;}P(y|x)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(w)=L_{\tilde{P}}(P_w)=log\prod_{x,y}^{&space;}P(y|x)^{\tilde{P}(x,y)}=\sum_{x,y}^{&space;}\tilde{P}(x,y)logP(y|x)">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?H(y|x)">
-<meta property="og:updated_time" content="2019-04-12T17:11:56.636Z">
+<meta property="og:updated_time" content="2019-04-13T09:47:37.702Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CRF 条件随机场">
 <meta name="twitter:description" content="CRF的定义CRF指的是Conditional Random Field,条件随机场。可以用HMM来帮助理解。  直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即对，对，对。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即对。 另外的区别是：HMM是有向图，严格定义了y的有序性 CRF是无向图，y无序（图中是线性链式，为CRF的特殊情况）">
@@ -591,10 +588,9 @@
 <p><img src="https://latex.codecogs.com/gif.latex?P(y|x)=\frac{1}{Z_w(x)}exp(wF(y,x))"></p>
 <p>其中 <img src="https://latex.codecogs.com/gif.latex?Z_w(x)=\sum_{y}^{&space;}exp(wF(y,x))"></p>
 <h1 id="CRF的模型训练"><a href="#CRF的模型训练" class="headerlink" title="CRF的模型训练"></a>CRF的模型训练</h1><p>上节讲的是在给定了的模型下，如何使用它进行标注。这一节讲，如何通过训练数据集，训练CRF标注模型。<br>所谓的训练，指的是训练权重，也就是我们已经有特征函数的情况（对同一种语言和语境，特征函数可以固定）下，训练权重<img src="https://latex.codecogs.com/gif.latex?w=(w_1,w_2,...,w_K)" title="w=(w_1,w_2,...,w_K)"></p>
-<p>基于<font size="4">极大似然</font>思想，通俗地说就是，我们要找到一组<img src="https://latex.codecogs.com/gif.latex?w" title="w">，使得训练集里面任何一组数据（如x=”Dorian plays football”,y=”名词-动词-名词”就是一组数据）的概率<img src="https://latex.codecogs.com/gif.latex?P(y|x)" title="P(y|x)">尽可能大，这样才说明该模型能够很“自信”地进行标注。为此，我们只要使得所有样本概率的乘积<img src="https://latex.codecogs.com/gif.latex?\prod_{x,y}^{&space;}P(y|x)" title="\prod_{x,y}^{ }P(y|x)">最大化即可，取对数就是<img src="https://latex.codecogs.com/gif.latex?log\prod_{x,y}^{&space;}P(y|x)">.</p>
-<p>为了使用最大熵模型，引入训练数据的经验概率分布<img src="https://latex.codecogs.com/gif.latex?\tilde{P}(x,y)" title="\tilde{P}(x,y)">，得到<img src="https://latex.codecogs.com/gif.latex?log\prod_{x,y}^{&space;}P(y|x)^{\tilde{P}(x,y)}">。因为<img src="https://latex.codecogs.com/gif.latex?\tilde{P}(x,y)" title="\tilde{P}(x,y)">是常数，所以极大化<img src="https://latex.codecogs.com/gif.latex?log\prod_{x,y}^{&space;}P(y|x)^{\tilde{P}(x,y)}">跟极大化<img src="https://latex.codecogs.com/gif.latex?\prod_{x,y}^{&space;}P(y|x)" title="\prod_{x,y}^{ }P(y|x)">是等效的。</p>
+<p>基于<font size="4">极大似然</font>思想，通俗地说就是，我们要找到一组<img src="https://latex.codecogs.com/gif.latex?w" title="w">，使得训练集里面任何一组数据（如x=”Dorian plays football”,y=”名词-动词-名词”就是一组数据）的概率<img src="https://latex.codecogs.com/gif.latex?P(y|x)" title="P(y|x)">尽可能大，这样才说明该模型能够很“自信”地进行标注。为此，我们只要使得所有样本概率的乘积<img src="https://latex.codecogs.com/gif.latex?\prod_{x,y}^{&space;}P(y|x)" title="\prod_{x,y}^{ }P(y|x)">最大化即可，取对数就是<img src="https://latex.codecogs.com/gif.latex?log\prod_{x,y}^{&space;}P(y|x)">。其中<img src="https://latex.codecogs.com/gif.latex?\prod_{x,y}^{&space;}">表示对样本数据的迭代。</p>
+<p>使用最大熵模型，引入训练数据的经验概率分布<img src="https://latex.codecogs.com/gif.latex?\tilde{P}(x,y)" title="\tilde{P}(x,y)">，得到<img src="https://latex.codecogs.com/gif.latex?log\prod_{x,y}^{&space;}P(y|x)^{\tilde{P}(x,y)}">，该对数似然函数就是最大熵模型的极大似然估计：</p>
 <p><img src="https://latex.codecogs.com/gif.latex?L(w)=L_{\tilde{P}}(P_w)=log\prod_{x,y}^{&space;}P(y|x)^{\tilde{P}(x,y)}=\sum_{x,y}^{&space;}\tilde{P}(x,y)logP(y|x)" title="L(w)=L_{\tilde{P}}(P_w)=log\prod_{x,y}^{ }P(y|x)^{\tilde{P}(x,y)}=\sum_{x,y}^{ }\tilde{P}(x,y)logP(y|x)"></p>
-<p>至此转换为最大熵模型，上式称作最大熵模型的对数似然函数。其实上式最后其实得到的是条件熵的-1倍：<img src="https://latex.codecogs.com/gif.latex?H(y|x)" title="H(y|x)">，</p>
 <p>接下来采用改进的迭代尺度法（即IIS法），可以求解该最大熵模型的参数迭代式，这里就不介绍了。</p>
 <p>以上。</p>
 
