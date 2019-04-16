@@ -100,45 +100,50 @@
 
 
 
-  <meta name="description" content="相似矩阵相似矩阵表达的是：同一个线性变换在不同基下的表达。下面的推导中，A矩阵和B矩阵相似，也就是说他们是同一个线性变换在不同基下的表达 推导见下图  首先我们脱离任何基，在“绝对”坐标系里面描述一个线性变换：线性变换将向量变换为 接下来我们分别在不同的基里描述这个线性变换： 在基下，上述变换描述为：线性变换A将变换为 同时由于我们知道向量和的关系是： 所以该变换可以进一步表述为：线性变换A将变换">
+  <meta name="description" content="eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在这里 XGBoost在GBDT基础上进行了很多抽象和优化，以至于乍一看不像一个算法了。接下来解释XGBoost的原理 XGBoost原理推导首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测结">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Matrix Similarity 矩阵相似">
-<meta property="og:url" content="https://dorianzi.github.io/2019/03/04/matrix_similarity/index.html">
+<meta property="og:title" content="XGBoost">
+<meta property="og:url" content="https://dorianzi.github.io/2019/04/14/XGBoost/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="相似矩阵相似矩阵表达的是：同一个线性变换在不同基下的表达。下面的推导中，A矩阵和B矩阵相似，也就是说他们是同一个线性变换在不同基下的表达 推导见下图  首先我们脱离任何基，在“绝对”坐标系里面描述一个线性变换：线性变换将向量变换为 接下来我们分别在不同的基里描述这个线性变换： 在基下，上述变换描述为：线性变换A将变换为 同时由于我们知道向量和的关系是： 所以该变换可以进一步表述为：线性变换A将变换">
+<meta property="og:description" content="eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在这里 XGBoost在GBDT基础上进行了很多抽象和优化，以至于乍一看不像一个算法了。接下来解释XGBoost的原理 XGBoost原理推导首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测结">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/raw/master/res/matrix_similarity.jpg">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{\beta}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow}&space;,\underset{j}{\rightarrow})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{a}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}=\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow}&space;,\underset{j'}{\rightarrow})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}(\underset{i}{\rightarrow},\underset{j}{\rightarrow})=(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}=B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}A=BP^{-1}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}AP=B">
-<meta property="og:updated_time" content="2019-04-01T02:13:37.568Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{align*}&space;Obj=&\sum_{i=1}^{n}l(y_i,\hat{y_i})+\sum_{k=1}^{K}\Omega(f_k)\\&space;=&\sum_{i=1}^{n}l(y_i,\hat{y_i})+\gamma&space;T+\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j&space;\end{align*}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\sum_{i=1}^{n}l(y_i,\hat{y_i})">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?n">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?l">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\hat{y_i}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\sum_{k=1}^{K}\Omega(f_k)=\gamma&space;T+\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?K">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_j">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\gamma&space;,\lambda">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_t(x_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\hat{y}^{(t)}_{i}=\hat{y}^{(t-1)}_{i}+f_t(x_i)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?&space;L^{(t)}=&\sum_{i=1}^{n}l(y_i,\hat{y}^{(t-1)}_{i}+f_t(x_i))+\sum_{k=1}^{K}\Omega(f_k)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?l">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\tilde{L}^{(t)}=\sum_{i=1}^{n}[l(y_i,\hat{y}^{(t-1)}_{i})+g_if_t(x_i)+\frac{1}{2}h_if^2_t(x_i)]+\sum_{k=1}^{K}\Omega(f_k)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?g_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?l">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?h_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?l">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">
+<meta property="og:updated_time" content="2019-04-16T00:53:46.243Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Matrix Similarity 矩阵相似">
-<meta name="twitter:description" content="相似矩阵相似矩阵表达的是：同一个线性变换在不同基下的表达。下面的推导中，A矩阵和B矩阵相似，也就是说他们是同一个线性变换在不同基下的表达 推导见下图  首先我们脱离任何基，在“绝对”坐标系里面描述一个线性变换：线性变换将向量变换为 接下来我们分别在不同的基里描述这个线性变换： 在基下，上述变换描述为：线性变换A将变换为 同时由于我们知道向量和的关系是： 所以该变换可以进一步表述为：线性变换A将变换">
-<meta name="twitter:image" content="https://github.com/DorianZi/algorithm_explained/raw/master/res/matrix_similarity.jpg">
+<meta name="twitter:title" content="XGBoost">
+<meta name="twitter:description" content="eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在这里 XGBoost在GBDT基础上进行了很多抽象和优化，以至于乍一看不像一个算法了。接下来解释XGBoost的原理 XGBoost原理推导首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测结">
+<meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?\begin{align*}&space;Obj=&\sum_{i=1}^{n}l(y_i,\hat{y_i})+\sum_{k=1}^{K}\Omega(f_k)\\&space;=&\sum_{i=1}^{n}l(y_i,\hat{y_i})+\gamma&space;T+\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j&space;\end{align*}">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/2019/03/04/matrix_similarity/">
+  <link rel="canonical" href="https://dorianzi.github.io/2019/04/14/XGBoost/">
 
 
 
@@ -148,7 +153,7 @@
   };
 </script>
 
-  <title>Matrix Similarity 矩阵相似 | Dorian Mode</title>
+  <title>XGBoost | Dorian Mode</title>
   
 
 
@@ -393,7 +398,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/03/04/matrix_similarity/">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/04/14/XGBoost/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dorian Zi">
@@ -410,7 +415,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Matrix Similarity 矩阵相似
+          <h1 class="post-title" itemprop="name headline">XGBoost
 
               
             
@@ -436,7 +441,7 @@
                 
               
 
-              <time title="Created: 2019-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-04T00:00:00+08:00">2019-03-04</time>
+              <time title="Created: 2019-04-14 20:33:01" itemprop="dateCreated datePublished" datetime="2019-04-14T20:33:01+08:00">2019-04-14</time>
             
 
             
@@ -506,23 +511,22 @@
       
 
       
-        <h1 id="相似矩阵"><a href="#相似矩阵" class="headerlink" title="相似矩阵"></a>相似矩阵</h1><p>相似矩阵表达的是：同一个线性变换在不同基下的表达。<br>下面的推导中，A矩阵和B矩阵相似，也就是说他们是同一个线性变换在不同基下的表达</p>
-<h2 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h2><p>见下图</p>
-<p><img src="https://github.com/DorianZi/algorithm_explained/raw/master/res/matrix_similarity.jpg"></p>
-<p>首先我们脱离任何基，在“绝对”坐标系里面描述一个线性变换：线性变换将向量<img src="https://latex.codecogs.com/gif.latex?\underset{\alpha}{\rightarrow}" title="\underset{a}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?\underset{\beta}{\rightarrow}" title="\underset{\beta}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>接下来我们分别在不同的基里描述这个线性变换：</p>
-<p>在基<img src="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow}&space;,\underset{j}{\rightarrow})" title="(\underset{i}{\rightarrow} ,\underset{j}{\rightarrow})" style="display:inline;vertical-align:text-top;">下，上述变换描述为：线性变换A将<img src="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}" title="\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?A\underset{v}{\rightarrow}" title="A\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>同时由于我们知道向量<img src="https://latex.codecogs.com/gif.latex?\underset{a}{\rightarrow}" title="\underset{a}{\rightarrow}" style="display:inline;vertical-align:text-top;">和<img src="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}" title="\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;">的关系是：<img src="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}=\underset{v}{\rightarrow}" title="(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}=\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>所以该变换可以进一步表述为：线性变换A将<img src="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}" title="(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}" title="A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>同理在新基下<img src="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow}&space;,\underset{j'}{\rightarrow})" title="(\underset{i'}{\rightarrow} ,\underset{j'}{\rightarrow})" style="display:inline;vertical-align:text-top;">该变换表述为：线性变换B将<img src="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" title="(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" title="B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>如果我们知道两组基的转换关系为<img src="https://latex.codecogs.com/gif.latex?P^{-1}" title="P^{-1}" style="display:inline;vertical-align:text-top;">，那么有：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}(\underset{i}{\rightarrow},\underset{j}{\rightarrow})=(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})" title="P^{-1}(\underset{i}{\rightarrow},\underset{j}{\rightarrow})=(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})" style="display:inline;vertical-align:text-top;"> ①</p>
-<p>同时，线性变换之后得到的向量也应该满足基之间的转换关系：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}=B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" title="P^{-1}A(\underset{i}{\rightarrow},\underset{i}{\rightarrow})\underset{\alpha}{\rightarrow}=B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;">  ②</p>
-<p>将①带入②得到：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}A=BP^{-1}" title="P^{-1}A=BP^{-1}" style="display:inline;vertical-align:text-top;"></p>
-<p>==&gt;</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}AP=B" title="P^{-1}AP=B" style="display:inline;vertical-align:text-top;"></p>
+        <p>eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在<a href="https://github.com/dmlc/xgboost" target="_blank" rel="noopener">这里</a></p>
+<p>XGBoost在<a href="https://dorianzi.github.io/2019/04/05/GBDT/">GBDT</a>基础上进行了很多抽象和优化，以至于乍一看不像一个算法了。接下来解释XGBoost的原理</p>
+<h1 id="XGBoost原理推导"><a href="#XGBoost原理推导" class="headerlink" title="XGBoost原理推导"></a>XGBoost原理推导</h1><p>首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测结果相加，就是该样本的最终预测结果。而损失函数和GBDT一样，都是对所有样本预测值和label值偏差的求和，这个偏差可以是均方误差也可以是别的误差。不同的是XGBoost抽象出了损失函数并且加上了惩罚项：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;Obj=&\sum_{i=1}^{n}l(y_i,\hat{y_i})&plus;\sum_{k=1}^{K}\Omega(f_k)\\&space;=&\sum_{i=1}^{n}l(y_i,\hat{y_i})&plus;\gamma&space;T&plus;\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j&space;\end{align*}"></p>
+<p>其中<img src="https://latex.codecogs.com/gif.latex?\sum_{i=1}^{n}l(y_i,\hat{y_i})">为GBDT的损失函数，是样本偏差之和，<img src="https://latex.codecogs.com/gif.latex?n" title="n">为样本数，<img src="https://latex.codecogs.com/gif.latex?l" title="l">为偏差函数，比如均方误差，<img src="https://latex.codecogs.com/gif.latex?y_i" title="y_i">为样本的label值，<img src="https://latex.codecogs.com/gif.latex?\hat{y_i}" title="\hat{y_i}">为预测值。</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\sum_{k=1}^{K}\Omega(f_k)=\gamma&space;T&plus;\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j" title="\sum_{k=1}^{K}\Omega(f_k)=\gamma T+\lambda\frac{1}{2}\sum_{j=i}^{T}w^{2}_j">  为惩罚项，<img src="https://latex.codecogs.com/gif.latex?K">为树的总棵树，<img src="https://latex.codecogs.com/gif.latex?T">为所有树的叶子总个数，<img src="https://latex.codecogs.com/gif.latex?w_j" title="w_j">为第j个叶子的值，这里用的是它的二范数。<img src="https://latex.codecogs.com/gif.latex?\gamma&space;,\lambda" title="\gamma ,\lambda">是乘数因子。</p>
+<p>可以看出惩罚项惩罚的是总叶子的个数，相当于也惩罚了树的颗数。以此降低过拟合风险。</p>
+<p>接下来把注意力放到住损失函数上来。现在想象我们已经生成到了第t一棵树，我们当然希望，这第t颗树的生成使得总损失减少了，不然就没必要生成第t棵树了。</p>
+<p>设第t棵树的预测对样本<img src="https://latex.codecogs.com/gif.latex?x_i" title="x_i">的预测函数为<img src="https://latex.codecogs.com/gif.latex?f_t(x_i)">，那么样本的最终预测值是所有树的预测值之和，也是前t-1棵树的最终预测值加当前树的单独预测值：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\hat{y}^{(t)}_{i}=\hat{y}^{(t-1)}_{i}&plus;f_t(x_i)" title="\hat{y}^{(t)}_{i}=\hat{y}^{(t-1)}_{i}+f_t(x_i)"></p>
+<p>代入到损失函数中，得到t颗数总损失为:</p>
+<p><img src="https://latex.codecogs.com/gif.latex?&space;L^{(t)}=&\sum_{i=1}^{n}l(y_i,\hat{y}^{(t-1)}_{i}&plus;f_t(x_i))&plus;\sum_{k=1}^{K}\Omega(f_k)"></p>
+<p>接下来巧妙的来了：将函数<img src="https://latex.codecogs.com/gif.latex?l" title="l">在点<img src="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">处按<font size="4">泰勒二次展开</font>：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\tilde{L}^{(t)}=\sum_{i=1}^{n}[l(y_i,\hat{y}^{(t-1)}_{i})&plus;g_if_t(x_i)&plus;\frac{1}{2}h_if^2_t(x_i)]&plus;\sum_{k=1}^{K}\Omega(f_k)"></p>
+<p>其中<img src="https://latex.codecogs.com/gif.latex?g_i" title="g_i">为偏差函数<img src="https://latex.codecogs.com/gif.latex?l" title="l">在点<img src="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">处的一阶导数，<img src="https://latex.codecogs.com/gif.latex?h_i">为偏差函数<img src="https://latex.codecogs.com/gif.latex?l" title="l">在点<img src="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">处的二阶导数</p>
+<p>我们回顾一下<a href="https://dorianzi.github.io/2019/04/05/GBDT/#%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E6%A2%AF%E5%BA%A6">GBDT的梯度</a>，它只用到了对偏差函数一阶导数。所以说这里，使用二阶导数是XGBoost的一个优化，这样使得它能够使用任何损失函数，比如最小二乘函数(<a href="https://www.zhihu.com/question/61374305" target="_blank" rel="noopener">参考</a>)，以此提高扩展性</p>
 
       
     </div>
@@ -564,15 +568,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/04/12/Maximum-Entropy-Model/" rel="next" title="Maximum Entropy Model 最大熵模型">
+                <i class="fa fa-chevron-left"></i> Maximum Entropy Model 最大熵模型
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/04/matrix-QR-decomposition/" rel="prev" title="QR Decomposition 矩阵的QR分解">
-                QR Decomposition 矩阵的QR分解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -818,7 +822,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相似矩阵"><span class="nav-number">1.</span> <span class="nav-text">相似矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#推导"><span class="nav-number">1.1.</span> <span class="nav-text">推导</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XGBoost原理推导"><span class="nav-number">1.</span> <span class="nav-text">XGBoost原理推导</span></a></li></ol></div>
             
 
           </div>
