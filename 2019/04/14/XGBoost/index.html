@@ -100,13 +100,13 @@
 
 
 
-  <meta name="description" content="eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在这里 XGBoost在GBDT基础上进行了很多抽象和优化，以至于乍一看不像一个算法了。接下来解释XGBoost的原理 XGBoost原理推导首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测结">
+  <meta name="description" content="eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在这里 XGBoost在GBDT基础上进行了很多抽象和优化，以至于乍一看不像同一个算法了。接下来解释XGBoost的原理 XGBoost原理推导首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XGBoost">
+<meta property="og:title" content="XGBoost 提升树的高效实现">
 <meta property="og:url" content="https://dorianzi.github.io/2019/04/14/XGBoost/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在这里 XGBoost在GBDT基础上进行了很多抽象和优化，以至于乍一看不像一个算法了。接下来解释XGBoost的原理 XGBoost原理推导首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测结">
+<meta property="og:description" content="eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在这里 XGBoost在GBDT基础上进行了很多抽象和优化，以至于乍一看不像同一个算法了。接下来解释XGBoost的原理 XGBoost原理推导首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{align*}&space;Obj=&\sum_{i=1}^{n}l(y_i,\hat{y_i})+\sum_{k=1}^{K}\Omega(f_k)\\&space;=&\sum_{i=1}^{n}l(y_i,\hat{y_i})+\gamma&space;T+\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j&space;\end{align*}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\sum_{i=1}^{n}l(y_i,\hat{y_i})">
@@ -125,17 +125,33 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?&space;L^{(t)}=&\sum_{i=1}^{n}l(y_i,\hat{y}^{(t-1)}_{i}+f_t(x_i))+\sum_{k=1}^{K}\Omega(f_k)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?l">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\tilde{L}^{(t)}=\sum_{i=1}^{n}[l(y_i,\hat{y}^{(t-1)}_{i})+g_if_t(x_i)+\frac{1}{2}h_if^2_t(x_i)]+\sum_{k=1}^{K}\Omega(f_k)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\tilde{L}^{(t)}=&\sum_{i=1}^{n}[l(y_i,\hat{y}^{(t-1)}_{i})+g_if_t(x_i)+\frac{1}{2}h_if^2_t(x_i)]+\sum_{k=1}^{K}\Omega(f_k)\\&space;=&\sum_{i=1}^{n}[g_if_t(x_i)+\frac{1}{2}h_if^2_t(x_i)]+\gamma&space;T+\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j&space;\end{align*}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?g_i">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?l">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?h_i">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?l">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">
-<meta property="og:updated_time" content="2019-04-16T00:53:46.243Z">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\sum_{i=1}^{n}[g_if_t(x_i)+\frac{1}{2}h_if^2_t(x_i)]">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_t(x)=w_{q(x)}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?q(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?q(x)">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\tilde{L}^{(t)}=&\sum_{i=1}^{n}[g_iw_{q(x_i)}+\frac{1}{2}h_iw^2_{q(x_i)}]+\gamma&space;T+\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j\\&space;=&\sum_{j=1}^{T}[(\sum_{i\epsilon&space;I_j}g_i)w_j+\frac{1}{2}(\sum_{i\epsilon&space;I_j}h_i+\lambda)w^2_j]+\gamma&space;T&space;\end{align*}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?I_j}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_j}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?G_j=\sum_{i\epsilon&space;I_j}g_i,\&space;H_j=\sum_{i\epsilon&space;I_j}h_i">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\tilde{L}^{(t)}=&\sum_{j=1}^{T}[G_jw_j+\frac{1}{2}(H_j+\lambda)w^2_j]+\gamma&space;T&space;\end{align*}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_j">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?G_j+(H_j+\lambda)w_j=0">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_j^{*}=-\frac{G_j}{H_j+\lambda&space;}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?w_j">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\tilde{L}^{(t)}=-\frac{1}{2}\sum_{j=1}^{T}\frac{G^2_j}{H_j+\lambda}+\gamma&space;T">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/XGBoost_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/XGBoost_2.png">
+<meta property="og:updated_time" content="2019-04-17T01:02:11.266Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XGBoost">
-<meta name="twitter:description" content="eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在这里 XGBoost在GBDT基础上进行了很多抽象和优化，以至于乍一看不像一个算法了。接下来解释XGBoost的原理 XGBoost原理推导首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测结">
+<meta name="twitter:title" content="XGBoost 提升树的高效实现">
+<meta name="twitter:description" content="eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在这里 XGBoost在GBDT基础上进行了很多抽象和优化，以至于乍一看不像同一个算法了。接下来解释XGBoost的原理 XGBoost原理推导首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测">
 <meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?\begin{align*}&space;Obj=&\sum_{i=1}^{n}l(y_i,\hat{y_i})+\sum_{k=1}^{K}\Omega(f_k)\\&space;=&\sum_{i=1}^{n}l(y_i,\hat{y_i})+\gamma&space;T+\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j&space;\end{align*}">
 
 
@@ -153,7 +169,7 @@
   };
 </script>
 
-  <title>XGBoost | Dorian Mode</title>
+  <title>XGBoost 提升树的高效实现 | Dorian Mode</title>
   
 
 
@@ -415,7 +431,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">XGBoost
+          <h1 class="post-title" itemprop="name headline">XGBoost 提升树的高效实现
 
               
             
@@ -512,7 +528,7 @@
 
       
         <p>eXtreme Gradient Boosting简称XGBoost，不算一种全新的算法，而是GBDT的一种高效的实现，它的repo在<a href="https://github.com/dmlc/xgboost" target="_blank" rel="noopener">这里</a></p>
-<p>XGBoost在<a href="https://dorianzi.github.io/2019/04/05/GBDT/">GBDT</a>基础上进行了很多抽象和优化，以至于乍一看不像一个算法了。接下来解释XGBoost的原理</p>
+<p>XGBoost在<a href="https://dorianzi.github.io/2019/04/05/GBDT/">GBDT</a>基础上进行了很多抽象和优化，以至于乍一看不像同一个算法了。接下来解释XGBoost的原理</p>
 <h1 id="XGBoost原理推导"><a href="#XGBoost原理推导" class="headerlink" title="XGBoost原理推导"></a>XGBoost原理推导</h1><p>首先它继承的是GBDT的Boosting思想，也就是生成多颗树，每棵树都有对某个样本的预测，用加法模型将多颗树对该样本的预测结果相加，就是该样本的最终预测结果。而损失函数和GBDT一样，都是对所有样本预测值和label值偏差的求和，这个偏差可以是均方误差也可以是别的误差。不同的是XGBoost抽象出了损失函数并且加上了惩罚项：</p>
 <p><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;Obj=&\sum_{i=1}^{n}l(y_i,\hat{y_i})&plus;\sum_{k=1}^{K}\Omega(f_k)\\&space;=&\sum_{i=1}^{n}l(y_i,\hat{y_i})&plus;\gamma&space;T&plus;\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j&space;\end{align*}"></p>
 <p>其中<img src="https://latex.codecogs.com/gif.latex?\sum_{i=1}^{n}l(y_i,\hat{y_i})">为GBDT的损失函数，是样本偏差之和，<img src="https://latex.codecogs.com/gif.latex?n" title="n">为样本数，<img src="https://latex.codecogs.com/gif.latex?l" title="l">为偏差函数，比如均方误差，<img src="https://latex.codecogs.com/gif.latex?y_i" title="y_i">为样本的label值，<img src="https://latex.codecogs.com/gif.latex?\hat{y_i}" title="\hat{y_i}">为预测值。</p>
@@ -523,10 +539,29 @@
 <p><img src="https://latex.codecogs.com/gif.latex?\hat{y}^{(t)}_{i}=\hat{y}^{(t-1)}_{i}&plus;f_t(x_i)" title="\hat{y}^{(t)}_{i}=\hat{y}^{(t-1)}_{i}+f_t(x_i)"></p>
 <p>代入到损失函数中，得到t颗数总损失为:</p>
 <p><img src="https://latex.codecogs.com/gif.latex?&space;L^{(t)}=&\sum_{i=1}^{n}l(y_i,\hat{y}^{(t-1)}_{i}&plus;f_t(x_i))&plus;\sum_{k=1}^{K}\Omega(f_k)"></p>
-<p>接下来巧妙的来了：将函数<img src="https://latex.codecogs.com/gif.latex?l" title="l">在点<img src="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">处按<font size="4">泰勒二次展开</font>：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\tilde{L}^{(t)}=\sum_{i=1}^{n}[l(y_i,\hat{y}^{(t-1)}_{i})&plus;g_if_t(x_i)&plus;\frac{1}{2}h_if^2_t(x_i)]&plus;\sum_{k=1}^{K}\Omega(f_k)"></p>
+<p>接下来巧妙的来了：将函数<img src="https://latex.codecogs.com/gif.latex?l" title="l">在点<img src="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">处按<font size="4">泰勒二次展开</font>，并去掉常数项：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\tilde{L}^{(t)}=&\sum_{i=1}^{n}[l(y_i,\hat{y}^{(t-1)}_{i})&plus;g_if_t(x_i)&plus;\frac{1}{2}h_if^2_t(x_i)]&plus;\sum_{k=1}^{K}\Omega(f_k)\\&space;=&\sum_{i=1}^{n}[g_if_t(x_i)&plus;\frac{1}{2}h_if^2_t(x_i)]&plus;\gamma&space;T&plus;\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j&space;\end{align*}"></p>
 <p>其中<img src="https://latex.codecogs.com/gif.latex?g_i" title="g_i">为偏差函数<img src="https://latex.codecogs.com/gif.latex?l" title="l">在点<img src="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">处的一阶导数，<img src="https://latex.codecogs.com/gif.latex?h_i">为偏差函数<img src="https://latex.codecogs.com/gif.latex?l" title="l">在点<img src="https://latex.codecogs.com/gif.latex?\hat{y}^{(t-1)}_i">处的二阶导数</p>
-<p>我们回顾一下<a href="https://dorianzi.github.io/2019/04/05/GBDT/#%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E6%A2%AF%E5%BA%A6">GBDT的梯度</a>，它只用到了对偏差函数一阶导数。所以说这里，使用二阶导数是XGBoost的一个优化，这样使得它能够使用任何损失函数，比如最小二乘函数(<a href="https://www.zhihu.com/question/61374305" target="_blank" rel="noopener">参考</a>)，以此提高扩展性</p>
+<p>我们回顾一下<a href="https://dorianzi.github.io/2019/04/05/GBDT/#%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E6%A2%AF%E5%BA%A6">GBDT的梯度</a>，它只用到了对偏差函数一阶导数。所以说这里，使用二阶导数是XGBoost的一个优化，这样使得它能够使用任何损失函数，比如最小二乘函数(<a href="https://www.zhihu.com/question/61374305" target="_blank" rel="noopener">参考</a>)，以此提高扩展性。</p>
+<p>注意，上式之所以可以去掉常数项，是因为损失函数作为目标函数，进行最小化的过程中，常数项不影响求导结果，所以不影响目标参数的求解结果。被去掉常数项的损失函数的第一项求和部分<img src="https://latex.codecogs.com/gif.latex?\sum_{i=1}^{n}[g_if_t(x_i)&plus;\frac{1}{2}h_if^2_t(x_i)]">可以理解为第t棵树里每个样本的损失之和。</p>
+<p>下面，欲将以上目标函数写成按照叶子节点求和的形式。首先设<img src="https://latex.codecogs.com/gif.latex?f_t(x)=w_{q(x)}" title="f_t(x)=w_{q(x)}">，表示是总叶子数中第<img src="https://latex.codecogs.com/gif.latex?q(x)" title="q(x)">个叶子的值，而<img src="https://latex.codecogs.com/gif.latex?q(x)" title="q(x)">是落入第t棵树的。在一棵树里，n个总样本中，总是多个样本为一组，落入每个叶子中，并共享同一个值，每棵树都如此，只是每棵树的样本分组方式不一样。同时，第一项求和部分为第t棵树里每个样本的损失之和。考虑上述形式，将目标函数改写为：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\tilde{L}^{(t)}=&\sum_{i=1}^{n}[g_iw_{q(x_i)}&plus;\frac{1}{2}h_iw^2_{q(x_i)}]&plus;\gamma&space;T&plus;\lambda\frac{1}{2}\sum_{j=1}^{T}w^{2}_j\\&space;=&\sum_{j=1}^{T}[(\sum_{i\epsilon&space;I_j}g_i)w_j&plus;\frac{1}{2}(\sum_{i\epsilon&space;I_j}h_i&plus;\lambda)w^2_j]&plus;\gamma&space;T&space;\end{align*}"></p>
+<p>其中<img src="https://latex.codecogs.com/gif.latex?I_j}">表示第j个叶子里落入的那组样本的下标，它们是共享同一个值<img src="https://latex.codecogs.com/gif.latex?w_j}">的。 令<img src="https://latex.codecogs.com/gif.latex?G_j=\sum_{i\epsilon&space;I_j}g_i,\&space;H_j=\sum_{i\epsilon&space;I_j}h_i" title="G_j=\sum_{i\epsilon I_j}g_i,\ H_j=\sum_{i\epsilon I_j}h_i">，则:</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\tilde{L}^{(t)}=&\sum_{j=1}^{T}[G_jw_j&plus;\frac{1}{2}(H_j&plus;\lambda)w^2_j]&plus;\gamma&space;T&space;\end{align*}"></p>
+<p>要求的是<img src="https://latex.codecogs.com/gif.latex?w_j" title="w_j">，所以对它求偏导为0，得：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?G_j&plus;(H_j&plus;\lambda)w_j=0" title="G_j+(H_j+\lambda)w_j=0"></p>
+<p>求解得：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?w_j^{*}=-\frac{G_j}{H_j&plus;\lambda&space;}" title="w_j^{*}=-\frac{G_j}{H_j+\lambda }"></p>
+<p>至此我们可以通过第t-1棵树的导数，来求各叶子<img src="https://latex.codecogs.com/gif.latex?w_j" title="w_j">的数值，包括第t棵树的叶子的值。</p>
+<p>同时我们也可以得到目标函数的值,在节点分裂效果评估中会用到：</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\tilde{L}^{(t)}=-\frac{1}{2}\sum_{j=1}^{T}\frac{G^2_j}{H_j&plus;\lambda}&plus;\gamma&space;T" title="\tilde{L}^{(t)}=-\frac{1}{2}\sum_{j=1}^{T}\frac{G^2_j}{H_j+\lambda}+\gamma T"></p>
+<p>图示计算样例：</p>
+<p><img src="/uploads/XGBoost_1.png" alt></p>
+<h1 id="XGBoost的节点分裂"><a href="#XGBoost的节点分裂" class="headerlink" title="XGBoost的节点分裂"></a>XGBoost的节点分裂</h1><p>上一节只是基于树结构确定的情况下的叶子值求解算法，然而作为前提，树的特征分裂方法，还没有被讨论到。这一节就来讨论它。<br>XGBoost采用的方法是遍历所有特征的分裂点。如何评价分裂效果？使用上述的目标函数。只要逐一计算每种分裂方法下上述的目标函数的值，越小的分裂效果越好。当然不能无限制分裂，为了限制树生长过深，还加了个阈值，只有当增益大于该阈值才进行分裂：</p>
+<p><img src="/uploads/XGBoost_2.png" alt></p>
+<p>虽然需要贪心地计算很多遍分裂，但是好在特征的分裂是能够<font size="4">并行</font>的</p>
+<h1 id="XGBoost的其它优化"><a href="#XGBoost的其它优化" class="headerlink" title="XGBoost的其它优化"></a>XGBoost的其它优化</h1><p>时刻记住XGBoost是重在实现，它是个工具，提供了很多优化方式，在编程上，可以使用也可以不使用。<br>它的优化特性大致为：多策略去防止过拟合，稀疏数据的处理，交叉验证，early stop，支持设置样本权重，支持并行化等。不逐一讲解了。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf" target="_blank" rel="noopener">https://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf</a></p>
 
       
     </div>
@@ -822,7 +857,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XGBoost原理推导"><span class="nav-number">1.</span> <span class="nav-text">XGBoost原理推导</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XGBoost原理推导"><span class="nav-number">1.</span> <span class="nav-text">XGBoost原理推导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XGBoost的节点分裂"><span class="nav-number">2.</span> <span class="nav-text">XGBoost的节点分裂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XGBoost的其它优化"><span class="nav-number">3.</span> <span class="nav-text">XGBoost的其它优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
