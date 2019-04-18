@@ -100,13 +100,13 @@
 
 
 
-  <meta name="description" content="CART定义在上一篇决策树中，我们已经介绍了决策树的原理和ID3,C4.5算法。这一篇专门讲解CART算法。 ART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。 分类树CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样。 CART首先是二叉树，其次分裂评价标准是用基尼指数 基尼指数基尼指数可以用来描述一个">
+  <meta name="description" content="CART定义在上一篇决策树中，我们已经介绍了决策树的原理和ID3,C4.5算法。这一篇专门讲解CART算法。 CART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。 分类树CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样： CART首先是二叉树，其次分裂评价标准是用基尼指数 基尼指数基尼指数可以用来描述一">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CART 分类与回归树">
 <meta property="og:url" content="https://dorianzi.github.io/2019/03/30/CART/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="CART定义在上一篇决策树中，我们已经介绍了决策树的原理和ID3,C4.5算法。这一篇专门讲解CART算法。 ART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。 分类树CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样。 CART首先是二叉树，其次分裂评价标准是用基尼指数 基尼指数基尼指数可以用来描述一个">
+<meta property="og:description" content="CART定义在上一篇决策树中，我们已经介绍了决策树的原理和ID3,C4.5算法。这一篇专门讲解CART算法。 CART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。 分类树CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样： CART首先是二叉树，其次分裂评价标准是用基尼指数 基尼指数基尼指数可以用来描述一">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?Gini(D&space;)=\sum_{k=1}^{K}\rho&space;_k(1-\rho&space;_k)=1-\sum_{k=1}^{K}\rho&space;_k^2">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\rho&space;_k">
@@ -137,7 +137,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_3=2">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?Gini(D,A_3=1)}=0.27">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_4=1">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?Gini(D,A_4=1)==0.36">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?Gini(D,A_4=1)=0.36">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_4=2">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?Gini(D,A_4=2)}=0.47">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?A_4=3">
@@ -188,10 +188,10 @@
 <meta property="og:image" content="https://dorianzi.github.io/uploads/CART_17.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/CART_18.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/CART_19.png">
-<meta property="og:updated_time" content="2019-04-01T02:13:48.277Z">
+<meta property="og:updated_time" content="2019-04-17T18:50:49.073Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CART 分类与回归树">
-<meta name="twitter:description" content="CART定义在上一篇决策树中，我们已经介绍了决策树的原理和ID3,C4.5算法。这一篇专门讲解CART算法。 ART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。 分类树CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样。 CART首先是二叉树，其次分裂评价标准是用基尼指数 基尼指数基尼指数可以用来描述一个">
+<meta name="twitter:description" content="CART定义在上一篇决策树中，我们已经介绍了决策树的原理和ID3,C4.5算法。这一篇专门讲解CART算法。 CART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。 分类树CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样： CART首先是二叉树，其次分裂评价标准是用基尼指数 基尼指数基尼指数可以用来描述一">
 <meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?Gini(D&space;)=\sum_{k=1}^{K}\rho&space;_k(1-\rho&space;_k)=1-\sum_{k=1}^{K}\rho&space;_k^2">
 
 
@@ -568,8 +568,8 @@
 
       
         <h1 id="CART定义"><a href="#CART定义" class="headerlink" title="CART定义"></a>CART定义</h1><p>在上一篇<a href="https://dorianzi.github.io/2019/03/29/Decision-Tree">决策树</a>中，我们已经介绍了决策树的原理和ID3,C4.5算法。这一篇专门讲解CART算法。</p>
-<p>ART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。</p>
-<h2 id="分类树"><a href="#分类树" class="headerlink" title="分类树"></a>分类树</h2><p>CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样。 CART首先是二叉树，其次分裂评价标准是用基尼指数</p>
+<p>CART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。</p>
+<h2 id="分类树"><a href="#分类树" class="headerlink" title="分类树"></a>分类树</h2><p>CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样： CART首先是二叉树，其次分裂评价标准是用基尼指数</p>
 <h3 id="基尼指数"><a href="#基尼指数" class="headerlink" title="基尼指数"></a>基尼指数</h3><p>基尼指数可以用来描述一个集合D的类别纯度，集合的样本们只属于一类，那该集合的基尼指数为0，集合的样本属于越多类，则基尼指数越大。基尼指数对集合的算法是：</p>
 <p><img src="https://latex.codecogs.com/gif.latex?Gini(D&space;)=\sum_{k=1}^{K}\rho&space;_k(1-\rho&space;_k)=1-\sum_{k=1}^{K}\rho&space;_k^2"></p>
 <p>该式子的解读：集合的样本属于K个类，现在随机抽取一个样本，它属于第k个类的概率为<img src="https://latex.codecogs.com/gif.latex?\rho&space;_k">。设集合里一共有n个样本，第k个类的样本有m个，则<img src="https://latex.codecogs.com/gif.latex?\rho&space;_k=\frac{m}{n}"></p>
@@ -591,7 +591,7 @@
 <p>5）假设以“有房子与否”与否为分裂点，即<img src="https://latex.codecogs.com/gif.latex?A_3=1">或<img src="https://latex.codecogs.com/gif.latex?A_3=2">，求基尼指数。</p>
 <p><img src="https://latex.codecogs.com/gif.latex?Gini(D,A_3=1)}=0.27"></p>
 <p>6）假设以“信贷情况非常好”与否为分裂点，即<img src="https://latex.codecogs.com/gif.latex?A_4=1">，求基尼指数。</p>
-<p><img src="https://latex.codecogs.com/gif.latex?Gini(D,A_4=1)==0.36"></p>
+<p><img src="https://latex.codecogs.com/gif.latex?Gini(D,A_4=1)=0.36"></p>
 <p>7）假设以“信贷情况好”与否为分裂点，即<img src="https://latex.codecogs.com/gif.latex?A_4=2">，求基尼指数。</p>
 <p><img src="https://latex.codecogs.com/gif.latex?Gini(D,A_4=2)}=0.47"></p>
 <p>8）假设以“信贷情况一般”与否为分裂点，即<img src="https://latex.codecogs.com/gif.latex?A_4=3">，求基尼指数。</p>
@@ -801,7 +801,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
