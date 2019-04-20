@@ -100,35 +100,31 @@
 
 
 
-  <meta name="description" content="基于SVD的图像压缩实践在之前的介绍里，我们讲过了SVD分解的基本原理。一个mxn的矩阵A可以分解为三个矩阵相乘： A可以被U和V表示，而其中的奇异值分别为U的列向量和V的行向量的权重：  通常，前k大的奇异值就足以占了所以奇异值90%的比重，这种情况下，我们只需要选择前k个奇异值，对应地选择U的前k个列向量，还有V的前k个行向量，就可以近似表示出矩阵A:  在图像处理中，我们把一张图片的每个像素">
-<meta name="keywords" content="Algorithm,SVD">
+  <meta name="description" content="聚类K-means 是聚类算法。不同于分类，聚类是事先不知道有几类的情况下，将数据聚合成几个群体，相当于自己划出几个类出来，属于无监督学习。 K-means 算法流程1）选质心：随机选取K个数据作为质心 2）聚集：对全局数据，计算质心之外的数据到K个质心的距离，到哪个质心距离最近就归到这个质心的团体中 3）选质心：得到了K个团体，对各个团体通过计算数据的平均值得到该团体新的质心（此时的质心很可能是">
+<meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Image Compression by SVD 基于奇异值分解的图像压缩">
-<meta property="og:url" content="https://dorianzi.github.io/2019/03/10/image_compression_with_SVD/index.html">
+<meta property="og:title" content="K-means K均值聚类">
+<meta property="og:url" content="https://dorianzi.github.io/2019/04/20/K-means/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="基于SVD的图像压缩实践在之前的介绍里，我们讲过了SVD分解的基本原理。一个mxn的矩阵A可以分解为三个矩阵相乘： A可以被U和V表示，而其中的奇异值分别为U的列向量和V的行向量的权重：  通常，前k大的奇异值就足以占了所以奇异值90%的比重，这种情况下，我们只需要选择前k个奇异值，对应地选择U的前k个列向量，还有V的前k个行向量，就可以近似表示出矩阵A:  在图像处理中，我们把一张图片的每个像素">
+<meta property="og:description" content="聚类K-means 是聚类算法。不同于分类，聚类是事先不知道有几类的情况下，将数据聚合成几个群体，相当于自己划出几个类出来，属于无监督学习。 K-means 算法流程1）选质心：随机选取K个数据作为质心 2）聚集：对全局数据，计算质心之外的数据到K个质心的距离，到哪个质心距离最近就归到这个质心的团体中 3）选质心：得到了K个团体，对各个团体通过计算数据的平均值得到该团体新的质心（此时的质心很可能是">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\lambda_{1},\lambda_{2},...,\lambda_{n}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{A}=\lambda_{1}u_{1}v^{T}_{1}+\lambda_{2}u_{2}v^{T}_{2}+...+\lambda_{n}u_{n}v^{T}_{n}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{\tilde{A}}=\underset{m\times&space;k}{(u_{1},u_{2},...,u_{k})}&space;\underset{k\times&space;k}{\begin{bmatrix}&space;\lambda_{1}&&space;&&space;&&space;0&space;\\&space;&&space;\lambda_{2}&&space;&&space;\\&space;&&space;&&space;...&&space;\\&space;&&space;&&space;&&space;\lambda_{k}\end{bmatrix}}&space;\underset{k\times&space;n}{\begin{pmatrix}&space;v^{T}_{1}\\&space;v^{T}_{2}\\&space;...\\&space;v^{T}_{k}&space;\end{pmatrix}&space;}">
-<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/raw/master/res/svd_cut.png">
-<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/SVD_k_10.png?raw=true">
-<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/SVD_k_30.png?raw=true">
-<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/SVD_k_50.png?raw=true">
-<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/SVD_k_100.png?raw=true">
-<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/SVD_k_500.png?raw=true">
-<meta property="og:updated_time" content="2019-04-01T02:13:43.076Z">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/kmeans_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/kmeans_2.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/kmeans_3.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/kmeans_4.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/kmeans_5.png">
+<meta property="og:updated_time" content="2019-04-20T01:10:05.751Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Image Compression by SVD 基于奇异值分解的图像压缩">
-<meta name="twitter:description" content="基于SVD的图像压缩实践在之前的介绍里，我们讲过了SVD分解的基本原理。一个mxn的矩阵A可以分解为三个矩阵相乘： A可以被U和V表示，而其中的奇异值分别为U的列向量和V的行向量的权重：  通常，前k大的奇异值就足以占了所以奇异值90%的比重，这种情况下，我们只需要选择前k个奇异值，对应地选择U的前k个列向量，还有V的前k个行向量，就可以近似表示出矩阵A:  在图像处理中，我们把一张图片的每个像素">
-<meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?\lambda_{1},\lambda_{2},...,\lambda_{n}">
+<meta name="twitter:title" content="K-means K均值聚类">
+<meta name="twitter:description" content="聚类K-means 是聚类算法。不同于分类，聚类是事先不知道有几类的情况下，将数据聚合成几个群体，相当于自己划出几个类出来，属于无监督学习。 K-means 算法流程1）选质心：随机选取K个数据作为质心 2）聚集：对全局数据，计算质心之外的数据到K个质心的距离，到哪个质心距离最近就归到这个质心的团体中 3）选质心：得到了K个团体，对各个团体通过计算数据的平均值得到该团体新的质心（此时的质心很可能是">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/kmeans_1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/2019/03/10/image_compression_with_SVD/">
+  <link rel="canonical" href="https://dorianzi.github.io/2019/04/20/K-means/">
 
 
 
@@ -138,7 +134,7 @@
   };
 </script>
 
-  <title>Image Compression by SVD 基于奇异值分解的图像压缩 | Dorian Mode</title>
+  <title>K-means K均值聚类 | Dorian Mode</title>
   
 
 
@@ -383,7 +379,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/03/10/image_compression_with_SVD/">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/04/20/K-means/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dorian Zi">
@@ -400,7 +396,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Image Compression by SVD 基于奇异值分解的图像压缩
+          <h1 class="post-title" itemprop="name headline">K-means K均值聚类
 
               
             
@@ -426,7 +422,7 @@
                 
               
 
-              <time title="Created: 2019-03-10 07:50:00" itemprop="dateCreated datePublished" datetime="2019-03-10T07:50:00+08:00">2019-03-10</time>
+              <time title="Created: 2019-04-20 06:54:59" itemprop="dateCreated datePublished" datetime="2019-04-20T06:54:59+08:00">2019-04-20</time>
             
 
             
@@ -479,8 +475,6 @@
               
                 <a href="/tags/Algorithm/" <i class="fa fa-tag"> Algorithm</a>
               
-                <a href="/tags/SVD/" <i class="fa fa-tag"> SVD</a>
-              
             </div>
           
           <!--Dorian Added End-->
@@ -498,27 +492,37 @@
       
 
       
-        <h1 id="基于SVD的图像压缩实践"><a href="#基于SVD的图像压缩实践" class="headerlink" title="基于SVD的图像压缩实践"></a>基于SVD的图像压缩实践</h1><p>在<a href="https://github.com/DorianZi/algorithm_explained/blob/master/matrix_SVD_decomposition.md" target="_blank" rel="noopener">之前的介绍</a>里，我们讲过了SVD分解的基本原理。一个mxn的矩阵A可以分解为三个矩阵相乘：</p>
-<p>A可以被U和V表示，而其中的奇异值<img src="https://latex.codecogs.com/gif.latex?\lambda_{1},\lambda_{2},...,\lambda_{n}" title="\lambda_{1},\lambda_{2},...,\lambda_{n}" style="display:inline;vertical-align:text-top;">分别为U的列向量和V的行向量的权重：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{A}=\lambda_{1}u_{1}v^{T}_{1}&plus;\lambda_{2}u_{2}v^{T}_{2}&plus;...&plus;\lambda_{n}u_{n}v^{T}_{n}" title="=\lambda_{1}u_{1}v^{T}_{1}+\lambda_{2}u_{2}v^{T}_{2}+...+\lambda_{n}u_{n}v^{T}_{n}" style="display:inline;vertical-align:text-top;"></p>
-<p>通常，前k大的奇异值就足以占了所以奇异值90%的比重，这种情况下，我们只需要选择前k个奇异值，对应地选择U的前k个列向量，还有V的前k个行向量，就可以近似表示出矩阵A:</p>
-<p><img src="https://latex.codecogs.com/gif.latex?\underset{m\times&space;n}{\tilde{A}}=\underset{m\times&space;k}{(u_{1},u_{2},...,u_{k})}&space;\underset{k\times&space;k}{\begin{bmatrix}&space;\lambda_{1}&&space;&&space;&&space;0&space;\\&space;&&space;\lambda_{2}&&space;&&space;\\&space;&&space;&&space;...&&space;\\&space;&&space;&&space;&&space;\lambda_{k}\end{bmatrix}}&space;\underset{k\times&space;n}{\begin{pmatrix}&space;v^{T}_{1}\\&space;v^{T}_{2}\\&space;...\\&space;v^{T}_{k}&space;\end{pmatrix}&space;}" style="display:inline;vertical-align:text-top;"></p>
-<p>在图像处理中，我们把一张图片的每个像素点作为矩阵中的元素，则我们得到一个mxn的矩阵，利用SVD分解，取前k个奇异值，就能实现图像的压缩：</p>
-<p><img src="https://github.com/DorianZi/algorithm_explained/raw/master/res/svd_cut.png" style="display:inline;vertical-align:text-top;"></p>
-<p>同时我也可以称作其为图像降噪，因为可以认为奇异值非常小的那些项是噪声。<br>Anyway, 直接上代码</p>
-<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from optparse import OptionParser</span><br><span class="line">import numpy as np</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line"># Get image path</span><br><span class="line">def getOptions():</span><br><span class="line">	parser = OptionParser()</span><br><span class="line">	parser.add_option(&quot;-p&quot;, &quot;--picture&quot;, dest=&quot;picture&quot;, action=&quot;store&quot;, help=&quot;specify the input picture path&quot;)</span><br><span class="line">	parser.add_option(&quot;-c&quot;, &quot;--count&quot;, dest=&quot;count&quot;, action=&quot;store&quot;, help=&quot;specify the required singular value count&quot;)</span><br><span class="line">	options, _ = parser.parse_args()</span><br><span class="line">	if not options.picture:</span><br><span class="line">		sys.exit(&quot;-p/--picture is required!&quot;)</span><br><span class="line">	return options</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def compress(K,U,Sigma,VT,verbose=False):</span><br><span class="line">	if verbose:</span><br><span class="line">		print(&quot;Selected singular value count: &#123;&#125;&quot;.format(K))</span><br><span class="line">		print(&quot;Before compression: &#123;&#125; &#123;&#125; &#123;&#125;&quot;.format(U.shape, Sigma.shape, VT.shape))</span><br><span class="line">	U_K = U[:, :K]</span><br><span class="line">	Sigma_K = np.eye(K)*Sigma[:K]   # Because Sigma matrix is a vector instead of a matrix, need to convert to matrix</span><br><span class="line">	VT_K = VT[:K, :]</span><br><span class="line">	if verbose:</span><br><span class="line">		print(&quot;After  compression: &#123;&#125; &#123;&#125; &#123;&#125;&quot;.format(U_K.shape, Sigma_K.shape, VT_K.shape))</span><br><span class="line">	return np.matmul(np.matmul(U_K,Sigma_K), VT_K)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	options = getOptions()</span><br><span class="line"></span><br><span class="line">	# Read image</span><br><span class="line">	pMatrix= np.array(plt.imread(options.picture))</span><br><span class="line">	print(&quot;Original image shape: &#123;&#125;&quot;.format(pMatrix.shape))</span><br><span class="line"></span><br><span class="line">	# Do SVD decomposition for each channel of RGB</span><br><span class="line">	R, G, B = pMatrix[:,:,0], pMatrix[:,:,1], pMatrix[:,:,2]</span><br><span class="line">	U_R,Sigma_R,VT_R = np.linalg.svd(R)</span><br><span class="line">	U_G,Sigma_G,VT_G = np.linalg.svd(G)</span><br><span class="line">	U_B,Sigma_B,VT_B = np.linalg.svd(B)</span><br><span class="line"></span><br><span class="line">	# compress by top K singular values</span><br><span class="line">	K = int(options.count) if options.count else 100</span><br><span class="line">	R_new = compress(K,U_R,Sigma_R,VT_R,verbose=True)</span><br><span class="line">	G_new = compress(K,U_G,Sigma_G,VT_G)</span><br><span class="line">	B_new = compress(K,U_B,Sigma_B,VT_B)</span><br><span class="line">	pMatrix_new = np.stack((R_new,G_new,B_new),2)  # Compose R,G,B channels back to complete image</span><br><span class="line">	print(&quot;Compresses image shape: &#123;&#125;&quot;.format(pMatrix_new.shape))</span><br><span class="line"></span><br><span class="line">	# show image after compress</span><br><span class="line">	plt.imshow(pMatrix_new)</span><br><span class="line">	plt.show()</span><br><span class="line">	sys.exit()</span><br></pre></td></tr></table></figure>
-<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ python imageCompress.py -p pic_1.png -c 1000</span><br><span class="line">     Original image shape: (1440L, 1080L, 4L)</span><br><span class="line">     Selected singular value count: 1000</span><br><span class="line">     Before compression: (1440L, 1440L) (1080L,) (1080L, 1080L)</span><br><span class="line">     After  compression: (1440L, 1000L) (1000L, 1000L) (1000L, 1080L)</span><br><span class="line">     Compresses image shape: (1440L, 1080L, 3L)</span><br></pre></td></tr></table></figure>
-<p>当K=10，即选取10个奇异值进行压缩：</p>
-<p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/SVD_k_10.png?raw=true" style="display:inline;vertical-align:text-top;"></p>
-<p>当K=30</p>
-<p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/SVD_k_30.png?raw=true" style="display:inline;vertical-align:text-top;"></p>
-<p>当K=50</p>
-<p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/SVD_k_50.png?raw=true" style="display:inline;vertical-align:text-top;"></p>
-<p>当K=100</p>
-<p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/SVD_k_100.png?raw=true" style="display:inline;vertical-align:text-top;"></p>
-<p>当K=500</p>
-<p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/SVD_k_500.png?raw=true" style="display:inline;vertical-align:text-top;"></p>
-<p>可见，当使用前100个奇异值（约占全部奇异值数量的10%），就可以比较好地表示原图像了</p>
+        <h1 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h1><p>K-means 是聚类算法。不同于分类，聚类是事先不知道有几类的情况下，将数据聚合成几个群体，相当于自己划出几个类出来，属于无监督学习。</p>
+<h1 id="K-means-算法流程"><a href="#K-means-算法流程" class="headerlink" title="K-means 算法流程"></a>K-means 算法流程</h1><p>1）选质心：随机选取K个数据作为质心</p>
+<p>2）聚集：对全局数据，计算质心之外的数据到K个质心的距离，到哪个质心距离最近就归到这个质心的团体中</p>
+<p>3）选质心：得到了K个团体，对各个团体通过计算数据的平均值得到该团体新的质心（此时的质心很可能是虚拟点，即不存在原数据中）</p>
+<p>4）重新聚集：对全局数据，计算质心之外的数据到K个质心的距离，到哪个质心距离最近就归到这个质心的团体中</p>
+<p>5）验证：查看这次聚集的团体跟上次聚集的团体有没有变化。没有变化则结束，有变化则继续循环3）和 4）</p>
+<p>通过图解就是:</p>
+<p><img src="/uploads/kmeans_1.png" alt></p>
+<p>通过上图可以看到6）相对于5）的团体没有变化，所以已经收敛，聚类结束</p>
+<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><p>问题：将下面6个点聚类为2类</p>
+<p><img src="/uploads/kmeans_2.png" alt></p>
+<p>1）选择P1和P2为初始质心</p>
+<p>2）通过计算其它点到质心P1, P2的距离来聚集团体：</p>
+<p><img src="/uploads/kmeans_3.png" alt></p>
+<p>根据距离计算，得到两个团体：<br>A 团: P1<br>B 团: P2, P3, P4, P5, P6</p>
+<p>3）对A, B团分别选新质心：</p>
+<p>A团质心是P1自己，B团质心是PB=(6.2, 5.6)</p>
+<p>4）围绕质心P1和PB，重新聚集团体：</p>
+<p>首先距离计算为</p>
+<p><img src="/uploads/kmeans_4.png" alt></p>
+<p>更新团体为：<br>C 团: P1, P2, P3<br>D 团: P4, P5, P6</p>
+<p>团体相对A,B发生了改变，所以继续</p>
+<p>5）对C, D团分别选新质心：</p>
+<p>C团质心是PC=(1.33, 1), D团质心是PD=(9, 8.33)</p>
+<p>6）围绕质心PC和PD，重新聚集团体：</p>
+<p>首先距离计算为</p>
+<p><img src="/uploads/kmeans_5.png" alt></p>
+<p>更新团体为：<br>E 团: P1, P2, P3<br>F 团: P4, P5, P6</p>
+<p>团体相对C,D没有改变，所以已经收敛了。结束!</p>
+<p>以上。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://blog.csdn.net/huangfei711/article/details/78480078" target="_blank" rel="noopener">https://blog.csdn.net/huangfei711/article/details/78480078</a></p>
 
       
     </div>
@@ -548,8 +552,6 @@
          
             <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
          
-            <a href="/tags/SVD/" rel="tag"># SVD</a>
-         
        Dorian Removed End -->
         </div>
       
@@ -562,8 +564,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/09/matrix_SVD_decomposition/" rel="next" title="SVD Decomposition 矩阵的奇异值分解">
-                <i class="fa fa-chevron-left"></i> SVD Decomposition 矩阵的奇异值分解
+              <a href="/2019/04/17/Random-Forest/" rel="next" title="Random Forest 随机森林">
+                <i class="fa fa-chevron-left"></i> Random Forest 随机森林
               </a>
             
           </div>
@@ -571,10 +573,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/18/[music]zaiwan/" rel="prev" title="再晚">
-                再晚 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -820,7 +818,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于SVD的图像压缩实践"><span class="nav-number">1.</span> <span class="nav-text">基于SVD的图像压缩实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#完整代码"><span class="nav-number">1.1.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行结果"><span class="nav-number">1.2.</span> <span class="nav-text">运行结果</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#聚类"><span class="nav-number">1.</span> <span class="nav-text">聚类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K-means-算法流程"><span class="nav-number">2.</span> <span class="nav-text">K-means 算法流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例"><span class="nav-number">3.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
