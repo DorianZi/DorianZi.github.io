@@ -100,20 +100,33 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Dorian Mode">
-<meta property="og:url" content="https://dorianzi.github.io/tags/Algorithm/index.html">
+  <meta name="description" content="卷积和神经网络了解卷积神经网络(Convolutional Neural Network)之前先来了解卷积。见下图：  从上图看，一个矩阵被另一个矩阵（我们称作“卷积核”）执行卷积，就是中矩阵通过一定步长（图中步长为1，也就是每次移动一个元素）扫描左矩阵，每次停留时计算对应元素的乘积之和作为新矩阵（右）的元素。 具体的计算例子：  那么卷积计算如何使用神经网络来构建呢？在之前的blog里讲过神经网">
+<meta name="keywords" content="Algorithm,Deep Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CNN 卷积神经网络">
+<meta property="og:url" content="https://dorianzi.github.io/2019/04/25/CNN/index.html">
 <meta property="og:site_name" content="Dorian Mode">
+<meta property="og:description" content="卷积和神经网络了解卷积神经网络(Convolutional Neural Network)之前先来了解卷积。见下图：  从上图看，一个矩阵被另一个矩阵（我们称作“卷积核”）执行卷积，就是中矩阵通过一定步长（图中步长为1，也就是每次移动一个元素）扫描左矩阵，每次停留时计算对应元素的乘积之和作为新矩阵（右）的元素。 具体的计算例子：  那么卷积计算如何使用神经网络来构建呢？在之前的blog里讲过神经网">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/cnn_1.gif">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/cnn_2.gif">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;1&space;&&space;2&space;&&space;3\\&space;4&space;&&space;5&space;&&space;6\\&space;7&space;&8&space;&9&space;\end{bmatrix}&space;\ast&space;\begin{bmatrix}&space;1&space;&2&space;\\&space;3&space;&&space;4&space;\end{bmatrix}=\begin{bmatrix}&space;37&space;&&space;47\\&space;67&space;&&space;77&space;\end{bmatrix}">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/cnn_3.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/cnn_4.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/cnn_5.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/cnn_6.png">
+<meta property="og:updated_time" content="2019-04-28T23:53:26.112Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dorian Mode">
+<meta name="twitter:title" content="CNN 卷积神经网络">
+<meta name="twitter:description" content="卷积和神经网络了解卷积神经网络(Convolutional Neural Network)之前先来了解卷积。见下图：  从上图看，一个矩阵被另一个矩阵（我们称作“卷积核”）执行卷积，就是中矩阵通过一定步长（图中步长为1，也就是每次移动一个元素）扫描左矩阵，每次停留时计算对应元素的乘积之和作为新矩阵（右）的元素。 具体的计算例子：  那么卷积计算如何使用神经网络来构建呢？在之前的blog里讲过神经网">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/cnn_1.gif">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/tags/Algorithm/">
+  <link rel="canonical" href="https://dorianzi.github.io/2019/04/25/CNN/">
 
 
 
@@ -123,7 +136,7 @@
   };
 </script>
 
-  <title>Tag: Algorithm | Dorian Mode</title>
+  <title>CNN 卷积神经网络 | Dorian Mode</title>
   
 
 
@@ -181,7 +194,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/DorianZi/DorianZi.github.io/tree/master" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
@@ -254,7 +267,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -348,318 +361,248 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Algorithm<small>Tag</small>
-        </h1>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/04/25/CNN/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dorian Zi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dorian Mode">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/04/25/CNN/" itemprop="url">
-            
-              <span itemprop="name">CNN 卷积神经网络</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">CNN 卷积神经网络
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-25T23:18:36+08:00" content="2019-04-25">
-          04-25
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-04-25 23:18:36" itemprop="dateCreated datePublished" datetime="2019-04-25T23:18:36+08:00">2019-04-25</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+          
+          <!--Dorian Added Start-->
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Algorithm/" <i class="fa fa-tag"> Algorithm</a>
+              
+                <a href="/tags/Deep-Learning/" <i class="fa fa-tag"> Deep Learning</a>
+              
+            </div>
+          
+          <!--Dorian Added End-->
+        
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/22/Neural_Network/" itemprop="url">
-            
-              <span itemprop="name">Neural Network 神经网络</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-22T17:15:02+08:00" content="2019-04-22">
-          04-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/20/K-means/" itemprop="url">
-            
-              <span itemprop="name">K-means K均值聚类</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-20T06:54:59+08:00" content="2019-04-20">
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/17/Random-Forest/" itemprop="url">
-            
-              <span itemprop="name">Random Forest 随机森林</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-17T21:31:03+08:00" content="2019-04-17">
-          04-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/14/XGBoost/" itemprop="url">
-            
-              <span itemprop="name">XGBoost 提升树的高效实现</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-14T20:33:01+08:00" content="2019-04-14">
-          04-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/12/Maximum-Entropy-Model/" itemprop="url">
-            
-              <span itemprop="name">Maximum Entropy Model 最大熵模型</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-12T08:34:34+08:00" content="2019-04-12">
-          04-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/10/CRF/" itemprop="url">
-            
-              <span itemprop="name">CRF 条件随机场</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-10T20:18:41+08:00" content="2019-04-10">
-          04-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/08/HMM/" itemprop="url">
-            
-              <span itemprop="name">HMM 隐马尔可夫模型</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-08T03:48:27+08:00" content="2019-04-08">
-          04-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/07/EM/" itemprop="url">
-            
-              <span itemprop="name">EM 算法</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-07T07:08:13+08:00" content="2019-04-07">
-          04-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/05/GBDT/" itemprop="url">
-            
-              <span itemprop="name">GBDT 梯度提升树</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-05T21:42:35+08:00" content="2019-04-05">
-          04-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <h1 id="卷积和神经网络"><a href="#卷积和神经网络" class="headerlink" title="卷积和神经网络"></a>卷积和神经网络</h1><p>了解卷积神经网络(Convolutional Neural Network)之前先来了解卷积。见下图：</p>
+<p><img src="/uploads/cnn_1.gif" alt></p>
+<p>从上图看，一个矩阵被另一个矩阵（我们称作“卷积核”）执行卷积，就是中矩阵通过一定步长（图中步长为1，也就是每次移动一个元素）扫描左矩阵，每次停留时计算对应元素的乘积之和作为新矩阵（右）的元素。</p>
+<p>具体的计算例子：</p>
+<p><img src="/uploads/cnn_2.gif" alt></p>
+<p>那么卷积计算如何使用神经网络来构建呢？在之前的blog里讲过神经网络是加权求和，于是我们可以这么构建：</p>
+<p>实现<img src="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;1&space;&&space;2&space;&&space;3\\&space;4&space;&&space;5&space;&&space;6\\&space;7&space;&8&space;&9&space;\end{bmatrix}&space;\ast&space;\begin{bmatrix}&space;1&space;&2&space;\\&space;3&space;&&space;4&space;\end{bmatrix}=\begin{bmatrix}&space;37&space;&&space;47\\&space;67&space;&&space;77&space;\end{bmatrix}" title="\begin{bmatrix} 1 & 2 & 3\\ 4 & 5 & 6\\ 7 &8 &9 \end{bmatrix} \ast \begin{bmatrix} 1 &2 \\ 3 & 4 \end{bmatrix}=\begin{bmatrix} 37 & 47\\ 67 & 77 \end{bmatrix}">的神经网络为：</p>
+<p><img src="/uploads/cnn_3.png" alt></p>
+<h1 id="CNN的各层"><a href="#CNN的各层" class="headerlink" title="CNN的各层"></a>CNN的各层</h1><p>CNN是因为有卷积层才叫CNN，但是除此外通常还有几个层:线性整流层，池化层，全连接层。至于它们的组合顺序和个数，取决于不同网络设计方式。只要它有效，任何组合方式的CNN网络都可以被认可。</p>
+<p>我们假设输入为图像，来讲讲常见的构造：卷积层-&gt;线性整流层-&gt;池化层-&gt;全连接层</p>
+<h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2><p>正如上面的例子讲过的，卷积层是对各个像素进行加权求和，而权重就是卷积核的元素。卷积层的物理意义就是提取图像各个部分的特征</p>
+<h2 id="线性整流层"><a href="#线性整流层" class="headerlink" title="线性整流层"></a>线性整流层</h2><p>整流层采用激活函数进行激活，常用的是Relu函数，它的图像如下：</p>
+<p><img src="/uploads/cnn_4.png" alt></p>
+<p>为什么选择Relu? 因为：</p>
+<p>1）信号通过它之后等于设置了阈值，在小于阈值（比如小于0），信号完全衰减。换句话说，不是所有信号都去拟合，这样有助于防止过拟合<br>2）它的导数大部分为常数，反向传播时计算量大大减小<br>3）它不像Sigmoid等激活函数，越往后导数越接近于零，容易造成梯度消失。而梯度消失会导致参数没法更新，训练停滞</p>
+<h2 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h2><p>池化层是为了保留主要的特征，缩减数据量，减少下一层的参数和计算量，防止过拟合。常用的有mean-pooling和max-pooling</p>
+<p>2x2平均池化：</p>
+<p><img src="/uploads/cnn_5.png" alt></p>
+<p>2x2最大池化：</p>
+<p><img src="/uploads/cnn_6.png" alt></p>
+<h2 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h2><p>卷积层和池化层都是对局部的操作，而全连接层得以将全局进行加权求和</p>
+<h1 id="其它技巧"><a href="#其它技巧" class="headerlink" title="其它技巧"></a>其它技巧</h1><h2 id="补零"><a href="#补零" class="headerlink" title="补零"></a>补零</h2><h2 id="参数共享"><a href="#参数共享" class="headerlink" title="参数共享"></a>参数共享</h2><h2 id="dropout"><a href="#dropout" class="headerlink" title="dropout"></a>dropout</h2><h1 id="各种CNN"><a href="#各种CNN" class="headerlink" title="各种CNN"></a>各种CNN</h1><p>LeNet</p>
+<p>AlexNet</p>
+<p>VGGNet</p>
+<p>GoogleNet</p>
+<p>ResNet</p>
+<p>（未完待续…）</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+
+      
+        <div class="post-tags">
+         <br>
+         <br>
+<!--  Dorian Removed Start    
+         
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+         
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+         
+       Dorian Removed End -->
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/22/Neural_Network/" rel="next" title="Neural Network 神经网络">
+                <i class="fa fa-chevron-left"></i> Neural Network 神经网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/tags/Algorithm/page/2/">2</a><a class="page-number" href="/tags/Algorithm/page/3/">3</a><a class="extend next" rel="next" href="/tags/Algorithm/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -679,8 +622,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -860,6 +812,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积和神经网络"><span class="nav-number">1.</span> <span class="nav-text">卷积和神经网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CNN的各层"><span class="nav-number">2.</span> <span class="nav-text">CNN的各层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积层"><span class="nav-number">2.1.</span> <span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性整流层"><span class="nav-number">2.2.</span> <span class="nav-text">线性整流层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#池化层"><span class="nav-number">2.3.</span> <span class="nav-text">池化层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全连接层"><span class="nav-number">2.4.</span> <span class="nav-text">全连接层</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其它技巧"><span class="nav-number">3.</span> <span class="nav-text">其它技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#补零"><span class="nav-number">3.1.</span> <span class="nav-text">补零</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数共享"><span class="nav-number">3.2.</span> <span class="nav-text">参数共享</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dropout"><span class="nav-number">3.3.</span> <span class="nav-text">dropout</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各种CNN"><span class="nav-number">4.</span> <span class="nav-text">各种CNN</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -1016,6 +985,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -1031,6 +1004,37 @@
 
   
 
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '5b4b5d838e55b91b3713',
+    clientSecret: 'ca4bfc7fee3940ef0896565d06b76890fd29ce40',
+    repo: 'DorianZi.github.io',
+    owner: 'DorianZi',
+    admin: ['DorianZi'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
 
 
   
