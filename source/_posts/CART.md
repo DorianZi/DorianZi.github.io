@@ -8,10 +8,10 @@ categories: Technic
 # CART定义
 在上一篇[决策树](https://dorianzi.github.io/2019/03/29/Decision-Tree)中，我们已经介绍了决策树的原理和ID3,C4.5算法。这一篇专门讲解CART算法。
 
-ART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。
+CART即Classification and Regression Tree,分类与回归树。特点是：只有二叉树。
 
 ## 分类树
-CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样。 CART首先是二叉树，其次分裂评价标准是用基尼指数
+CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分裂的准则不一样： CART首先是二叉树，其次分裂评价标准是用基尼指数
 
 ### 基尼指数
 基尼指数可以用来描述一个集合D的类别纯度，集合的样本们只属于一类，那该集合的基尼指数为0，集合的样本属于越多类，则基尼指数越大。基尼指数对集合的算法是：
@@ -58,7 +58,7 @@ CART用作分类树的时候跟ID3,C4.5决策树算法类似，只是特征分�
 
 6）假设以“信贷情况非常好”与否为分裂点，即<img src="https://latex.codecogs.com/gif.latex?A_4=1"/>，求基尼指数。
 
-<img src="https://latex.codecogs.com/gif.latex?Gini(D,A_4=1)==0.36"  />
+<img src="https://latex.codecogs.com/gif.latex?Gini(D,A_4=1)=0.36"  />
 
 
 7）假设以“信贷情况好”与否为分裂点，即<img src="https://latex.codecogs.com/gif.latex?A_4=2"/>，求基尼指数。

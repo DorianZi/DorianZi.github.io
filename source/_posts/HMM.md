@@ -1,7 +1,7 @@
 ---
 title: HMM 隐马尔可夫模型
 date: 2019-04-08 03:48:27
-tags: ["Algorithm"]
+tags: ["Algorithm","NLP"]
 categories: Technic
 ---
 

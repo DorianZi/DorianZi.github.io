@@ -56,28 +56,27 @@ BTW,此模型下，参数<img src="https://latex.codecogs.com/gif.latex?\theta=(
 
 ### 损失函数
 
-现在我们已经得到了概率模型。此时我们可以通过<font size="5">极大似然</font>的思维方式得到损失函数，即既然已经分类出来了，那么就不满足概率仅仅大于0.5，而是让分到这个类的概率尽可能大。也就是说如果分类器够完美的话，会使得①尽可能大，也会使得②尽可能大。又因为①和②作为概率都是正数，所以我们只要让①×②最大就好。所以①×②是我们需要最大化的目标函数，在前面加个<font size="5">负号</font>，则是需要最小化的损失函数：
+现在我们已经得到了概率模型。此时我们可以通过<font size="5">极大似然</font>的思维方式得到损失函数，即既然已经分类出来了，那么就不满足概率仅仅大于0.5，而是让分到这个类的概率尽可能大，如果我们的训练样本数为m个，那么我们希望m个概率的乘积尽可能大。所以似然函数是<img src="https://latex.codecogs.com/gif.latex?\prod_{i=1}^{m}P(y^{(i)}|x^{(i)},\theta)" />，我们需要最大化它。取负号就是最小化它，于是它损失函数就是损失函数：
 
-<img src="https://latex.codecogs.com/gif.latex?L(\theta)=-P(Y=1|X,\theta)P(Y=0|X,\theta)" />
+<img src="https://latex.codecogs.com/gif.latex?L(\theta)=-\prod_{i=1}^{m}P(y^{(i)}|x^{(i)},\theta)" />
 
-<img src="https://latex.codecogs.com/gif.latex?=-\prod_{Y=0}^{1}P(Y|X,\theta)"  />
 
-<img src="https://latex.codecogs.com/gif.latex?=-\prod_{Y=0}^{1}(\frac{1}{1&plus;e^{-\theta^{T}X}})^{Y}(1-\frac{1}{1&plus;e^{-\theta^{T}X}})^{1-Y}" />
+<img src="https://latex.codecogs.com/gif.latex?=-\prod_{i=1}^{m}(\frac{1}{1&plus;e^{-\theta^{T}x^{(i)}}})^{y^{(i)}}(1-\frac{1}{1&plus;e^{-\theta^{T}x^{(i)}}})^{1-y^{(i)}}" />
 
-<img src="https://latex.codecogs.com/gif.latex?l(\theta)=ln(L(\theta))=-\sum_{Y=0}^{1}ln[(\frac{1}{1&plus;e^{-\theta^{T}X}})^{Y}(1-\frac{1}{1&plus;e^{-\theta^{T}X}})^{1-Y}]"  />
+<img src="https://latex.codecogs.com/gif.latex?l(\theta)=ln(L(\theta))=-\sum_{i=1}^{m}ln[(\frac{1}{1&plus;e^{-\theta^{T}x^{(i)}}})^{y^{(i)}}(1-\frac{1}{1&plus;e^{-\theta^{T}x^{(i)}}})^{1-y^{(i)}}]"  />
 
-<img src="https://latex.codecogs.com/gif.latex?=\sum_{Y=0}^{1}[-Yln(\frac{1}{1&plus;e^{-\theta&space;^{T}X}})-(1-Y)ln(1-\frac{1}{1&plus;e^{-\theta&space;^{T}X}})]" />
+<img src="https://latex.codecogs.com/gif.latex?=\sum_{i=1}^{m}[-y^{(i)}ln(\frac{1}{1&plus;e^{-\theta&space;^{T}x^{(i)}}})-(1-y^{(i)})ln(1-\frac{1}{1&plus;e^{-\theta&space;^{T}x^{(i)}}})]" />
 
 ### 损失函数求导
 
 为了方便求导，设:
 
-<img src="https://latex.codecogs.com/gif.latex?z=\theta^{T}X"/>
+<img src="https://latex.codecogs.com/gif.latex?z=\theta^{T}x^{(i)}"/>
 
 <img src="https://latex.codecogs.com/gif.latex?h(z)=\frac{1}{1&plus;e^{-z}}"  />
 
 上两式求分别对<img src="https://latex.codecogs.com/gif.latex?\theta_{j}" />求导：
-<img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;z}{\partial\theta_{j}}=\frac{\partial&space;(\theta^{T}X)}{\partial\theta_{j}}=\frac{\partial&space;(\theta_{1}x_{1}&plus;\theta_{1}x_{2}&plus;...&plus;\theta_{1}x_{n})}{\partial\theta_{j}}=x_{j}"  />
+<img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;z}{\partial\theta_{j}}=\frac{\partial&space;(\theta^{T}x^{(i)})}{\partial\theta_{j}}=\frac{\partial&space;(\theta_{1}x^{(i)}_{1}&plus;\theta_{1}x^{(i)}_{2}&plus;...&plus;\theta_{1}x^{(i)}_{n})}{\partial\theta_{j}}=x^{(i)}_{j}"  />
 
 <img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;h(z)}{\partial&space;z}=[(1&plus;e^{-z})^{-1}]'=-\frac{(e^{-z})'}{(1&plus;e^{-z})^2}=\frac{e^{-z}}{(1&plus;e^{-z})^{2}}"  />
 
@@ -89,23 +88,23 @@ BTW,此模型下，参数<img src="https://latex.codecogs.com/gif.latex?\theta=(
 
 将<img src="https://latex.codecogs.com/gif.latex?h(z)=\frac{1}{1&plus;e^{-z}}"  />代入损失函数:
 
-<img src="https://latex.codecogs.com/gif.latex?l(\theta)=-\sum_{Y=0}^{1}[Yln(h(z))&plus;(1-Y)ln(1-h(z))]" />
+<img src="https://latex.codecogs.com/gif.latex?l(\theta)=-\sum_{i=1}^{m}[y^{(i)}ln(h(z))&plus;(1-y^{(i)})ln(1-h(z))]" />
 
 
 好了，准备就绪，开始对损失函数求导：
 <img src="https://latex.codecogs.com/gif.latex?\frac{\partial&space;l(\theta)}{\partial&space;\theta_{j}}=\frac{\partial&space;l(\theta)}{\partial&space;h}\frac{\partial&space;h}{\partial&space;z}\frac{\partial&space;z}{\partial&space;\theta_{j}}"  />
 
-<img src="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}[Y\frac{1}{h(z)}-(1-Y)\frac{1}{1-h(z)}]\times&space;h(z)[1-h(z)]\times&space;x_{j}"  />
+<img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}[y^{(i)}\frac{1}{h(z)}-(1-y^{(i)})\frac{1}{1-h(z)}]\times&space;h(z)[1-h(z)]\times&space;x^{(i)}_{j}"  />
 
-<img src="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}\{Y[1-h(z)]-(1-Y)h(z)\}\times&space;x_{j}" />
+<img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}\{y^{(i)}[1-h(z)]-(1-y^{(i)})h(z)\}\times&space;x^{(i)}_{j}" />
 
-<img src="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}[Y-h(z)]\times&space;x_{j}" />
+<img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}[y^{(i)}-h(z)]\times&space;x^{(i)}_{j}" />
 
-<img src="https://latex.codecogs.com/gif.latex?=-\sum_{Y=0}^{1}[Y-h(\theta^{T}X)]\times&space;x_{j}"  />
+<img src="https://latex.codecogs.com/gif.latex?=-\sum_{i=1}^{m}[y^{(i)}-h(\theta^{T}x^{(i)})]\times&space;x^{(i)}_{j}"  />
 
 至此，我们得到参数更新的迭代公式为：
 
-<img src="https://latex.codecogs.com/gif.latex?\theta_{j}:=\theta_{j}-\alpha&space;\sum_{Y=0}^{1}[Y-h(\theta^{T}X)]\times&space;x_{j}" />
+<img src="https://latex.codecogs.com/gif.latex?\theta_{j}:=\theta_{j}-\alpha&space;\sum_{i=1}^{m}[y^{(i)}-h(\theta^{T}x^{(i)})]\times&space;x^{(i)}_{j}" />
 
 接下来怎么办？——更新参数，训练分类器。训练过程由软件完成，这里就不手动推导了。
 
