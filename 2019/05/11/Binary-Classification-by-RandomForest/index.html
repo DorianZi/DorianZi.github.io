@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="L6qAeUEWrk">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '6O9OK26379',
+      apiKey: 'd266e496228bce82728a87f4c2ea4800',
+      indexName: 'MyHexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="问题的提出问题来自于Kaggle的一个Titanic的竞赛项目：给出泰坦尼克号上的乘客的特征（仓位，年龄，性别等），预测Ta是否被选中上援救船 数据集的获取数据集在这里可以下载 我们来看看训练数据(测试数据只是少了label所在的列)  需要解释的列：  Survived 列为是否被解救的label pclass 舱位等级 SibSp 同船配偶以及兄弟姐妹的人数 Parch 同船父母或者子女的人数">
+<meta name="keywords" content="Machine Learning,TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Binary Classification by RandomForest 基于随机森林的二分类问题实践">
+<meta property="og:url" content="https://dorianzi.github.io/2019/05/11/Binary-Classification-by-RandomForest/index.html">
+<meta property="og:site_name" content="Dorian Mode">
+<meta property="og:description" content="问题的提出问题来自于Kaggle的一个Titanic的竞赛项目：给出泰坦尼克号上的乘客的特征（仓位，年龄，性别等），预测Ta是否被选中上援救船 数据集的获取数据集在这里可以下载 我们来看看训练数据(测试数据只是少了label所在的列)  需要解释的列：  Survived 列为是否被解救的label pclass 舱位等级 SibSp 同船配偶以及兄弟姐妹的人数 Parch 同船父母或者子女的人数">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://dorianzi.github.io/2019/05/11/Binary-Classification-by-RandomForest/Binary_classification_randomForest_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/2019/05/11/Binary-Classification-by-RandomForest/Binary_classification_randomForest_2.png">
+<meta property="og:image" content="https://dorianzi.github.io/2019/05/11/Binary-Classification-by-RandomForest/Binary_classification_randomForest_3.png">
+<meta property="og:image" content="https://dorianzi.github.io/2019/05/11/Binary-Classification-by-RandomForest/Binary_classification_randomForest_4.png">
+<meta property="og:updated_time" content="2019-05-13T03:19:08.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Binary Classification by RandomForest 基于随机森林的二分类问题实践">
+<meta name="twitter:description" content="问题的提出问题来自于Kaggle的一个Titanic的竞赛项目：给出泰坦尼克号上的乘客的特征（仓位，年龄，性别等），预测Ta是否被选中上援救船 数据集的获取数据集在这里可以下载 我们来看看训练数据(测试数据只是少了label所在的列)  需要解释的列：  Survived 列为是否被解救的label pclass 舱位等级 SibSp 同船配偶以及兄弟姐妹的人数 Parch 同船父母或者子女的人数">
+<meta name="twitter:image" content="https://dorianzi.github.io/2019/05/11/Binary-Classification-by-RandomForest/Binary_classification_randomForest_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://dorianzi.github.io/2019/05/11/Binary-Classification-by-RandomForest/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Binary Classification by RandomForest 基于随机森林的二分类问题实践 | Dorian Mode</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bdd9553b00b737f4e03ff3fc43e220f2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/DorianZi/DorianZi.github.io/tree/master" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dorian Mode</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/05/11/Binary-Classification-by-RandomForest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dorian Zi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dorian Mode">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Binary Classification by RandomForest 基于随机森林的二分类问题实践
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-11 08:15:37" itemprop="dateCreated datePublished" datetime="2019-05-11T08:15:37+08:00">2019-05-11</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+          
+          <!--Dorian Added Start-->
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Machine-Learning/" <i class="fa fa-tag"> Machine Learning</a>
+              
+                <a href="/tags/TensorFlow/" <i class="fa fa-tag"> TensorFlow</a>
+              
+            </div>
+          
+          <!--Dorian Added End-->
+        
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="问题的提出"><a href="#问题的提出" class="headerlink" title="问题的提出"></a>问题的提出</h1><p>问题来自于Kaggle的一个<a href="https://www.kaggle.com/c/titanic" target="_blank" rel="noopener">Titanic</a>的竞赛项目：<br>给出泰坦尼克号上的乘客的特征（仓位，年龄，性别等），预测Ta是否被选中上援救船</p>
+<h1 id="数据集的获取"><a href="#数据集的获取" class="headerlink" title="数据集的获取"></a>数据集的获取</h1><p>数据集在<a href="https://www.kaggle.com/c/titanic/data" target="_blank" rel="noopener">这里</a>可以下载</p>
+<p>我们来看看训练数据(测试数据只是少了label所在的列)</p>
+<p><img src="Binary_classification_randomForest_1.png" alt></p>
+<p>需要解释的列：</p>
+<ul>
+<li>Survived 列为是否被解救的label</li>
+<li>pclass 舱位等级</li>
+<li>SibSp 同船配偶以及兄弟姐妹的人数</li>
+<li>Parch 同船父母或者子女的人数</li>
+<li>Fare 船票价格</li>
+<li>Cabin 舱位</li>
+<li>Embarked 登船港口</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">train_df = pd.read_csv(&quot;train.csv&quot;)</span><br><span class="line">train_data = train_df.drop([&quot;Survived&quot;],axis=1).values</span><br><span class="line">train_label_data = train_df[&quot;Survived&quot;].values</span><br><span class="line">test_df = pd.read_csv(&quot;test.csv&quot;)</span><br></pre></td></tr></table></figure>
+<h1 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h1><p>为什么要进行特征工程？ 因为特征众多，干扰也多，并不是所有特征都是需要保留的；需要保留的特征也并非直接可用的（比如需要进行数值转换，需要字符串截取）；并不是所有特征都是有数据的（需要进行数据补全，或者直接舍弃该特征）</p>
+<p>首先对训练数据有个大致的轮廓：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">train_df.info()</span><br><span class="line"></span><br><span class="line">############################输出如下#################################</span><br><span class="line">&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;</span><br><span class="line">RangeIndex: 891 entries, 0 to 890</span><br><span class="line">Data columns (total 12 columns):</span><br><span class="line">PassengerId    891 non-null int64</span><br><span class="line">Survived       891 non-null int64</span><br><span class="line">Pclass         891 non-null int64</span><br><span class="line">Name           891 non-null object</span><br><span class="line">Sex            891 non-null object</span><br><span class="line">Age            714 non-null float64</span><br><span class="line">SibSp          891 non-null int64</span><br><span class="line">Parch          891 non-null int64</span><br><span class="line">Ticket         891 non-null object</span><br><span class="line">Fare           891 non-null float64</span><br><span class="line">Cabin          204 non-null object</span><br><span class="line">Embarked       889 non-null object</span><br><span class="line">dtypes: float64(2), int64(5), object(5)</span><br><span class="line">memory usage: 83.6+ KB</span><br><span class="line">None</span><br></pre></td></tr></table></figure></p>
+<h2 id="Pclass"><a href="#Pclass" class="headerlink" title="Pclass"></a>Pclass</h2><p>Pclass在数据集里面只有1,2,3三个值，且没有缺失值，可以直接用来训练</p>
+<h2 id="Name"><a href="#Name" class="headerlink" title="Name"></a>Name</h2><p>名字中的Mr.  Mrs. Miss Rev. Dr.可能是身份的象征，它影响是否被解救的结果吗？我们可以通过数据可视化来观察:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">from matplotlib import pyplot as plt </span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def findTittle(name):</span><br><span class="line">    title = name.split(&quot;, &quot;)[1].split(&quot;.&quot;)[0]</span><br><span class="line">    return title if title else None</span><br><span class="line"></span><br><span class="line">train_df = pd.read_csv(&quot;train.csv&quot;)</span><br><span class="line"></span><br><span class="line"># 通过apply和lambda来进行数据替换的mapping</span><br><span class="line">train_df[&quot;Name&quot;] = train_df[&quot;Name&quot;].apply(lambda x: findTittle(x) if findTittle(x) else x)</span><br><span class="line"></span><br><span class="line"># 找到集合</span><br><span class="line">title_list =  train_df[&quot;Name&quot;].unique()</span><br><span class="line">survived_num = list()</span><br><span class="line">not_survived_num = list()</span><br><span class="line"></span><br><span class="line">for t in title_list:</span><br><span class="line">    # train_df[&quot;Name&quot;] == t 返回的是Series格式的数值为布尔值的数据，loc可以接受Series作为参数，并返回其中为True的值</span><br><span class="line">    bar_name = train_df.loc[train_df[&quot;Name&quot;] == t]</span><br><span class="line"></span><br><span class="line">    # Series的函数sum()返回数值为True的个数</span><br><span class="line">    survived_num.append((bar_name[&quot;Survived&quot;] == 1).sum())</span><br><span class="line">    not_survived_num.append((bar_name[&quot;Survived&quot;] == 0).sum())</span><br><span class="line"></span><br><span class="line"># 构建生还率条状图，每个条状图宽度为0.3</span><br><span class="line">plt.bar(np.arange(len(title_list)),survived_num,label=&apos;survived&apos;, width=0.3)</span><br><span class="line"></span><br><span class="line"># 构建非生还率条状图，每个条状图宽度为0.3，每隔位置平移0.3，这样就能与生还率条状图并排</span><br><span class="line">plt.bar(np.arange(len(title_list))+0.3,not_survived_num,label=&apos;non-survived&apos;,width=0.3)</span><br><span class="line"></span><br><span class="line"># 将位置映射为字符来显示</span><br><span class="line">plt.xticks([i for i in np.arange(len(title_list))], title_list)</span><br><span class="line"></span><br><span class="line"># 显示图例</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="Binary_classification_randomForest_2.png" alt></p>
+<p>从图上看Mr生还率最低，而Mrs和Miss的生还率更高。所以title这个特征是可以影响到结果的，应该保留</p>
+<h2 id="Sex"><a href="#Sex" class="headerlink" title="Sex"></a>Sex</h2><p>第一反应会好奇是否女性会生还率更高？我们还是通过数据来观察：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">from matplotlib import pyplot as plt</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">train_df = pd.read_csv(&quot;train.csv&quot;)</span><br><span class="line">sex_list =  train_df[&quot;Sex&quot;].unique()</span><br><span class="line">survived_num = list()</span><br><span class="line">not_survived_num = list()</span><br><span class="line"></span><br><span class="line">for t in sex_list:</span><br><span class="line">    bar_name = train_df.loc[train_df[&quot;Sex&quot;] == t]</span><br><span class="line">    survived_num.append((bar_name[&quot;Survived&quot;] == 1).sum())</span><br><span class="line">    not_survived_num.append((bar_name[&quot;Survived&quot;] == 0).sum())</span><br><span class="line"></span><br><span class="line">plt.bar(np.arange(len(sex_list)),survived_num,label=&apos;survived&apos;, width=0.3)</span><br><span class="line">plt.bar(np.arange(len(sex_list))+0.3,not_survived_num,label=&apos;non-survived&apos;,width=0.3)</span><br><span class="line">plt.xticks([i for i in np.arange(len(sex_list))], sex_list)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="Binary_classification_randomForest_3.png" alt></p>
+<p>的确女性生还率更高，所以性别对结果有影响，应当保留</p>
+<h2 id="Age"><a href="#Age" class="headerlink" title="Age"></a>Age</h2><p>首先年龄有缺失值，需要进行缺失值处理；其次年龄跨度很大，数值众多，为了简化计算同时减少过拟合，需要对年龄进行分段。</p>
+<p>首先看缺失值补全。</p>
+<p>缺失值怎么补全？根据实际需要可以补零，显然这里不适用；可以补充平均值，作为年龄的话也不是很合理；可以联合其他跟年龄有关的特征，比如上面讲的title来分别对不同的title求平均，这里我们选用这个方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"># 根据Name来分类，返回DataFrameGroupBy格式数据，是一种中间格式，不能打印</span><br><span class="line">name_group = train_df.groupby(&quot;Name&quot;)</span><br><span class="line"></span><br><span class="line"># 不能打印数据，可以查看grouping之后的各组个数</span><br><span class="line">print name_group.size()</span><br><span class="line"></span><br><span class="line"># 选中列，返回SeriesGroupBy，仍然是中间数据</span><br><span class="line">age_by_name = name_group[&apos;Age&apos;]</span><br><span class="line"></span><br><span class="line"># 进行计算，返回Series格式数据</span><br><span class="line">median_age = age_by_name.median()</span><br><span class="line">print median_age</span><br><span class="line"></span><br><span class="line">########打印如下#######</span><br><span class="line"># Name</span><br><span class="line"># Capt            70.0</span><br><span class="line"># Col             58.0</span><br><span class="line"># Don             40.0</span><br><span class="line"># Dr              46.5</span><br><span class="line"># Jonkheer        38.0</span><br><span class="line"># Lady            48.0</span><br><span class="line"># Major           48.5</span><br><span class="line"># Master           3.5</span><br><span class="line"># Miss            21.0</span><br><span class="line"># Mlle            24.0</span><br><span class="line"># Mme             24.0</span><br><span class="line"># Mr              30.0</span><br><span class="line"># Mrs             35.0</span><br><span class="line"># Ms              28.0</span><br><span class="line"># Rev             46.5</span><br><span class="line"># Sir             49.0</span><br><span class="line"># the Countess    33.0</span><br><span class="line"># Name: Age, dtype: float64</span><br><span class="line"></span><br><span class="line">print train_df[&quot;Age&quot;]</span><br><span class="line">########打印如下#######</span><br><span class="line"># 0      22.0</span><br><span class="line"># 1      38.0</span><br><span class="line"># 2      26.0</span><br><span class="line"># 3      35.0</span><br><span class="line"># 4      35.0</span><br><span class="line"># 5       NaN</span><br><span class="line"># 6      54.0</span><br><span class="line"># 7       2.0</span><br><span class="line"># ...     ...</span><br><span class="line"></span><br><span class="line"># 使用SeriesGroupBy数据通过transform填充空值</span><br><span class="line">train_df[&quot;Age&quot;] = age_by_name.transform(lambda x: x.fillna(x.median()))   # 这里lambda的x取值范围是每一个group里的数据</span><br><span class="line">print train_df[&quot;Age&quot;]</span><br><span class="line"></span><br><span class="line">########打印如下#######</span><br><span class="line"># 0      22.0</span><br><span class="line"># 1      38.0</span><br><span class="line"># 2      26.0</span><br><span class="line"># 3      35.0</span><br><span class="line"># 4      35.0</span><br><span class="line"># 5       30.0</span><br><span class="line"># 6      54.0</span><br><span class="line"># 7       2.0</span><br><span class="line"># ...     ...</span><br></pre></td></tr></table></figure>
+<p>groupBy数据 在进行任何操作比如mean()之前只能是中间数据。</p>
+<p>groupby的操作图如下：</p>
+<p><img src="Binary_classification_randomForest_4.png" alt></p>
+<p>（未完待续…）</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+
+      
+        <div class="post-tags">
+         <br>
+         <br>
+<!--  Dorian Removed Start    
+         
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+         
+            <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+         
+       Dorian Removed End -->
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/01/Digit-Recognizer-By-CNN/" rel="next" title="Digit Recognizer by CNN 基于卷积神经网络的手写数字识别">
+                <i class="fa fa-chevron-left"></i> Digit Recognizer by CNN 基于卷积神经网络的手写数字识别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/eric_clapton.jpg" alt="Dorian Zi">
+            
+              <p class="site-author-name" itemprop="name">Dorian Zi</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/dorianzi" title="GitHub &rarr; https://github.com/dorianzi" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://kaggle.com/dorianzi" title="Kaggle &rarr; https://kaggle.com/dorianzi" rel="noopener" target="_blank"><i class="fa fa-fw fa-list-alt"></i>Kaggle</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://xiami.com/artist/mf8ydg642ef" title="Xiami &rarr; https://xiami.com/artist/mf8ydg642ef" rel="noopener" target="_blank"><i class="fa fa-fw fa-music"></i>Xiami</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://music.163.com/#/album?id=3080421" title="Netease &rarr; https://music.163.com/#/album?id=3080421" rel="noopener" target="_blank"><i class="fa fa-fw fa-headphones"></i>Netease</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://facebook.com/profile.php?id=100008679135728" title="FB Page &rarr; https://facebook.com/profile.php?id=100008679135728" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://instagram.com/dorian.zi/" title="Instagram &rarr; https://instagram.com/dorian.zi/" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://linkedin.com/in/dorian-zi-7620b6127/" title="Linkedin &rarr; https://linkedin.com/in/dorian-zi-7620b6127/" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+                </span>
+              
+            </div>
+          
+
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=481876106&auto=1&height=66"></iframe>
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题的提出"><span class="nav-number">1.</span> <span class="nav-text">问题的提出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据集的获取"><span class="nav-number">2.</span> <span class="nav-text">数据集的获取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.1.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特征工程"><span class="nav-number">3.</span> <span class="nav-text">特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pclass"><span class="nav-number">3.1.</span> <span class="nav-text">Pclass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Name"><span class="nav-number">3.2.</span> <span class="nav-text">Name</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sex"><span class="nav-number">3.3.</span> <span class="nav-text">Sex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Age"><span class="nav-number">3.4.</span> <span class="nav-text">Age</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dorian Zi</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '5b4b5d838e55b91b3713',
+    clientSecret: 'ca4bfc7fee3940ef0896565d06b76890fd29ce40',
+    repo: 'DorianZi.github.io',
+    owner: 'DorianZi',
+    admin: ['DorianZi'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=7.0.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
