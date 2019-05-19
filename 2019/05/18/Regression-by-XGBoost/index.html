@@ -100,45 +100,32 @@
 
 
 
-  <meta name="description" content="相似矩阵相似矩阵表达的是：同一个线性变换在不同基下的表达。下面的推导中，A矩阵和B矩阵相似，也就是说他们是同一个线性变换在不同基下的表达 推导见下图  首先我们脱离任何基，在“绝对”坐标系里面描述一个线性变换：线性变换将向量变换为 接下来我们分别在不同的基里描述这个线性变换： 在基下，上述变换描述为：线性变换A将变换为 同时由于我们知道向量和的关系是： 所以该变换可以进一步表述为：线性变换A将变换">
-<meta name="keywords" content="Algorithm">
+  <meta name="description" content="问题的提出问题来自于Kaggle的一个比赛项目：房价预测。给出房子的众多特征，要求建立数值回归模型，预测房子的价格。 数据集到此处下载 训练数据长这个样子：123456789101112Id  MSSubClass  MSZoning  LotFrontage  LotArea  Street   ...   MoSold  YrSold  SaleType  SaleCondition  Sal">
+<meta name="keywords" content="Machine Learning,xgboost">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Matrix Similarity 矩阵相似">
-<meta property="og:url" content="https://dorianzi.github.io/2019/03/04/matrix_similarity/index.html">
+<meta property="og:title" content="Regression by XGBoost">
+<meta property="og:url" content="https://dorianzi.github.io/2019/05/18/Regression-by-XGBoost/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="相似矩阵相似矩阵表达的是：同一个线性变换在不同基下的表达。下面的推导中，A矩阵和B矩阵相似，也就是说他们是同一个线性变换在不同基下的表达 推导见下图  首先我们脱离任何基，在“绝对”坐标系里面描述一个线性变换：线性变换将向量变换为 接下来我们分别在不同的基里描述这个线性变换： 在基下，上述变换描述为：线性变换A将变换为 同时由于我们知道向量和的关系是： 所以该变换可以进一步表述为：线性变换A将变换">
+<meta property="og:description" content="问题的提出问题来自于Kaggle的一个比赛项目：房价预测。给出房子的众多特征，要求建立数值回归模型，预测房子的价格。 数据集到此处下载 训练数据长这个样子：123456789101112Id  MSSubClass  MSZoning  LotFrontage  LotArea  Street   ...   MoSold  YrSold  SaleType  SaleCondition  Sal">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/raw/master/res/matrix_similarity.jpg">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{\beta}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow}&space;,\underset{j}{\rightarrow})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{a}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}=\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow}&space;,\underset{j'}{\rightarrow})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}(\underset{i}{\rightarrow},\underset{j}{\rightarrow})=(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}=B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}A=BP^{-1}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}AP=B">
-<meta property="og:updated_time" content="2019-04-01T02:13:37.568Z">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RegressionbyXGBoost_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RegressionbyXGBoost_2.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RegressionbyXGBoost_3.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RegressionbyXGBoost_4.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RegressionbyXGBoost_5.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RegressionbyXGBoost_6.png">
+<meta property="og:updated_time" content="2019-05-19T03:37:17.864Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Matrix Similarity 矩阵相似">
-<meta name="twitter:description" content="相似矩阵相似矩阵表达的是：同一个线性变换在不同基下的表达。下面的推导中，A矩阵和B矩阵相似，也就是说他们是同一个线性变换在不同基下的表达 推导见下图  首先我们脱离任何基，在“绝对”坐标系里面描述一个线性变换：线性变换将向量变换为 接下来我们分别在不同的基里描述这个线性变换： 在基下，上述变换描述为：线性变换A将变换为 同时由于我们知道向量和的关系是： 所以该变换可以进一步表述为：线性变换A将变换">
-<meta name="twitter:image" content="https://github.com/DorianZi/algorithm_explained/raw/master/res/matrix_similarity.jpg">
+<meta name="twitter:title" content="Regression by XGBoost">
+<meta name="twitter:description" content="问题的提出问题来自于Kaggle的一个比赛项目：房价预测。给出房子的众多特征，要求建立数值回归模型，预测房子的价格。 数据集到此处下载 训练数据长这个样子：123456789101112Id  MSSubClass  MSZoning  LotFrontage  LotArea  Street   ...   MoSold  YrSold  SaleType  SaleCondition  Sal">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/RegressionbyXGBoost_1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/2019/03/04/matrix_similarity/">
+  <link rel="canonical" href="https://dorianzi.github.io/2019/05/18/Regression-by-XGBoost/">
 
 
 
@@ -148,7 +135,7 @@
   };
 </script>
 
-  <title>Matrix Similarity 矩阵相似 | Dorian Mode</title>
+  <title>Regression by XGBoost | Dorian Mode</title>
   
 
 
@@ -393,7 +380,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/03/04/matrix_similarity/">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/05/18/Regression-by-XGBoost/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dorian Zi">
@@ -410,7 +397,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Matrix Similarity 矩阵相似
+          <h1 class="post-title" itemprop="name headline">Regression by XGBoost
 
               
             
@@ -436,7 +423,7 @@
                 
               
 
-              <time title="Created: 2019-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-04T00:00:00+08:00">2019-03-04</time>
+              <time title="Created: 2019-05-18 07:52:19" itemprop="dateCreated datePublished" datetime="2019-05-18T07:52:19+08:00">2019-05-18</time>
             
 
             
@@ -487,7 +474,9 @@
           
             <div class="post-tags">
               
-                <a href="/tags/Algorithm/" <i class="fa fa-tag"> Algorithm</a>
+                <a href="/tags/Machine-Learning/" <i class="fa fa-tag"> Machine Learning</a>
+              
+                <a href="/tags/xgboost/" <i class="fa fa-tag"> xgboost</a>
               
             </div>
           
@@ -506,23 +495,24 @@
       
 
       
-        <h1 id="相似矩阵"><a href="#相似矩阵" class="headerlink" title="相似矩阵"></a>相似矩阵</h1><p>相似矩阵表达的是：同一个线性变换在不同基下的表达。<br>下面的推导中，A矩阵和B矩阵相似，也就是说他们是同一个线性变换在不同基下的表达</p>
-<h2 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h2><p>见下图</p>
-<p><img src="https://github.com/DorianZi/algorithm_explained/raw/master/res/matrix_similarity.jpg"></p>
-<p>首先我们脱离任何基，在“绝对”坐标系里面描述一个线性变换：线性变换将向量<img src="https://latex.codecogs.com/gif.latex?\underset{\alpha}{\rightarrow}" title="\underset{a}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?\underset{\beta}{\rightarrow}" title="\underset{\beta}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>接下来我们分别在不同的基里描述这个线性变换：</p>
-<p>在基<img src="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow}&space;,\underset{j}{\rightarrow})" title="(\underset{i}{\rightarrow} ,\underset{j}{\rightarrow})" style="display:inline;vertical-align:text-top;">下，上述变换描述为：线性变换A将<img src="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}" title="\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?A\underset{v}{\rightarrow}" title="A\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>同时由于我们知道向量<img src="https://latex.codecogs.com/gif.latex?\underset{a}{\rightarrow}" title="\underset{a}{\rightarrow}" style="display:inline;vertical-align:text-top;">和<img src="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}" title="\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;">的关系是：<img src="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}=\underset{v}{\rightarrow}" title="(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}=\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>所以该变换可以进一步表述为：线性变换A将<img src="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}" title="(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}" title="A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>同理在新基下<img src="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow}&space;,\underset{j'}{\rightarrow})" title="(\underset{i'}{\rightarrow} ,\underset{j'}{\rightarrow})" style="display:inline;vertical-align:text-top;">该变换表述为：线性变换B将<img src="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" title="(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" title="B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>如果我们知道两组基的转换关系为<img src="https://latex.codecogs.com/gif.latex?P^{-1}" title="P^{-1}" style="display:inline;vertical-align:text-top;">，那么有：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}(\underset{i}{\rightarrow},\underset{j}{\rightarrow})=(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})" title="P^{-1}(\underset{i}{\rightarrow},\underset{j}{\rightarrow})=(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})" style="display:inline;vertical-align:text-top;"> ①</p>
-<p>同时，线性变换之后得到的向量也应该满足基之间的转换关系：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}=B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" title="P^{-1}A(\underset{i}{\rightarrow},\underset{i}{\rightarrow})\underset{\alpha}{\rightarrow}=B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;">  ②</p>
-<p>将①带入②得到：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}A=BP^{-1}" title="P^{-1}A=BP^{-1}" style="display:inline;vertical-align:text-top;"></p>
-<p>==&gt;</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}AP=B" title="P^{-1}AP=B" style="display:inline;vertical-align:text-top;"></p>
+        <h1 id="问题的提出"><a href="#问题的提出" class="headerlink" title="问题的提出"></a>问题的提出</h1><p>问题来自于Kaggle的一个比赛项目：<a href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques" target="_blank" rel="noopener">房价预测</a>。<br>给出房子的众多特征，要求建立数值回归模型，预测房子的价格。</p>
+<h1 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h1><p>到<a href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data" target="_blank" rel="noopener">此处</a>下载</p>
+<p>训练数据长这个样子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Id  MSSubClass  MSZoning  LotFrontage  LotArea  Street   ...   MoSold  YrSold  SaleType  SaleCondition  SalePrice</span><br><span class="line">1      60          RL         65        8450     Pave    ...     2      2008      WD        Normal       208500</span><br><span class="line">2      20          RL         80        9600     Pave    ...     5      2007      WD        Normal       181500</span><br><span class="line">3      60          RL         68       11250     Pave    ...     9      2008      WD        Normal       223500</span><br><span class="line">4      70          RL         60        9550     Pave    ...     2      2006      WD       Abnorml       140000</span><br><span class="line">5      60          RL         84       14260     Pave    ...    12      2008      WD        Normal       250000</span><br><span class="line">6      50          RL         85       14115     Pave    ...    10      2009      WD        Normal       143000</span><br><span class="line">7      20          RL         75       10084     Pave    ...     8      2007      WD        Normal       307000</span><br><span class="line">8      60          RL         NA       10382     Pave    ...    11      2009      WD        Normal       200000</span><br><span class="line">9      50          RM         51        6120     Pave    ...     4      2008      WD       Abnorml       129900</span><br><span class="line">10    190          RL         50        7420     Pave    ...     1      2008      WD        Normal       118000</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>一共有81项特征，有数值特征，有类型特征</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">trainDF = pd.read_csv(&quot;train.csv&quot;)</span><br><span class="line">testDF = pd.read_csv(&quot;test.csv&quot;)</span><br></pre></td></tr></table></figure>
+<h1 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h1><h2 id="查看价格整体分布"><a href="#查看价格整体分布" class="headerlink" title="查看价格整体分布"></a>查看价格整体分布</h2><p>先看一下价格的整体分布<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"># 画密度图，也可以用更底层的plt.hist</span><br><span class="line">(trainDF[&apos;SalePrice&apos;])来做</span><br><span class="line">sns.distplot(trainDF[&apos;SalePrice&apos;])</span><br><span class="line"></span><br><span class="line"># 因为seaborn是matplotlib的高级库，所以可以用plt.show()来调动绘图</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>使用sns.distplot<br><img src="/uploads/RegressionbyXGBoost_1.png" alt></p>
+<p>使用plt.hist<br><img src="/uploads/RegressionbyXGBoost_2.png" alt></p>
+<h2 id="查看相关系数"><a href="#查看相关系数" class="headerlink" title="查看相关系数"></a>查看相关系数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">corrmat = trainDF.corr()</span><br><span class="line">print corrmat</span><br><span class="line"></span><br><span class="line">###打印如下###</span><br><span class="line">#                    Id  MSSubClass  LotFrontage   LotArea  OverallQual     ...</span><br><span class="line"># Id             1.000000    0.011156    -0.010601 -0.033226    -0.028365   ...</span><br><span class="line"># MSSubClass     0.011156    1.000000    -0.386347 -0.139781     0.032628   ...</span><br><span class="line"># LotFrontage   -0.010601   -0.386347     1.000000  0.426095     0.251646   ...</span><br><span class="line"># LotArea       -0.033226   -0.139781     0.426095  1.000000     0.105806   ...</span><br><span class="line"># OverallQual   -0.028365    0.032628     0.251646  0.105806     1.000000   ...</span><br><span class="line"># OverallCond    0.012609   -0.059316    -0.059213 -0.005636    -0.091932   ...</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"># 得到saleprice相对系数前十大的数据 </span><br><span class="line">corrmat = strainDF.corr()</span><br><span class="line">cols = corrmat.nlargest(10,&apos;SalePrice&apos;).index</span><br><span class="line">largest_price = trainDF[cols].corr()</span><br><span class="line"></span><br><span class="line"># 绘制这前十的相关系数的热点图,其中annot=True表示将数值写入格子</span><br><span class="line">sns.heatmap(largest_price,annot=True, xticklabels=largest_price.columns,yticklabels=largest_price.index)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line">print corrmat.nlargets(10,&apos;SalePrice&apos;)</span><br><span class="line">###打印如下###</span><br><span class="line">#               ScreenPorch  PoolArea   MiscVal    MoSold    YrSold  SalePrice  </span><br><span class="line"># SalePrice        0.111447  0.092404 -0.021190  0.046432 -0.028923   1.000000  </span><br><span class="line"># OverallQual      0.064886  0.065166 -0.031406  0.070815 -0.027347   0.790982  </span><br><span class="line"># GrLivArea        0.101510  0.170205 -0.002416  0.050240 -0.036526   0.708624  </span><br><span class="line"># GarageCars       0.050494  0.020934 -0.043080  0.040522 -0.039117   0.640409  </span><br><span class="line"># GarageArea       0.051412  0.061047 -0.027400  0.027974 -0.027378   0.623431  </span><br><span class="line"># TotalBsmtSF      0.084489  0.126053 -0.018479  0.013196 -0.014969   0.613581  </span><br><span class="line"># 1stFlrSF         0.088758  0.131525 -0.021096  0.031372 -0.013604   0.605852  </span><br><span class="line"># FullBath        -0.008106  0.049604 -0.014290  0.055872 -0.019669   0.560664  </span><br><span class="line"># TotRmsAbvGrd     0.059383  0.083757  0.024763  0.036907 -0.034516   0.533723  </span><br><span class="line"># YearBuilt       -0.050364  0.004950 -0.034383  0.012398 -0.013618   0.522897</span><br></pre></td></tr></table></figure>
+<p><img src="/uploads/RegressionbyXGBoost_3.png" alt></p>
+<h2 id="去除异常值"><a href="#去除异常值" class="headerlink" title="去除异常值"></a>去除异常值</h2><p>先查看所有特征对于价格的散点图，查看哪些是异常值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for var in trainDF.select_dtypes(include=[np.number]).columns:</span><br><span class="line">    plt.scatter(trainDF[var],trainDF[&apos;SalePrice&apos;])</span><br><span class="line">    plt.xlabel(var)</span><br><span class="line">    plt.ylabel(&apos;SalePrice&apos;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>随机展示几张图片：</p>
+<p><img src="/uploads/RegressionbyXGBoost_4.png" alt></p>
+<p><img src="/uploads/RegressionbyXGBoost_5.png" alt></p>
+<p><img src="/uploads/RegressionbyXGBoost_6.png" alt></p>
+<p>总结起来，以下的特征的取值范围中price的值异常，需要去除该数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">trainDF = trainDF.drop(trainDF[(trainDF[&apos;GrLivArea&apos;]&gt;4000) &amp; (trainDF[&apos;SalePrice&apos;]&lt;300000)].index) # 默认axis=0也就是删除行</span><br><span class="line">trainDF = trainDF.drop(trainDF[(trainDF[&apos;LotFrontage&apos;]&gt;300) &amp; (trainDF[&apos;SalePrice&apos;]&lt;300000)].index)</span><br><span class="line">trainDF = trainDF.drop(trainDF[(trainDF[&apos;BsmtFinSF1&apos;]&gt;5000) &amp; (trainDF[&apos;SalePrice&apos;]&lt;200000)].index)</span><br><span class="line">trainDF = trainDF.drop(trainDF[(trainDF[&apos;TotalBsmtSF&apos;]&gt;6000) &amp; (trainDF[&apos;SalePrice&apos;]&lt;200000)].index)</span><br><span class="line">trainDF = trainDF.drop(trainDF[(trainDF[&apos;1stFlrSF&apos;]&gt;4000) &amp; (trainDF[&apos;SalePrice&apos;]&lt;200000)].index)</span><br></pre></td></tr></table></figure>
+<p>(未完待续…)</p>
 
       
     </div>
@@ -550,7 +540,9 @@
          <br>
 <!--  Dorian Removed Start    
          
-            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+         
+            <a href="/tags/xgboost/" rel="tag"># xgboost</a>
          
        Dorian Removed End -->
         </div>
@@ -564,15 +556,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/05/11/Binary-Classification-by-RandomForest/" rel="next" title="Binary Classification by RandomForest 基于随机森林的二分类问题实践">
+                <i class="fa fa-chevron-left"></i> Binary Classification by RandomForest 基于随机森林的二分类问题实践
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/04/matrix-QR-decomposition/" rel="prev" title="QR Decomposition 矩阵的QR分解">
-                QR Decomposition 矩阵的QR分解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -828,7 +820,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相似矩阵"><span class="nav-number">1.</span> <span class="nav-text">相似矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#推导"><span class="nav-number">1.1.</span> <span class="nav-text">推导</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题的提出"><span class="nav-number">1.</span> <span class="nav-text">问题的提出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据集"><span class="nav-number">2.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特征工程"><span class="nav-number">3.</span> <span class="nav-text">特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看价格整体分布"><span class="nav-number">3.1.</span> <span class="nav-text">查看价格整体分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看相关系数"><span class="nav-number">3.2.</span> <span class="nav-text">查看相关系数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去除异常值"><span class="nav-number">3.3.</span> <span class="nav-text">去除异常值</span></a></li></ol></li></ol></div>
             
 
           </div>

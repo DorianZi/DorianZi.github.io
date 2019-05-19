@@ -100,13 +100,13 @@
 
 
 
-  <meta name="description" content="问题的提出问题来自于Kaggle的一个Titanic的竞赛项目：给出泰坦尼克号上的乘客的特征（仓位，年龄，性别等），预测Ta是否被选中上援救船 模型训练和预测代码在此（不包含本文中的分析绘图部分代码） 数据集的获取数据集在这里可以下载 我们来看看训练数据(测试数据只是少了label所在的列)  需要解释的列：  Survived 列为是否被解救的label pclass 舱位等级 SibSp 同船">
+  <meta name="description" content="问题的提出问题来自于Kaggle的一个Titanic的竞赛项目：给出泰坦尼克号上的乘客的特征（舱位，年龄，性别等），预测Ta是否被选中上援救船 模型训练和预测代码在此（不包含本文中的分析绘图部分代码） 数据集的获取数据集在这里可以下载 我们来看看训练数据(测试数据只是少了label所在的列)  需要解释的列：  Survived 列为是否被解救的label pclass 舱位等级 SibSp 同船">
 <meta name="keywords" content="Machine Learning,sklearn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Binary Classification by RandomForest 基于随机森林的二分类问题实践">
 <meta property="og:url" content="https://dorianzi.github.io/2019/05/11/Binary-Classification-by-RandomForest/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="问题的提出问题来自于Kaggle的一个Titanic的竞赛项目：给出泰坦尼克号上的乘客的特征（仓位，年龄，性别等），预测Ta是否被选中上援救船 模型训练和预测代码在此（不包含本文中的分析绘图部分代码） 数据集的获取数据集在这里可以下载 我们来看看训练数据(测试数据只是少了label所在的列)  需要解释的列：  Survived 列为是否被解救的label pclass 舱位等级 SibSp 同船">
+<meta property="og:description" content="问题的提出问题来自于Kaggle的一个Titanic的竞赛项目：给出泰坦尼克号上的乘客的特征（舱位，年龄，性别等），预测Ta是否被选中上援救船 模型训练和预测代码在此（不包含本文中的分析绘图部分代码） 数据集的获取数据集在这里可以下载 我们来看看训练数据(测试数据只是少了label所在的列)  需要解释的列：  Survived 列为是否被解救的label pclass 舱位等级 SibSp 同船">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/Binary_classification_randomForest_1.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/Binary_classification_randomForest_11.png">
@@ -121,10 +121,10 @@
 <meta property="og:image" content="https://dorianzi.github.io/uploads/Binary_classification_randomForest_12.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/Binary_classification_randomForest_10.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/Binary_classification_randomForest_13.png">
-<meta property="og:updated_time" content="2019-05-17T01:58:39.734Z">
+<meta property="og:updated_time" content="2019-05-17T02:11:56.006Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Binary Classification by RandomForest 基于随机森林的二分类问题实践">
-<meta name="twitter:description" content="问题的提出问题来自于Kaggle的一个Titanic的竞赛项目：给出泰坦尼克号上的乘客的特征（仓位，年龄，性别等），预测Ta是否被选中上援救船 模型训练和预测代码在此（不包含本文中的分析绘图部分代码） 数据集的获取数据集在这里可以下载 我们来看看训练数据(测试数据只是少了label所在的列)  需要解释的列：  Survived 列为是否被解救的label pclass 舱位等级 SibSp 同船">
+<meta name="twitter:description" content="问题的提出问题来自于Kaggle的一个Titanic的竞赛项目：给出泰坦尼克号上的乘客的特征（舱位，年龄，性别等），预测Ta是否被选中上援救船 模型训练和预测代码在此（不包含本文中的分析绘图部分代码） 数据集的获取数据集在这里可以下载 我们来看看训练数据(测试数据只是少了label所在的列)  需要解释的列：  Survived 列为是否被解救的label pclass 舱位等级 SibSp 同船">
 <meta name="twitter:image" content="https://dorianzi.github.io/uploads/Binary_classification_randomForest_1.png">
 
 
@@ -502,7 +502,7 @@
       
 
       
-        <h1 id="问题的提出"><a href="#问题的提出" class="headerlink" title="问题的提出"></a>问题的提出</h1><p>问题来自于Kaggle的一个<a href="https://www.kaggle.com/c/titanic" target="_blank" rel="noopener">Titanic</a>的竞赛项目：<br>给出泰坦尼克号上的乘客的特征（仓位，年龄，性别等），预测Ta是否被选中上援救船</p>
+        <h1 id="问题的提出"><a href="#问题的提出" class="headerlink" title="问题的提出"></a>问题的提出</h1><p>问题来自于Kaggle的一个<a href="https://www.kaggle.com/c/titanic" target="_blank" rel="noopener">Titanic</a>的竞赛项目：<br>给出泰坦尼克号上的乘客的特征（舱位，年龄，性别等），预测Ta是否被选中上援救船</p>
 <p>模型训练和预测代码在<a href="https://github.com/DorianZi/kaggle/blob/master/titanic/titanic.py" target="_blank" rel="noopener">此</a>（不包含本文中的分析绘图部分代码）</p>
 <h1 id="数据集的获取"><a href="#数据集的获取" class="headerlink" title="数据集的获取"></a>数据集的获取</h1><p>数据集在<a href="https://www.kaggle.com/c/titanic/data" target="_blank" rel="noopener">这里</a>可以下载</p>
 <p>我们来看看训练数据(测试数据只是少了label所在的列)</p>
@@ -566,7 +566,7 @@
 <h2 id="Cabin"><a href="#Cabin" class="headerlink" title="Cabin"></a>Cabin</h2><p>Cabin含有大量的缺失值。我们是否要删掉这个特征呢？其实可以保留，因为确实的值是有信息的：可能他们属于没有舱位的散座乘客。那么我们可以把散座设置为“No”。同时我们猜想有舱位和无舱位应该是会有显著的差别的，所以我们可以确定区别之后，将特征简化为有无舱位两种值</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">train_test_df[&apos;Cabin&apos;] = train_test_df[&apos;Cabin&apos;].fillna(&quot;No&quot;)</span><br><span class="line">train_test_df[&apos;Cabin&apos;] = np.where(train_test_df[&apos;Cabin&apos;]==&apos;No&apos;,0,1)</span><br><span class="line"></span><br><span class="line"># 绘制生还图</span><br><span class="line">train_df[&apos;Cabin&apos;] = train_df[&apos;Cabin&apos;].fillna(&quot;No&quot;)</span><br><span class="line">train_df[&apos;Cabin&apos;] = np.where(train_df[&apos;Cabin&apos;]==&apos;No&apos;,0,1)</span><br><span class="line">pd.crosstab(train_df[&apos;Cabin&apos;],train_df[&apos;Survived&apos;]).plot(kind=&apos;bar&apos;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p><img src="/uploads/Binary_classification_randomForest_12.png" alt></p>
-<p>可见的确无舱位的生还率大大低于有仓位的。我们接受这次特征转换</p>
+<p>可见的确无舱位的生还率大大低于有舱位的。我们接受这次特征转换</p>
 <h2 id="Embarked"><a href="#Embarked" class="headerlink" title="Embarked"></a>Embarked</h2><p>含有两个缺失值，可以通过众数来填补</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Series调用mode函数，会返回Series格式的众数表格，而DataFrame会返回DataFrame</span><br><span class="line">train_test_df[&apos;Embarked&apos;] = train_test_df[&apos;Embarked&apos;].fillna(train_test_df[&apos;Embarked&apos;].mode()[0])</span><br><span class="line"></span><br><span class="line"># 绘制生还图</span><br><span class="line">train_df[&apos;Embarked&apos;] = train_df[&apos;Embarked&apos;].fillna(train_df[&apos;Embarked&apos;].mode()[0])</span><br><span class="line">pd.crosstab(train_df[&apos;Embarked&apos;],train_df[&apos;Survived&apos;]).plot(kind=&apos;bar&apos;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p><img src="/uploads/Binary_classification_randomForest_10.png" alt></p>
@@ -634,6 +634,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/18/Regression-by-XGBoost/" rel="prev" title="Regression by XGBoost">
+                Regression by XGBoost <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -708,7 +712,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -766,7 +770,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
