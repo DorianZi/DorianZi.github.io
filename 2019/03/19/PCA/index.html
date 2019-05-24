@@ -115,7 +115,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{k}{\rightarrow}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?2\underset{i}{\rightarrow}+\underset{j}{\rightarrow}=\underset{k}{\rightarrow}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;x_{1}&space;&&space;x_{2}&&space;x_{3}&space;\end{bmatrix}">
-<meta property="og:image" content="https://pic3.zhimg.com/v2-89d7327bd92119c2c99357a423d4da26_b.gif">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/PCA_1.gif">
 <meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/blob/master/res/pca_3.png?raw=true">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?v">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?x_{1},x_{2},...,x_{n}">
@@ -148,7 +148,7 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\Lambda">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\Lambda">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\Lambda">
-<meta property="og:updated_time" content="2019-04-01T02:13:54.832Z">
+<meta property="og:updated_time" content="2019-05-23T03:24:31.584Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCA 主成分分析">
 <meta name="twitter:description" content="PCA主成分分析降维思想PCA即Principal Component Analysis, 主成分分析。主要思想是数据降维。 降维的办法常常是利用现有的n维数据的统计特征，创造更少的m维特征来表示该组数据，实现降维。 有三个数据点在正交基下表示为  我们可以用2x3矩阵来表示它：  这里我们发现数据的x与y两个维度有着规律：x=2y，则我们可以创造出新的维度 :  在新维度下表示数据只需要1x3矩">
@@ -543,7 +543,7 @@
 <h2 id="最大方差"><a href="#最大方差" class="headerlink" title="最大方差"></a>最大方差</h2><p>上面是一种特殊情况，即所有数据点恰好在一个向量方向上。通常情况，我们有很多数据点且并非所有数据都能连成一条线。</p>
 <p>这时候我们要找到一个维度（一个向量），让所有数据投影（降维）到该向量上之后，尽可能地分散。因为越分散说明通过该向量降维之后数据得以很好地区分，越紧凑说明该降维导致了越多信息丢失。数学上表达“分散”的方式就是：方差。方差越大，则说明数据越分散</p>
 <p>为了计算方差方便，对数据进行去均值（即以各维度的均值所指明的点为中点）。接下来我们要找到一个单位向量（为了计算方便）使得投影后数据最分散，即方差最大：</p>
-<p><img src="https://pic3.zhimg.com/v2-89d7327bd92119c2c99357a423d4da26_b.gif"></p>
+<p><img src="/uploads/PCA_1.gif" alt></p>
 <p><img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/pca_3.png?raw=true"></p>
 <p>设该向量为<img src="https://latex.codecogs.com/gif.latex?v" title="v">, 数据点为向量（以中心点为原点作向量）<img src="https://latex.codecogs.com/gif.latex?x_{1},x_{2},...,x_{n}" title="x_{1},x_{2},...,x_{n}"></p>
 <p>通过向量点积求投影长度：<img src="https://latex.codecogs.com/gif.latex?d_{i}=\frac{x_{i}^{T}v}{|v|}" title="d_{i}=\frac{x_{i}^{T}v}{|v|}"></p>
@@ -709,7 +709,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -769,7 +769,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
