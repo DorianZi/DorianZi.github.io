@@ -39,7 +39,7 @@ PCA即Principal Component Analysis, 主成分分析。主要思想是数据降�
 
 为了计算方差方便，对数据进行去均值（即以各维度的均值所指明的点为中点）。接下来我们要找到一个单位向量（为了计算方便）使得投影后数据最分散，即方差最大：
 
-<img src="https://pic3.zhimg.com/v2-89d7327bd92119c2c99357a423d4da26_b.gif" >
+![](/uploads/PCA_1.gif)
 
 <img src="https://github.com/DorianZi/algorithm_explained/blob/master/res/pca_3.png?raw=true" >
 
