@@ -116,7 +116,16 @@
 <meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_6.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_7.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_8.png">
-<meta property="og:updated_time" content="2019-05-28T02:59:19.813Z">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_10.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_11.gif">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_12.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_13.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_14.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_15.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_16.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_18.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/RCNN_17.png">
+<meta property="og:updated_time" content="2019-06-01T02:53:12.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RCNN Series 用于目标检测的RCNN系列网络">
 <meta name="twitter:description" content="首先我们看我们要实现的什么：  我们要实现图3的Object Detection.不仅需要将物体识别出来还需要画出它们的位置。我们知道将物体识别，通过CNN是可以实现的，那么这里关键的部分就是定位了。基于CNN和定位的思想，算法界出现了RCNN，即Region Convolution Neural Network.  之后，基于RCNN，相继出现了改进的算法：Fast RCNN, Faster R">
@@ -499,7 +508,8 @@
 <p><img src="/uploads/RCNN_1.png" alt></p>
 <p>我们要实现图3的Object Detection.不仅需要将物体识别出来还需要画出它们的位置。我们知道将物体识别，通过CNN是可以实现的，那么这里关键的部分就是定位了。基于CNN和定位的思想，算法界出现了RCNN，即Region Convolution Neural Network.  之后，基于RCNN，相继出现了改进的算法：Fast RCNN, Faster RCNN, Mask RCNN.</p>
 <p>本文将逐一讲解以上算法。</p>
-<h1 id="RCNN"><a href="#RCNN" class="headerlink" title="RCNN"></a>RCNN</h1><p>RCNN的模型如下：</p>
+<h1 id="RCNN"><a href="#RCNN" class="headerlink" title="RCNN"></a>RCNN</h1><p>论文在<a href="https://arxiv.org/pdf/1311.2524v3.pdf" target="_blank" rel="noopener">此</a></p>
+<p>RCNN的模型如下：</p>
 <p><img src="/uploads/RCNN_2.png" alt></p>
 <h2 id="RCNN预测模型"><a href="#RCNN预测模型" class="headerlink" title="RCNN预测模型"></a>RCNN预测模型</h2><p>它的预测流程是：</p>
 <p>1）使用<a href="https://zhuanlan.zhihu.com/p/39927488" target="_blank" rel="noopener">Selective Search</a>方法选中proposal框<br><img src="/uploads/RCNN_3.png" alt></p>
@@ -528,7 +538,44 @@
 <h3 id="SVM分类器的训练"><a href="#SVM分类器的训练" class="headerlink" title="SVM分类器的训练"></a>SVM分类器的训练</h3><p>正如上面所说，SVM分类器的数据来自于被中断的CNN输出，中断点是在全连接之前，第5个池化之后的4096个特征的输出。上面的预测过程中已经给出了图。</p>
 <p>在训练过程中，SVM的数据来自于带框和label的数据。但是与上面CNN网络的训练不同的是，正向样本严格来自于label数据中框出的数据及其label，将它们输入CNN中，中途输出4096个特征，就是SVM的正向样本；而负向样本可以来自于selective search得到的且与label框的IOU小于0.3的proposal框。 当然这里会导致负样本远远大于正样本个数，可以通过hard negative mining来解决。 具体请自行搜索</p>
 <h3 id="位置回归器的训练"><a href="#位置回归器的训练" class="headerlink" title="位置回归器的训练"></a>位置回归器的训练</h3><p>位置回归器的训练完全独立于物体识别和分类而存在，可以并行。它的输入是目标检测训练数据集的图片在selective search之后的且与标注好的框的IOU大于0.6的proposal框，而它的label就是已经标注好的框。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.cnblogs.com/skyfsm/p/6806246.html" target="_blank" rel="noopener">https://www.cnblogs.com/skyfsm/p/6806246.html</a><br><a href="https://zhuanlan.zhihu.com/p/43619815" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/43619815</a></p>
+<h1 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast RCNN"></a>Fast RCNN</h1><p>论文见<a href="https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Girshick_Fast_R-CNN_ICCV_2015_paper.pdf" target="_blank" rel="noopener">此</a></p>
+<p>Fast RCNN的模型如下</p>
+<p><img src="/uploads/RCNN_10.png" alt></p>
+<h2 id="Fast-RCNN对RCNN的改进"><a href="#Fast-RCNN对RCNN的改进" class="headerlink" title="Fast RCNN对RCNN的改进"></a>Fast RCNN对RCNN的改进</h2><p>Fast RCNN是为了改进RCNN的缺陷而诞生的。RCNN的缺陷主要是：<br>1）Selective Search产生的每一个proposal框需要独自经过CNN来获得特征，计算量巨大<br>2）框物体识别和位置调整是分离的两个模型</p>
+<p>基于上面两个缺点，Fast RCNN做了如下改进<br>1）先对图片整体经过CNN获得整体特征，再从中抠出proposal框，得到每一个框的特征。实现了卷积共享<br>2）使用multi-task的CNN网络，同时训练两种输出：物体识别和框位置调整</p>
+<h2 id="ROI-Pooling-Layer"><a href="#ROI-Pooling-Layer" class="headerlink" title="ROI Pooling Layer"></a>ROI Pooling Layer</h2><p>Fast RCNN对RCNN的第一个改进是卷积共享。卷积共享之后，是如何再提取proposal框的图像特征呢？</p>
+<p>假设原始图片的shape是1000*1000，某个proposal框的对角顶点坐标在(300,400)和(600,500)。图片在进行卷积之后的到的数据为100*100，那么上述的proposal框的对角顶点在当前数据上的映射为(30,40),(60,50)，如此我们便拿到了卷积共享之后的proposal框特征。</p>
+<p>不同shape的proposal框映射出了不同shape的特征。如果要将这些特征输入到后续的全连接层的话，那么全连接层的参数个数是未知的，是无法提前定义的。所以为了保证正常的网络构建，需要把特征们统一化一个shape上去。于是ROI Pooling层被引入了。</p>
+<p>ROI Pooling实现的是一种特殊的max pooling，它能够将任何shape的矩阵进行分割，最大池化到目标shape的矩阵：</p>
+<p><img src="/uploads/RCNN_11.gif" alt></p>
+<h2 id="Multi-task"><a href="#Multi-task" class="headerlink" title="Multi-task"></a>Multi-task</h2><p>在Fast RCNN中，不在需要把proposal的位置输入到SVM来进行位置回归，它和proposal的图像特征一起通过CNN网络（不同的参数）并最后通过softmax输出。这种方式称作<a href="https://zhuanlan.zhihu.com/p/22190532" target="_blank" rel="noopener">Multi-task</a></p>
+<p>这里的多任务是从全连接层开始的。因为proposal框是非常多的，可以预见全连接层的参数非常多，所以整个网络的训练和预测在全连接环节的计算量非常大。这里Fast RCNN的作者很聪明地想到了用SVD进行降维。在之前的<a href="https://dorianzi.github.io/2019/03/09/matrix_SVD_decomposition/">文章</a>中我们讲过，SVD可以将矩阵进行奇异值分解，并通过取部分奇异值及其对应维度的方式，在可以承受的信息损失下进行矩阵的降维：</p>
+<p><img src="/uploads/RCNN_12.png" alt></p>
+<h1 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h1><p>论文见<a href="https://arxiv.org/pdf/1506.01497" target="_blank" rel="noopener">此</a></p>
+<p>Faster RCNN的流程图如下：</p>
+<p><img src="/uploads/RCNN_13.png" alt></p>
+<p>网络细节如下：</p>
+<p><img src="/uploads/RCNN_14.png" alt></p>
+<p>Faster RCNN是Fast RCNN的改进版。改进了什么呢？</p>
+<p>Fast RCNN以及RCNN都使用了Selective Search进行proposal框图的选择，而在选择出来的框图被投入到后续的CNN模型中进行特征提取。利用成熟的Selective Search方法，省去了很多细节的工作，但是却带来了更多的计算量：因为Selective Search本身就进行了图像的特征分析和提取，这与后面使用CNN进行特征提取是有重复工作的。为了减少这个重复的工作，Faster RCNN直接弃用Selective Search，转而创造了Region Proposal Network（RPN)方法。</p>
+<h2 id="RPN"><a href="#RPN" class="headerlink" title="RPN"></a>RPN</h2><p>RPN是一种全卷积网络<a href="https://zhuanlan.zhihu.com/p/30195134" target="_blank" rel="noopener">FCN</a>, 它的流程图如下：</p>
+<p><img src="/uploads/RCNN_15.png" alt></p>
+<p>假设原图的shape为(N,M)，在经过CNN的最后一个卷积之后得到feature map，shape是（N/16, M/16, 256），这里的256是它的通道数。<br>得到了feature map，开始进行RPN操作。</p>
+<p>1）使用一个3*3的卷积核，对feature map进行卷积，得到的结果shape仍然是(N/16, M/16, 256)。另一种表述是：使用一个3*3的滑动窗口，对feature map进行扫描，每一次停留，对窗口内的图像进行一次全连接，这种表述是为了把焦点聚集在这个窗口的内容，而非整个feature map被卷积后的结果。</p>
+<p>2）聚焦到每一个3*3的窗口上来。它进行全连接之后把3*3的矩阵转换成了一个数值，算上通道数，就是256个数值。这256个数值构成一个256维的特征向量。这个特征向量反映出feature map中3*3窗口里的图像信息，再进一步往回推，它反映了原图中48*48窗口里的图像信息。</p>
+<p>3）以窗口的中心点为中心，在对应的<font color="Red">原图</font>上框出多个（比如9个）不同比例（1:1,2:1等等）和大小的候选框（称之为Anchor）。注意，候选框是对于整个原图而言的，可以大到覆盖整个原图，而不必限制在对应的滑动窗口中（即原图的48*48窗口）：</p>
+<p><img src="/uploads/RCNN_16.png" alt></p>
+<p>这样，整个原图会被画出N/16*M/16*9个Anchors</p>
+<p>4）至此，对每个小窗口获取了两部分数据：1个特征向量，9个Anchor位置。对该特征向量分别进行两次全连接：全连接cls layer输出18个分数；全连接reg layer加上9个Anchor的位置信息，输出36个(x, y, w, h)这样的偏移量。</p>
+<p><img src="/uploads/RCNN_18.png" alt></p>
+<p>为什么一个256维的特征向量就能获得9个Anchor的信息呢？因为这个特征向量倒推回去到原图，其实包含了很大范围的图像，它即使没有覆盖每一个Anchor的面积，但至少包含了Anchor的很多部分，其次它定义了9个Anchor的中心。</p>
+<h3 id="RPN的训练"><a href="#RPN的训练" class="headerlink" title="RPN的训练"></a>RPN的训练</h3><p>对于“是否为物体”识别器来说，训练数据是原始图片上被划分出来的Anchor，而label根据Anchor和原始图片上已经标注好的框的IOU而定，超过0.7为正，低于0.3为负，在这之间则该Anchor被丢弃。</p>
+<p>对于位置回归器来说，训练数据是原始图片上被划分出来的Anchor，label是图片上已经标注好的框中与Anchor的IOU超过0.7的框的位置信息。</p>
+<h3 id="Faster-RCNN的训练"><a href="#Faster-RCNN的训练" class="headerlink" title="Faster RCNN的训练"></a>Faster RCNN的训练</h3><p>Faster RCNN相当于RPN和Fast RCNN的融合，他们共享了前部分的CNN网络。那么要怎么训练这么一个融合模型呢？</p>
+<p><img src="/uploads/RCNN_17.png" alt></p>
+<p>1）在已经被ImageNet数据集上预训练过（获取判断是否是背景的能力）的模型上，训练RPN网络，获得proposal预测能力<br>2）获取proposal，然后第一次训练Fast RCNN网络，更新共享CNN参数<br>3）使用更新了的共享CNN参数，第二次训练RPN网络，这次训练不再更新共享CNN参数，只更新RPN独有的部分<br>4）再次训练RPN网络，收集proposals<br>5）利用收取的proposals，第二次训练Fast RCNN网络</p>
+<p>以上。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.cnblogs.com/skyfsm/p/6806246.html" target="_blank" rel="noopener">https://www.cnblogs.com/skyfsm/p/6806246.html</a><br><a href="https://zhuanlan.zhihu.com/p/43619815" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/43619815</a><br><a href="https://blog.csdn.net/lanran2/article/details/54376126" target="_blank" rel="noopener">https://blog.csdn.net/lanran2/article/details/54376126</a><br><a href="https://zhuanlan.zhihu.com/p/30720870" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/30720870</a></p>
 
       
     </div>
@@ -840,7 +887,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RCNN"><span class="nav-number">1.</span> <span class="nav-text">RCNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RCNN预测模型"><span class="nav-number">1.1.</span> <span class="nav-text">RCNN预测模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三个模型的训练"><span class="nav-number">1.2.</span> <span class="nav-text">三个模型的训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CNN识别器的训练"><span class="nav-number">1.2.1.</span> <span class="nav-text">CNN识别器的训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVM分类器的训练"><span class="nav-number">1.2.2.</span> <span class="nav-text">SVM分类器的训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位置回归器的训练"><span class="nav-number">1.2.3.</span> <span class="nav-text">位置回归器的训练</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RCNN"><span class="nav-number">1.</span> <span class="nav-text">RCNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RCNN预测模型"><span class="nav-number">1.1.</span> <span class="nav-text">RCNN预测模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三个模型的训练"><span class="nav-number">1.2.</span> <span class="nav-text">三个模型的训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CNN识别器的训练"><span class="nav-number">1.2.1.</span> <span class="nav-text">CNN识别器的训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVM分类器的训练"><span class="nav-number">1.2.2.</span> <span class="nav-text">SVM分类器的训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位置回归器的训练"><span class="nav-number">1.2.3.</span> <span class="nav-text">位置回归器的训练</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fast-RCNN"><span class="nav-number">2.</span> <span class="nav-text">Fast RCNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fast-RCNN对RCNN的改进"><span class="nav-number">2.1.</span> <span class="nav-text">Fast RCNN对RCNN的改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROI-Pooling-Layer"><span class="nav-number">2.2.</span> <span class="nav-text">ROI Pooling Layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-task"><span class="nav-number">2.3.</span> <span class="nav-text">Multi-task</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-RCNN"><span class="nav-number">3.</span> <span class="nav-text">Faster RCNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RPN"><span class="nav-number">3.1.</span> <span class="nav-text">RPN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RPN的训练"><span class="nav-number">3.1.1.</span> <span class="nav-text">RPN的训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Faster-RCNN的训练"><span class="nav-number">3.1.2.</span> <span class="nav-text">Faster RCNN的训练</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
