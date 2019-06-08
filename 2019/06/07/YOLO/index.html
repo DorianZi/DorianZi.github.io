@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="L6qAeUEWrk">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '6O9OK26379',
+      apiKey: 'd266e496228bce82728a87f4c2ea4800',
+      indexName: 'MyHexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="论文在此 YOLO这个名字完整体现了算法的精髓：You Only Look Once 它与RCNN系列算法不同。RCNN系列算法（RCNN/Fast RCNN/Faster RCNN）是经过了两次检测，第一次是获取proposal box，第二次才是图像预测。YOLO算法通过回归来完成物体检测，期间使用了统一的网络来完成物体识别和框定位。 YOLO运行流程它的推理流程图如下：  经过网络之后输出为">
+<meta name="keywords" content="Deep Learning,Computer Vision">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YOLO 目标检测算法之YOLO">
+<meta property="og:url" content="https://dorianzi.github.io/2019/06/07/YOLO/index.html">
+<meta property="og:site_name" content="Dorian Mode">
+<meta property="og:description" content="论文在此 YOLO这个名字完整体现了算法的精髓：You Only Look Once 它与RCNN系列算法不同。RCNN系列算法（RCNN/Fast RCNN/Faster RCNN）是经过了两次检测，第一次是获取proposal box，第二次才是图像预测。YOLO算法通过回归来完成物体检测，期间使用了统一的网络来完成物体识别和框定位。 YOLO运行流程它的推理流程图如下：  经过网络之后输出为">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_3.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_4.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_5.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_6.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_7.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_8.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_9.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_10.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_11.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_12.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_13.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_14.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_15.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_16.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_17.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_18.png">
+<meta property="og:updated_time" content="2019-06-08T00:19:34.609Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="YOLO 目标检测算法之YOLO">
+<meta name="twitter:description" content="论文在此 YOLO这个名字完整体现了算法的精髓：You Only Look Once 它与RCNN系列算法不同。RCNN系列算法（RCNN/Fast RCNN/Faster RCNN）是经过了两次检测，第一次是获取proposal box，第二次才是图像预测。YOLO算法通过回归来完成物体检测，期间使用了统一的网络来完成物体识别和框定位。 YOLO运行流程它的推理流程图如下：  经过网络之后输出为">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/yolo_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://dorianzi.github.io/2019/06/07/YOLO/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>YOLO 目标检测算法之YOLO | Dorian Mode</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bdd9553b00b737f4e03ff3fc43e220f2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/DorianZi/DorianZi.github.io/tree/master" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dorian Mode</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/06/07/YOLO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dorian Zi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dorian Mode">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">YOLO 目标检测算法之YOLO
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-07 11:29:00" itemprop="dateCreated datePublished" datetime="2019-06-07T11:29:00+08:00">2019-06-07</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+          
+          <!--Dorian Added Start-->
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Deep-Learning/" <i class="fa fa-tag"> Deep Learning</a>
+              
+                <a href="/tags/Computer-Vision/" <i class="fa fa-tag"> Computer Vision</a>
+              
+            </div>
+          
+          <!--Dorian Added End-->
+        
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>论文在<a href="https://arxiv.org/pdf/1506.02640.pdf" target="_blank" rel="noopener">此</a></p>
+<p>YOLO这个名字完整体现了算法的精髓：You Only Look Once</p>
+<p>它与RCNN系列算法不同。RCNN系列算法（RCNN/Fast RCNN/Faster RCNN）是经过了两次检测，第一次是获取proposal box，第二次才是图像预测。YOLO算法通过回归来完成物体检测，期间使用了统一的网络来完成物体识别和框定位。</p>
+<h1 id="YOLO运行流程"><a href="#YOLO运行流程" class="headerlink" title="YOLO运行流程"></a>YOLO运行流程</h1><p>它的推理流程图如下：</p>
+<p><img src="/uploads/yolo_1.png" alt></p>
+<p>经过网络之后输出为7*7*30的特征图，也就是有49个30维向量。 这个特征图意味着什么呢？ 意味着可以认为将原图划分为7*7的网格，每一个网格对应一个30维的向量。这么说不太严谨，容易误导为：7*7的网格图中的每一个网格的图像信息严格对应7*7*30特征图的每一个向量。要理解这一点先要理解<strong>感受野</strong>：</p>
+<p>如下图，经过卷积得到的3*3的矩阵的元素映射到原矩阵的感受野是2，而并非4/3，且感受野之间是互相重叠的</p>
+<p><img src="/uploads/yolo_3.png" alt></p>
+<p>（更多感受野的理解见<a href="https://blog.csdn.net/qq_27825451/article/details/83302662" target="_blank" rel="noopener">此文</a>）</p>
+<p>所以说，YOLO流程图里的一个30维向量包含的不仅仅是一个网格的信息，它包含了含有该网格的更大图像范围的信息，这个知识点有利于理解接下来要讲的为什么30维向量里能包含已经超出网格之外的Anchor信息。</p>
+<h2 id="30维向量信息解析"><a href="#30维向量信息解析" class="headerlink" title="30维向量信息解析"></a>30维向量信息解析</h2><p>30维数据的前5维，是以该网格为中心的第1个Anchor的5个信息：框的x坐标，框的y坐标，框的宽，框的高，框中有物体的置信度<br><img src="/uploads/yolo_4.png" alt></p>
+<p>紧接着的5维，是以该网格为中心的第2个Anchor的5个同上的信息<br><img src="/uploads/yolo_5.png" alt></p>
+<p>之后的20维中的任何1维度，是该网格为中心的2个Anchor里的图像为某一个类别的打分，这样对每个网格（它的2个Anchor）得到20个打分<br><img src="/uploads/yolo_6.png" alt></p>
+<p>如何获取某个Anchor是某个类的概率呢？——将上述的打分乘以该Anchor有物体的置信度即可，那么每一个Anchor就相当于有一个20维的概率向量：<br><img src="/uploads/yolo_7.png" alt></p>
+<p>由此，每个网格两个Anchor，也就是有2个20维概率向量，7*7个网格一共有98个20维向量：<br><img src="/uploads/yolo_8.png" alt></p>
+<h2 id="Box预测和保留"><a href="#Box预测和保留" class="headerlink" title="Box预测和保留"></a>Box预测和保留</h2><p>对于每一个种类的概率，比如Dog，我们将所有98个框按照预测概率从高到低排序（为方便计算，排序前可以剔除极小概率的框，也就是把它们的概率置为0），然后通过非极大抑制NMS方法，继续剔除多余的框：<br><img src="/uploads/yolo_9.png" alt></p>
+<p>NMS方法在这里如何运行呢？首先因为经过了排序，所以第一个框是概率最大的框（下图橘色）。然后继续扫描下一个框跟第一个框，看是否IOU大于0.5：<br><img src="/uploads/yolo_10.png" alt></p>
+<p>的确IOU大于0.5，那么第二个框是多余的，将它剔除：<br><img src="/uploads/yolo_11.png" alt></p>
+<p>继续扫描到第三个框，它与最大概率框的IOU小于0.5，需要保留：<br><img src="/uploads/yolo_12.png" alt></p>
+<p>继续扫描到第四个框，同理需要保留：<br><img src="/uploads/yolo_13.png" alt></p>
+<p>继续扫描后面的框，直到所有框都与第一个框比较完毕。此时保留了不少框。</p>
+<p>接下来，以<font color="Red">次大概率的框</font>（因为一开始排序过，它在顺序上也一定是保留框中最靠近上一轮的基础框的）为基础，将它后面的其它框于之比较。</p>
+<p>如比较第4个框与之的IOU：<br><img src="/uploads/yolo_14.png" alt></p>
+<p>IOU大于0.5，所以可以剔除第4个框：<br><img src="/uploads/yolo_15.png" alt></p>
+<p>总之在经历了所有的扫描之后，对Dog类别只留下了两个框：<br><img src="/uploads/yolo_16.png" alt></p>
+<p>这时候，或许会有疑问：明显留下来的蓝色框，并非Dog，为什么要留下？因为对计算机来说，图片可能出现两只Dog，保留概率不为0的框是安全的。不过的确后续设置了一定的阈值（比如0.3）来删除掉概率太低的框，这里的蓝色框在最后并没有保留，因为它在20种类别里要么因为IOU不够而被删除，要么因为最后阈值不够而被剔除。</p>
+<p>上面描述了对Dog种类进行的框选择。接下来，我们还要对其它19种类别分别进行上面的操作。最后进行纵向跨类的比较（<font color="Red">为什么？</font>因为上面就算保留了橘色框为最大概率的Dog框，但该框可能在Cat的类别也为概率最大且比Dog的概率更大，那么我们最终要判断该框为Cat而不是Dog）。判定流程和法则如下：</p>
+<p><img src="/uploads/yolo_17.png" alt></p>
+<p>得到最后的结果：<br><img src="/uploads/yolo_18.png" alt></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://docs.google.com/presentation/d/1aeRvtKG21KHdD5lg6Hgyhx5rPq_ZOsGjG5rJ1HP7BbA/pub?start=false&amp;loop=false&amp;delayms=3000&amp;slide=id.p" target="_blank" rel="noopener">https://docs.google.com/presentation/d/1aeRvtKG21KHdD5lg6Hgyhx5rPq_ZOsGjG5rJ1HP7BbA/pub?start=false&amp;loop=false&amp;delayms=3000&amp;slide=id.p</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+
+      
+        <div class="post-tags">
+         <br>
+         <br>
+<!--  Dorian Removed Start    
+         
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+         
+            <a href="/tags/Computer-Vision/" rel="tag"># Computer Vision</a>
+         
+       Dorian Removed End -->
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/05/Mask-RCNN/" rel="next" title="Mask RCNN 用于实例分割的的Mask RCNN网络">
+                <i class="fa fa-chevron-left"></i> Mask RCNN 用于实例分割的的Mask RCNN网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/eric_clapton.jpg" alt="Dorian Zi">
+            
+              <p class="site-author-name" itemprop="name">Dorian Zi</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/dorianzi" title="GitHub &rarr; https://github.com/dorianzi" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://kaggle.com/dorianzi" title="Kaggle &rarr; https://kaggle.com/dorianzi" rel="noopener" target="_blank"><i class="fa fa-fw fa-list-alt"></i>Kaggle</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://xiami.com/artist/mf8ydg642ef" title="Xiami &rarr; https://xiami.com/artist/mf8ydg642ef" rel="noopener" target="_blank"><i class="fa fa-fw fa-music"></i>Xiami</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://music.163.com/#/album?id=3080421" title="Netease &rarr; https://music.163.com/#/album?id=3080421" rel="noopener" target="_blank"><i class="fa fa-fw fa-headphones"></i>Netease</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://facebook.com/profile.php?id=100008679135728" title="FB Page &rarr; https://facebook.com/profile.php?id=100008679135728" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://instagram.com/dorian.zi/" title="Instagram &rarr; https://instagram.com/dorian.zi/" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://linkedin.com/in/dorian-zi-7620b6127/" title="Linkedin &rarr; https://linkedin.com/in/dorian-zi-7620b6127/" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+                </span>
+              
+            </div>
+          
+
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=481876106&auto=1&height=66"></iframe>
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO运行流程"><span class="nav-number">1.</span> <span class="nav-text">YOLO运行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#30维向量信息解析"><span class="nav-number">1.1.</span> <span class="nav-text">30维向量信息解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Box预测和保留"><span class="nav-number">1.2.</span> <span class="nav-text">Box预测和保留</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dorian Zi</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '5b4b5d838e55b91b3713',
+    clientSecret: 'ca4bfc7fee3940ef0896565d06b76890fd29ce40',
+    repo: 'DorianZi.github.io',
+    owner: 'DorianZi',
+    admin: ['DorianZi'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=7.0.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
