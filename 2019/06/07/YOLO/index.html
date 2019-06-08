@@ -125,7 +125,8 @@
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_16.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_17.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_18.png">
-<meta property="og:updated_time" content="2019-06-08T00:19:34.609Z">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_19.png">
+<meta property="og:updated_time" content="2019-06-08T04:14:00.287Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YOLO 目标检测算法之YOLO">
 <meta name="twitter:description" content="论文在此 YOLO这个名字完整体现了算法的精髓：You Only Look Once 它与RCNN系列算法不同。RCNN系列算法（RCNN/Fast RCNN/Faster RCNN）是经过了两次检测，第一次是获取proposal box，第二次才是图像预测。YOLO算法通过回归来完成物体检测，期间使用了统一的网络来完成物体识别和框定位。 YOLO运行流程它的推理流程图如下：  经过网络之后输出为">
@@ -535,6 +536,14 @@
 <p>上面描述了对Dog种类进行的框选择。接下来，我们还要对其它19种类别分别进行上面的操作。最后进行纵向跨类的比较（<font color="Red">为什么？</font>因为上面就算保留了橘色框为最大概率的Dog框，但该框可能在Cat的类别也为概率最大且比Dog的概率更大，那么我们最终要判断该框为Cat而不是Dog）。判定流程和法则如下：</p>
 <p><img src="/uploads/yolo_17.png" alt></p>
 <p>得到最后的结果：<br><img src="/uploads/yolo_18.png" alt></p>
+<h1 id="YOLO的训练"><a href="#YOLO的训练" class="headerlink" title="YOLO的训练"></a>YOLO的训练</h1><p>首先预训练，使用ImageNet数据库训练上面流程图中的GoogleNet Modification,使得该网络具有强大的物体识别能力。</p>
+<p>然后进行迁移学习，也就是将上面预训练好的网络，接上后面需要进行图像分割的卷积核全连接网络，继续进行训练。这个阶段的训练流程如下：</p>
+<p>首先，YOLO训练的原始数据是已经标注好实例分割的图片。图片输入YOLO网络中，首先分割为S*S的网格，每一个网格有2个Anchor。对每一个网格来说，只保留一个Anchor，通过标注框和Anchor的IOU取大的来保留Anchor。这样的话只有部分网格中的部分Anchor保留下来了。保留下来的Anchor框可可进一步进图像分类，框位置调整的预测，获取预测值。</p>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>损失函数如下：<br><img src="/uploads/yolo_19.png" alt></p>
+<p>图中S为网格维度，B为Anchor个数，i为第i个网格，j为第j个Anchor。</p>
+<p>上面讲过，在训练的时候，只有部分Anchor能入选，所以只有入选了才进入损失函数中。</p>
+<p>在作者的文章中：<br>1）λcoord取5，因为需要重视坐标预测<br>2）λnoobj取0.5，因为大部分Anchor是没有入选的，积累了很多损失之后，不能给它大的系数<br>3）w和h之所以用来平方根，是因为在实际中，物体可能比框出它的框要小很多，那么物体实际的宽和高是要削减的。于是作者使用平方根来进行中和</p>
+<p>以上。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://docs.google.com/presentation/d/1aeRvtKG21KHdD5lg6Hgyhx5rPq_ZOsGjG5rJ1HP7BbA/pub?start=false&amp;loop=false&amp;delayms=3000&amp;slide=id.p" target="_blank" rel="noopener">https://docs.google.com/presentation/d/1aeRvtKG21KHdD5lg6Hgyhx5rPq_ZOsGjG5rJ1HP7BbA/pub?start=false&amp;loop=false&amp;delayms=3000&amp;slide=id.p</a></p>
 
       
@@ -849,7 +858,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO运行流程"><span class="nav-number">1.</span> <span class="nav-text">YOLO运行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#30维向量信息解析"><span class="nav-number">1.1.</span> <span class="nav-text">30维向量信息解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Box预测和保留"><span class="nav-number">1.2.</span> <span class="nav-text">Box预测和保留</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO运行流程"><span class="nav-number">1.</span> <span class="nav-text">YOLO运行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#30维向量信息解析"><span class="nav-number">1.1.</span> <span class="nav-text">30维向量信息解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Box预测和保留"><span class="nav-number">1.2.</span> <span class="nav-text">Box预测和保留</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO的训练"><span class="nav-number">2.</span> <span class="nav-text">YOLO的训练</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-number">2.1.</span> <span class="nav-text">损失函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
