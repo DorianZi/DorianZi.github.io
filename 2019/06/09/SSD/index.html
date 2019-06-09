@@ -100,20 +100,33 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Dorian Mode">
-<meta property="og:url" content="https://dorianzi.github.io/tags/Algorithm/page/3/index.html">
+  <meta name="description" content="论文见此 SSD算法全称为Single Shot MultiBox Detector，它和YOLO一样，是一种one-stage的检测方法，区别于RCNN系列的proposal+predict的two-stage方法。 SSD是基于YOLO进行改进的，它主要改进的地方有三点： 1）多次取各种大小的特征图进行多次目标检测。 大特征图（分辨率更高）检测小目标，小特征图（分辨率低）检测大目标。 2）与Y">
+<meta name="keywords" content="Deep Learning,Computer Vision">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSD 目标检测算法之SSD">
+<meta property="og:url" content="https://dorianzi.github.io/2019/06/09/SSD/index.html">
 <meta property="og:site_name" content="Dorian Mode">
+<meta property="og:description" content="论文见此 SSD算法全称为Single Shot MultiBox Detector，它和YOLO一样，是一种one-stage的检测方法，区别于RCNN系列的proposal+predict的two-stage方法。 SSD是基于YOLO进行改进的，它主要改进的地方有三点： 1）多次取各种大小的特征图进行多次目标检测。 大特征图（分辨率更高）检测小目标，小特征图（分辨率低）检测大目标。 2）与Y">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_2.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_3.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_4.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_5.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_6.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_7.png">
+<meta property="og:updated_time" content="2019-06-09T09:29:37.635Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dorian Mode">
+<meta name="twitter:title" content="SSD 目标检测算法之SSD">
+<meta name="twitter:description" content="论文见此 SSD算法全称为Single Shot MultiBox Detector，它和YOLO一样，是一种one-stage的检测方法，区别于RCNN系列的proposal+predict的two-stage方法。 SSD是基于YOLO进行改进的，它主要改进的地方有三点： 1）多次取各种大小的特征图进行多次目标检测。 大特征图（分辨率更高）检测小目标，小特征图（分辨率低）检测大目标。 2）与Y">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/ssd_1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/tags/Algorithm/page/3/">
+  <link rel="canonical" href="https://dorianzi.github.io/2019/06/09/SSD/">
 
 
 
@@ -123,7 +136,7 @@
   };
 </script>
 
-  <title>Tag: Algorithm | Dorian Mode</title>
+  <title>SSD 目标检测算法之SSD | Dorian Mode</title>
   
 
 
@@ -181,7 +194,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/DorianZi/DorianZi.github.io/tree/master" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
@@ -254,7 +267,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -348,266 +361,246 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Algorithm<small>Tag</small>
-        </h1>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/06/09/SSD/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dorian Zi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dorian Mode">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/03/25/LSA-LSI-by-SVD/" itemprop="url">
-            
-              <span itemprop="name">LSA/LSI by SVD 基于奇异值分解的潜在语义分析</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">SSD 目标检测算法之SSD
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-25T08:09:26+08:00" content="2019-03-25">
-          03-25
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-09 14:49:10" itemprop="dateCreated datePublished" datetime="2019-06-09T14:49:10+08:00">2019-06-09</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+          
+          <!--Dorian Added Start-->
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Deep-Learning/" <i class="fa fa-tag"> Deep Learning</a>
+              
+                <a href="/tags/Computer-Vision/" <i class="fa fa-tag"> Computer Vision</a>
+              
+            </div>
+          
+          <!--Dorian Added End-->
+        
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/23/relationship-between-PCA-and-SVD/" itemprop="url">
-            
-              <span itemprop="name">Relationship between PCA and SVD 主成分分析和奇异值分解的关系</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-23T15:40:19+08:00" content="2019-03-23">
-          03-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/20/recommender-system-by-SVD/" itemprop="url">
-            
-              <span itemprop="name">Recommender System by SVD 基于SVD的推荐系统</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-20T17:13:32+08:00" content="2019-03-20">
-          03-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/19/PCA/" itemprop="url">
-            
-              <span itemprop="name">PCA 主成分分析</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-19T10:53:44+08:00" content="2019-03-19">
-          03-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/10/image_compression_with_SVD/" itemprop="url">
-            
-              <span itemprop="name">Image Compression by SVD 基于奇异值分解的图像压缩</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-10T07:50:00+08:00" content="2019-03-10">
-          03-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/09/matrix_SVD_decomposition/" itemprop="url">
-            
-              <span itemprop="name">SVD Decomposition 矩阵的奇异值分解</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-09T02:00:00+08:00" content="2019-03-09">
-          03-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/04/matrix-QR-decomposition/" itemprop="url">
-            
-              <span itemprop="name">QR Decomposition 矩阵的QR分解</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-04T01:52:44+08:00" content="2019-03-04">
-          03-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/04/matrix_similarity/" itemprop="url">
-            
-              <span itemprop="name">Matrix Similarity 矩阵相似</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-04T00:00:00+08:00" content="2019-03-04">
-          03-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>论文见<a href="https://arxiv.org/pdf/1512.02325.pdf" target="_blank" rel="noopener">此</a></p>
+<p>SSD算法全称为Single Shot MultiBox Detector，它和YOLO一样，是一种one-stage的检测方法，区别于RCNN系列的proposal+predict的two-stage方法。</p>
+<p>SSD是基于YOLO进行改进的，它主要改进的地方有三点：</p>
+<p>1）多次取各种大小的特征图进行多次目标检测。 大特征图（分辨率更高）检测小目标，小特征图（分辨率低）检测大目标。<br><img src="/uploads/ssd_1.png" alt></p>
+<p>2）与YOLO最后采用全连接不同，SSD最后直接使用卷积来提取检测结果。</p>
+<p>3）借鉴了Fast RCNN中的方法，取多个不同高宽比的Anchor，而不像YOLO只取两个。<br><img src="/uploads/ssd_2.png" alt></p>
+<h1 id="SSD预测流程"><a href="#SSD预测流程" class="headerlink" title="SSD预测流程"></a>SSD预测流程</h1><p>预测流程图如下<br><img src="/uploads/ssd_3.png" alt></p>
+<p>从上面可以看到，网络经过了两次特征提取，分别预测了两次不同框的分类和定位。</p>
+<p>更详细的流程如下，网络运行过程中，各个阶段取大小不一的特征图进行目标检测，得到众多目标预测，最后综合通过NMS保留最终的预测框。<br><img src="/uploads/ssd_4.png" alt></p>
+<p>我们来看其中一个特征提取分支（大小5*5*256）的运行流程：<br><img src="/uploads/ssd_5.png" alt></p>
+<p>5*5*256的特征图会进行3部分计算：<br>1）产生Anchor box们，这里称作default box，上图中每个网格生成3个，一共生成75个<br>2）使用12个通道的3*3的卷积核对其进行卷积（padding=Same），得到5*5*12的定位预测结果<br>3）使用63个通道的3*3的卷积核对其进行卷积（padding=Same），得到5*5*63的分类预测结果</p>
+<p>如何理解上面2），3）输出的预测结果呢？为什么定位预测是12维数据而分类预测时63维数据？见下图——<br><img src="/uploads/ssd_6.png" alt></p>
+<p>对于12维的定位数据来说，首先，因为每个网格定义了三个default box，所以数据应该分成3份，也就是每个default box有4个数据，就是我们要的定位数据：中心x坐标，中心y坐标，框宽，框高</p>
+<p>对于63维的定位数据来说，同理分成3份，也就是每个default box有21个数据，也就是21个分类（其中包括1个“背景”类）。当然经过softmax函数之后可以输出概率值。</p>
+<p>75个default box会有75种检测结果，也就是说每个box会有一个25维的数据（4个定位数据，21个分类概率数据）。使用NMS的方法（<a href="https://dorianzi.github.io/2019/06/07/YOLO/#Box%E9%A2%84%E6%B5%8B%E5%92%8C%E4%BF%9D%E7%95%99">此文</a>有详解）进行框保留。<br><img src="/uploads/ssd_7.png" alt><br>（其实上图我并不理解为什么会输出两个概率不一样且IOU如此高的Car框，我理解只要保留0.7的那个就好了）</p>
+<p>总之，所有这样的特征提取分支输出的预测框会综合，再次使用NMS得出最终的预测结果</p>
+<h1 id="SSD的训练"><a href="#SSD的训练" class="headerlink" title="SSD的训练"></a>SSD的训练</h1><p>类似于<a href="https://dorianzi.github.io/2019/06/07/YOLO/#YOLO%E7%9A%84%E8%AE%AD%E7%BB%83">YOLO的训练</a></p>
+<p>首先预训练CNN，然后进行迁移学习，也就是接入各特征提取分支构成新的网络。对这个新网络进行训练，原始数据是已经标注好实例分割的图片。</p>
+<p>图片输入网络中，到达每一处S*S特征图，开始准备训练样本：将图片分割为S*S的网格，每一个网格有多个(比如3个，6个，9个) default box。与YOLO不同的是，SSD并不要求ground truth的中心落入某个网格就赋予该网格的default box正样本的机会，而是只要找到与ground truth的IOU最大的default box，就认为该default box为正样本；</p>
+<p>不过其它的default box还有机会，如果一个default box与某个ground truth的IOU大于阈值（比如0.5），那么这个default box也被认为是正样本。这样的话，就允许一个ground truth与多个default box（最大IOU，次大IOU,…）匹配，比如同一个网格里的多个default box就很有可能大都被选中为正样本。</p>
+<p>不过为了防止上一个条件被滥用，还有一个约束条件：不允许一个default box与多个ground truth匹配（比如当原始图片中有两个物体很小且紧靠着时）。这样做在逻辑上也是合理的，因为一个default box不能有多个label</p>
+<p>剩下落选的default box就作为负样本。当然这里仍然采用hard negative mining，对负样本进行抽样，抽样时按照置信度误差（预测背景的置信度越小，误差越大）进行降序排列，选取误差的较大的top-k作为训练的负样本，以保证正负样本比例接近1:3</p>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>（未完待续）</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://docs.google.com/presentation/d/1rtfeV_VmdGdZD5ObVVpPDPIODSDxKnFSU0bsN_rgZXc/pub?start=false&amp;loop=false&amp;delayms=3000&amp;slide=id.g179f601b72_0_51" target="_blank" rel="noopener">https://docs.google.com/presentation/d/1rtfeV_VmdGdZD5ObVVpPDPIODSDxKnFSU0bsN_rgZXc/pub?start=false&amp;loop=false&amp;delayms=3000&amp;slide=id.g179f601b72_0_51</a></p>
+<p><a href="https://blog.csdn.net/xiaohu2022/article/details/79833786" target="_blank" rel="noopener">https://blog.csdn.net/xiaohu2022/article/details/79833786</a></p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+
+      
+        <div class="post-tags">
+         <br>
+         <br>
+<!--  Dorian Removed Start    
+         
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+         
+            <a href="/tags/Computer-Vision/" rel="tag"># Computer Vision</a>
+         
+       Dorian Removed End -->
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/07/YOLO/" rel="next" title="YOLO 目标检测算法之YOLO">
+                <i class="fa fa-chevron-left"></i> YOLO 目标检测算法之YOLO
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/tags/Algorithm/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/tags/Algorithm/">1</a><a class="page-number" href="/tags/Algorithm/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -627,8 +620,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -822,6 +824,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD预测流程"><span class="nav-number">1.</span> <span class="nav-text">SSD预测流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD的训练"><span class="nav-number">2.</span> <span class="nav-text">SSD的训练</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-number">2.1.</span> <span class="nav-text">损失函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -978,6 +997,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
 
   
 
@@ -993,6 +1016,37 @@
 
   
 
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '5b4b5d838e55b91b3713',
+    clientSecret: 'ca4bfc7fee3940ef0896565d06b76890fd29ce40',
+    repo: 'DorianZi.github.io',
+    owner: 'DorianZi',
+    admin: ['DorianZi'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
 
 
   

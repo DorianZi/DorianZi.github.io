@@ -126,7 +126,7 @@
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_17.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_18.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolo_19.png">
-<meta property="og:updated_time" content="2019-06-08T04:14:00.287Z">
+<meta property="og:updated_time" content="2019-06-09T08:53:47.881Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YOLO 目标检测算法之YOLO">
 <meta name="twitter:description" content="论文在此 YOLO这个名字完整体现了算法的精髓：You Only Look Once 它与RCNN系列算法不同。RCNN系列算法（RCNN/Fast RCNN/Faster RCNN）是经过了两次检测，第一次是获取proposal box，第二次才是图像预测。YOLO算法通过回归来完成物体检测，期间使用了统一的网络来完成物体识别和框定位。 YOLO运行流程它的推理流程图如下：  经过网络之后输出为">
@@ -538,7 +538,8 @@
 <p>得到最后的结果：<br><img src="/uploads/yolo_18.png" alt></p>
 <h1 id="YOLO的训练"><a href="#YOLO的训练" class="headerlink" title="YOLO的训练"></a>YOLO的训练</h1><p>首先预训练，使用ImageNet数据库训练上面流程图中的GoogleNet Modification,使得该网络具有强大的物体识别能力。</p>
 <p>然后进行迁移学习，也就是将上面预训练好的网络，接上后面需要进行图像分割的卷积核全连接网络，继续进行训练。这个阶段的训练流程如下：</p>
-<p>首先，YOLO训练的原始数据是已经标注好实例分割的图片。图片输入YOLO网络中，首先分割为S*S的网格，每一个网格有2个Anchor。对每一个网格来说，只保留一个Anchor，通过标注框和Anchor的IOU取大的来保留Anchor。这样的话只有部分网格中的部分Anchor保留下来了。保留下来的Anchor框可可进一步进图像分类，框位置调整的预测，获取预测值。</p>
+<p>首先，YOLO训练的原始数据是已经标注好实例分割的图片。图片输入YOLO网络中，首先分割为S*S的网格，每一个网格有2个Anchor。对每一个网格来说，只保留一个Anchor，通过标注框（ground truth）和Anchor的IOU取大的（且要大于0.5）来保留Anchor。这里有一种情况：如果相邻的两个网格的都各自有一个Anchor与标注框的IOU达到了0.5甚至他们的IOU完全一样，那么保留哪个Anchor呢？YOLO算法里，作者提出的方法是，只有ground truth的中心点落到了某个网格中，该网格对应的Anchor才有资格保留。保留下来的作为正样本，其它的作为背景类，为负样本。当然负样本可以采用hard negative mining，对负样本进行抽样，抽样时按照置信度误差（预测背景的置信度越小，误差越大）进行降序排列，选取误差的较大的top-k作为训练的负样本，使得正负样本比例不会失调（正负样本比例1:3比较合理）。</p>
+<p>总之，只有部分网格中的部分Anchor保留下来了。保留下来的Anchor框可进一步进图像分类，框位置调整的预测，获取预测值。</p>
 <h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>损失函数如下：<br><img src="/uploads/yolo_19.png" alt></p>
 <p>图中S为网格维度，B为Anchor个数，i为第i个网格，j为第j个Anchor。</p>
 <p>上面讲过，在训练的时候，只有部分Anchor能入选，所以只有入选了才进入损失函数中。</p>
@@ -597,6 +598,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/09/SSD/" rel="prev" title="SSD 目标检测算法之SSD">
+                SSD 目标检测算法之SSD <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -671,7 +676,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
