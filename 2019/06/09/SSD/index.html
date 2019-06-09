@@ -115,7 +115,13 @@
 <meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_5.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_6.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_7.png">
-<meta property="og:updated_time" content="2019-06-09T09:29:37.635Z">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_8.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?N">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x^p_{ij}\epsilon&space;\{1,0\}">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x^p_{ij}=1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x^p_{ij}=0">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/ssd_9.png">
+<meta property="og:updated_time" content="2019-06-09T12:51:12.146Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSD 目标检测算法之SSD">
 <meta name="twitter:description" content="论文见此 SSD算法全称为Single Shot MultiBox Detector，它和YOLO一样，是一种one-stage的检测方法，区别于RCNN系列的proposal+predict的two-stage方法。 SSD是基于YOLO进行改进的，它主要改进的地方有三点： 1）多次取各种大小的特征图进行多次目标检测。 大特征图（分辨率更高）检测小目标，小特征图（分辨率低）检测大目标。 2）与Y">
@@ -518,7 +524,13 @@
 <p>不过其它的default box还有机会，如果一个default box与某个ground truth的IOU大于阈值（比如0.5），那么这个default box也被认为是正样本。这样的话，就允许一个ground truth与多个default box（最大IOU，次大IOU,…）匹配，比如同一个网格里的多个default box就很有可能大都被选中为正样本。</p>
 <p>不过为了防止上一个条件被滥用，还有一个约束条件：不允许一个default box与多个ground truth匹配（比如当原始图片中有两个物体很小且紧靠着时）。这样做在逻辑上也是合理的，因为一个default box不能有多个label</p>
 <p>剩下落选的default box就作为负样本。当然这里仍然采用hard negative mining，对负样本进行抽样，抽样时按照置信度误差（预测背景的置信度越小，误差越大）进行降序排列，选取误差的较大的top-k作为训练的负样本，以保证正负样本比例接近1:3</p>
-<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>（未完待续）</p>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>损失函数为：<br><img src="/uploads/ssd_8.png" alt></p>
+<p>其中<img src="https://latex.codecogs.com/gif.latex?N" title="N">为先验的正样本数量</p>
+<p><img src="https://latex.codecogs.com/gif.latex?x^p_{ij}\epsilon&space;\{1,0\}" title="x^p_{ij}\epsilon \{1,0\}">, 当<img src="https://latex.codecogs.com/gif.latex?x^p_{ij}=1" title="x^p_{ij}=1">表示第i个default box与第j个ground truth匹配，并且ground truth的类别为p，对于没有匹配的，自然就是被删除的框，这时候<img src="https://latex.codecogs.com/gif.latex?x^p_{ij}=0"></p>
+<p>c为类别置信度预测值，l为先验框的所对应边界框的位置预测值，而g是ground truth的位置参数。</p>
+<p>位置误差采用Smooth L1 loss，置信度误差采用softmax loss</p>
+<p>为什么选择Smooth L1呢？因为当它处于[-1,1]之间时，梯度下降相当于L2，比较缓慢，不至于在最优值左右来回震荡；当它处于[−∞,-1]，[1,+∞]，梯度下降同L1，避免了L2的梯度爆炸：<br><img src="/uploads/ssd_9.png" alt></p>
+<p>以上。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://docs.google.com/presentation/d/1rtfeV_VmdGdZD5ObVVpPDPIODSDxKnFSU0bsN_rgZXc/pub?start=false&amp;loop=false&amp;delayms=3000&amp;slide=id.g179f601b72_0_51" target="_blank" rel="noopener">https://docs.google.com/presentation/d/1rtfeV_VmdGdZD5ObVVpPDPIODSDxKnFSU0bsN_rgZXc/pub?start=false&amp;loop=false&amp;delayms=3000&amp;slide=id.g179f601b72_0_51</a></p>
 <p><a href="https://blog.csdn.net/xiaohu2022/article/details/79833786" target="_blank" rel="noopener">https://blog.csdn.net/xiaohu2022/article/details/79833786</a></p>
 
