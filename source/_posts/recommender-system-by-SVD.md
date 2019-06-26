@@ -93,7 +93,7 @@ tags: ["Algorithm", "SVD"]
 
 <img src="https://latex.codecogs.com/gif.latex?X_{2}^{T}&space;=(2,0,5,2,0)\begin{bmatrix}&space;-0.32&space;&&space;-0.41\\&space;-0.61&&space;0.22&space;\\&space;-0.29&space;&&space;-0.38&space;\\&space;-0.58&space;&&space;-0.26&space;\\&space;-0.33&space;&&space;0.76&space;\end{bmatrix}&space;\begin{bmatrix}&space;16.47&space;&&space;0\\&space;0&space;&&space;6.21&space;\end{bmatrix}^{-1}=(-0.20,-0.52)" />
 
-接下来通过欧式距离或者其它方式,找出<img src="https://latex.codecogs.com/gif.latex?user\_1^{T}" /> ~ <img src="https://latex.codecogs.com/gif.latex?user\_1^{T}" />中与<img src="https://latex.codecogs.com/gif.latex?X_{2}^{T}}" />相似度最该的且对item_2和item_5评过分的user, 然后把该user对item_2和item_5中评分更高的item推荐给<img src="https://latex.codecogs.com/gif.latex?X" title="X" />用户
+接下来通过欧式距离或者其它方式,找出<img src="https://latex.codecogs.com/gif.latex?user\_1^{T}" /> ~ <img src="https://latex.codecogs.com/gif.latex?user\_6^{T}" />中与<img src="https://latex.codecogs.com/gif.latex?X_{2}^{T}}" />相似度最该的且对item_2和item_5评过分的user, 然后把该user对item_2和item_5中评分更高的item推荐给<img src="https://latex.codecogs.com/gif.latex?X" title="X" />用户
 
 以上。
 

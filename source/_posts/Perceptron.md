@@ -32,7 +32,7 @@ categories: Technic
 
 点到超平面的距离为：<img src="https://latex.codecogs.com/gif.latex?\frac{(WX^T_i&plus;b)}{\|W\|}"  />, 注意它是有正负的，1类的点到超平面的距离为正，-1类的点为负。我们关注被分错的点，不管是1类点被错分到-1类，还是-1类点被错分到1类，他们的距离取绝对值都是：<img src="https://latex.codecogs.com/gif.latex?-Y_i\frac{(WX^T_i&plus;b)}{\|W\|}" />
 
-设所有分错的点的几何是<img src="https://latex.codecogs.com/gif.latex?M" />,那么所有分错的点到超平面的距离和是：
+设所有分错的点的集合是<img src="https://latex.codecogs.com/gif.latex?M" />,那么所有分错的点到超平面的距离和是：
 
 <img src="https://latex.codecogs.com/gif.latex?L(W,b)=-\sum&space;_{X_i\epsilon&space;M}Y_i\frac{(WX^T_i&plus;b)}{\|W\|}"  />
 
@@ -57,7 +57,7 @@ categories: Technic
 <img src="https://latex.codecogs.com/gif.latex?w_j:=w_j&plus;\eta&space;\sum_{X_i\epsilon&space;M}^{&space;}Y_iX_ij" title="w_j:=w_j+\eta Y_iX_ij" />
 
 
-## 学习过程
+## 训练过程
 
 输入：m个n维度的线性可分的已经标好label的数据集<img src="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;x_{11}&space;&&space;x_{12}&space;&&space;...&space;&&space;x_{1n}&space;&|&space;\&space;\&space;C_{1}\\&space;x_{21}&space;&&space;x_{22}&space;&&space;...&space;&&space;x_{2n}&space;&|&space;\&space;\&space;C_2\\&space;x_{31}&space;&&space;x_{32}&space;&&space;...&space;&&space;x_{3n}&space;&|&space;\&space;\&space;C_3\\&space;x_{41}&space;&&space;x_{42}&space;&&space;...&space;&&space;x_{4n}&space;&|&space;\&space;\&space;C_4\\&space;...&space;&&space;...&space;&&space;...&space;&&space;...&space;&|&space;\&space;\&space;\&space;...\\&space;x_{m1}&space;&&space;x_{m2}&space;&&space;...&space;&&space;x_{mn}&space;&\&space;\&space;|&space;\&space;\&space;\&space;C_m&space;\end{bmatrix}"  />， <img src="https://latex.codecogs.com/gif.latex?C_i" title="C_i" />只有1或-1两种label。
 

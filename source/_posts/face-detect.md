@@ -1,7 +1,7 @@
 ---
 title: Face Recognition by SVM or PCA 基于SVM或PCA的人脸识别
 date: 2019-05-23 10:21:59
-tags: ["SVM","PCA","OpenCV"]
+tags: ["SVM","PCA","OpenCV", "Computer Vision"]
 categories: Technic
 ---
 

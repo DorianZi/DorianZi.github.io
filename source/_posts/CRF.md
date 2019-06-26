@@ -11,9 +11,9 @@ CRF指的是Conditional Random Field,条件随机场。可以用HMM来帮助理�
 
 ![](/uploads/CRF_1.png)
 
-直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即<img src="https://latex.codecogs.com/gif.latex?y_1"  />对<img src="https://latex.codecogs.com/gif.latex?y_1" title="x_1" />，<img src="https://latex.codecogs.com/gif.latex?y_2"  />对<img src="https://latex.codecogs.com/gif.latex?x_2"  />，<img src="https://latex.codecogs.com/gif.latex?x_1"  />对<img src="https://latex.codecogs.com/gif.latex?x_3"  />。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即<img src="https://latex.codecogs.com/gif.latex?y_i" title="y_i" />对<img src="https://latex.codecogs.com/gif.latex?x_1,x_2,x_3" title="x_1,x_2,x_3" />。
+直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即<img src="https://latex.codecogs.com/gif.latex?y_1"  />对<img src="https://latex.codecogs.com/gif.latex?x_1" title="x_1" />，<img src="https://latex.codecogs.com/gif.latex?y_2"  />对<img src="https://latex.codecogs.com/gif.latex?x_2"  />，<img src="https://latex.codecogs.com/gif.latex?y_3"  />对<img src="https://latex.codecogs.com/gif.latex?x_3"  />。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即<img src="https://latex.codecogs.com/gif.latex?y_i" title="y_i" />对<img src="https://latex.codecogs.com/gif.latex?x_1,x_2,x_3" title="x_1,x_2,x_3" />。
 
-另外的区别是：HMM是有向图，严格定义了y的有序性 CRF是无向图，y无序（图中是线性链式，为CRF的特殊情况）。HMM是生成模型，通过求联合概率获得；CRF是判别模型，通过条件概率求得。在如词性标注上的应用中CRF更合理，因为它直接求某个标注的概率，而HMM需要先算联合概率再转而求目标概率。
+另外的区别是：HMM是有向图，严格定义了y的有序性，只能从左至右。CRF是无向图，y无序，可左可右。HMM是生成模型，通过求联合概率获得；CRF是判别模型，通过条件概率求得。在如词性标注上的应用中CRF更合理，因为它直接求某个标注的概率，而HMM需要先算联合概率再转而求目标概率。
 
 CRF的标准定义是：
 
@@ -25,7 +25,7 @@ CRF的标准定义是：
 
 我们通过CRF在词性标注上的应用来理解CRF算法原理。
 
-有这样一个句子： Dorian is a good boy 正确的词性标注为：名词-动词-名词。现在我们通过CRF来实现它：
+有这样一个句子： Dorian is a good boy 正确的词性标注为：名词-动词-冠词-形容词-名词。现在我们通过CRF来实现它：
 
 ![](/uploads/CRF_2.png)
 

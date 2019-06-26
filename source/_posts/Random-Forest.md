@@ -51,7 +51,7 @@ Bagging指的是有放回的方法，在随机森林的构建上就是：每棵�
 
 ![](/uploads/randforest_2.png)
 
-以<img src="https://latex.codecogs.com/gif.latex?A_1=1,A_2=1，A_3=1" title="A_1=1,A_2=1，A_3=1" />>分别表示青年，有工作，有房子三个特征，则Gini指数分别为：
+以<img src="https://latex.codecogs.com/gif.latex?A_1=1,A_2=1，A_3=1" title="A_1=1,A_2=1，A_3=1" />分别表示青年，有工作，有房子三个特征，则Gini指数分别为：
 
 <img src="https://latex.codecogs.com/gif.latex?Gini(D,A_1=1)=\frac{4}{9}Gini(D_1)&plus;\frac{5}{9}Gini(D_2)=\frac{4}{9}\times&space;\frac{2}{4}&plus;\frac{5}{9}\times\frac{12}{25}=0.224" title="Gini(D,A_1=1)=\frac{4}{9}Gini(D_1)+\frac{5}{9}Gini(D_2)=\frac{4}{9}\times \frac{2}{4}+\frac{5}{9}\times\frac{12}{25}=0.224" />
 

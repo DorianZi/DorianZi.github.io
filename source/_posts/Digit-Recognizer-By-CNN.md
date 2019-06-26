@@ -1,7 +1,7 @@
 ---
 title: Digit Recognizer by CNN 基于卷积神经网络的手写数字识别
 date: 2019-05-01 08:17:19
-tags: ["Algorithm", "Deep Learning", "TensorFlow"]
+tags: ["Algorithm", "Deep Learning", "TensorFlow", "Computer Vision"]
 categories: Technic
 ---
 

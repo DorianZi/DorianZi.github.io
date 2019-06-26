@@ -38,7 +38,7 @@ tags: ["Algorithm", "SVD", "PCA"]
 
 <img src="https://latex.codecogs.com/png.latex?\underset{m\times&space;n}{A}=\underset{m\times&space;m}{(u_{1},u_{2},...,u_{m})}\underset{m\times&space;n}{\sum}\underset{n\times&space;n}{V^{T}}" title="\underset{m\times n}{A}=\underset{m\times m}{(u_{1},u_{2},...,u_{m})}\underset{m\times n}{\sum}\underset{n\times n}{V^{T}}" />
 
-同时我们也继续PCA,也就是求协方差矩阵的特征向量<img src="https://latex.codecogs.com/png.latex?(u_{1},u_{2},...,u_{n})"/>并它们此为新的主元，写出新主元下的矩阵(即<img src="https://latex.codecogs.com/png.latex?UA" />)：
+同时我们也继续PCA,也就是求协方差矩阵的特征向量<img src="https://latex.codecogs.com/png.latex?(u_{1},u_{2},...,u_{n})"/>并以它们为新的主元，写出新主元下的矩阵(即<img src="https://latex.codecogs.com/png.latex?UA" />)：
 ![](/uploads/pca_vs_svd_after_pca.png)
 
 当然, SVD中通过<img src="https://latex.codecogs.com/png.latex?A^{T}A" />求得的右奇异矩阵<img src="https://latex.codecogs.com/png.latex?V^{T}" title="V^{T}" />，与PCA中以行为维度的协方差求得特征向量也有上述的对应关系

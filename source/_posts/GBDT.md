@@ -8,7 +8,7 @@ categories: Technic
 # 提升树引入
 
 提升树相当于提升方法在[CART](https://dorianzi.github.io/2019/03/30/CART/#more)上的应用。
-平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的
+平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值来实现提升的。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的。为什么？请往下看。
 
 GBDT有分类和回归两个方向的应用，本文主要介绍<font size="4">GBDT 回归提升树</font>。
 
@@ -120,7 +120,7 @@ GBDT的提升是加法模型，它不是定义一个固定结构的函数，然�
 
 <img src="https://latex.codecogs.com/gif.latex?T_3(x)=\left\{\begin{matrix}&space;0.15,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.22,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right." /> &emsp;&emsp; <img src="https://latex.codecogs.com/gif.latex?T_4(x)=\left\{\begin{matrix}&space;-0.16,\&space;\&space;x<4.5\\&space;0.11,\&space;\&space;\&space;\&space;\&space;x\geq&space;4.5&space;\end{matrix}\right." title="T_4(x)=\left\{\begin{matrix} -0.16,\ \ x<4.5\\ 0.11,\ \ \ \ \ x\geq 4.5 \end{matrix}\right." />
 
-<img src="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;0.07,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.11,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right." /> &emsp;&emsp; <img src="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;-0.15,\&space;\&space;x<2.5\\&space;0.04,\&space;\&space;\&space;\&space;\&space;x\geq&space;2.5&space;\end{matrix}\right." />
+<img src="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;0.07,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.11,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right." /> &emsp;&emsp; <img src="https://latex.codecogs.com/gif.latex?T_6(x)=\left\{\begin{matrix}&space;-0.15,\&space;\&space;x<2.5\\&space;0.04,\&space;\&space;\&space;\&space;\&space;x\geq&space;2.5&space;\end{matrix}\right." />
 
 此时提升树为：
 

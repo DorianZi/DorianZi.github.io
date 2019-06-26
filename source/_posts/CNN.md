@@ -1,7 +1,7 @@
 ---
 title: CNN 卷积神经网络
 date: 2019-04-25 23:18:36
-tags: ["Algorithm","Deep Learning"]
+tags: ["Algorithm", "Deep Learning", "Computer Vision"]
 categories: Technic
 ---
 
