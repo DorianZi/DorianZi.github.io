@@ -100,20 +100,20 @@
 
 
 
-  <meta name="description" content="CRF的定义CRF指的是Conditional Random Field,条件随机场。可以用HMM来帮助理解。  直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即对，对，对。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即对。 另外的区别是：HMM是有向图，严格定义了y的有序性 CRF是无向图，y无序（图中是线性链式，为CRF的特殊情况）">
+  <meta name="description" content="CRF的定义CRF指的是Conditional Random Field,条件随机场。可以用HMM来帮助理解。  直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即对，对，对。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即对。 另外的区别是：HMM是有向图，严格定义了y的有序性，只能从左至右。CRF是无向图，y无序，可左可右。HMM是生成">
 <meta name="keywords" content="Algorithm,NLP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CRF 条件随机场">
 <meta property="og:url" content="https://dorianzi.github.io/2019/04/10/CRF/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="CRF的定义CRF指的是Conditional Random Field,条件随机场。可以用HMM来帮助理解。  直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即对，对，对。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即对。 另外的区别是：HMM是有向图，严格定义了y的有序性 CRF是无向图，y无序（图中是线性链式，为CRF的特殊情况）">
+<meta property="og:description" content="CRF的定义CRF指的是Conditional Random Field,条件随机场。可以用HMM来帮助理解。  直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即对，对，对。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即对。 另外的区别是：HMM是有向图，严格定义了y的有序性，只能从左至右。CRF是无向图，y无序，可左可右。HMM是生成">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/CRF_1.png">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_1">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x_1">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_2">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?x_2">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?x_1">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_3">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?x_3">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?y_i">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?x_1,x_2,x_3">
@@ -155,10 +155,10 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?\tilde{P}(x,y)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?log\prod_{x,y}^{&space;}P(y|x)^{\tilde{P}(x,y)}">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(w)=L_{\tilde{P}}(P_w)=log\prod_{x,y}^{&space;}P(y|x)^{\tilde{P}(x,y)}=\sum_{x,y}^{&space;}\tilde{P}(x,y)logP(y|x)">
-<meta property="og:updated_time" content="2019-04-13T09:47:37.702Z">
+<meta property="og:updated_time" content="2019-06-25T01:13:44.161Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CRF 条件随机场">
-<meta name="twitter:description" content="CRF的定义CRF指的是Conditional Random Field,条件随机场。可以用HMM来帮助理解。  直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即对，对，对。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即对。 另外的区别是：HMM是有向图，严格定义了y的有序性 CRF是无向图，y无序（图中是线性链式，为CRF的特殊情况）">
+<meta name="twitter:description" content="CRF的定义CRF指的是Conditional Random Field,条件随机场。可以用HMM来帮助理解。  直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即对，对，对。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即对。 另外的区别是：HMM是有向图，严格定义了y的有序性，只能从左至右。CRF是无向图，y无序，可左可右。HMM是生成">
 <meta name="twitter:image" content="https://dorianzi.github.io/uploads/CRF_1.png">
 
 
@@ -538,13 +538,13 @@
       
         <h1 id="CRF的定义"><a href="#CRF的定义" class="headerlink" title="CRF的定义"></a>CRF的定义</h1><p>CRF指的是Conditional Random Field,条件随机场。可以用HMM来帮助理解。</p>
 <p><img src="/uploads/CRF_1.png" alt></p>
-<p>直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即<img src="https://latex.codecogs.com/gif.latex?y_1">对<img src="https://latex.codecogs.com/gif.latex?y_1" title="x_1">，<img src="https://latex.codecogs.com/gif.latex?y_2">对<img src="https://latex.codecogs.com/gif.latex?x_2">，<img src="https://latex.codecogs.com/gif.latex?x_1">对<img src="https://latex.codecogs.com/gif.latex?x_3">。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即<img src="https://latex.codecogs.com/gif.latex?y_i" title="y_i">对<img src="https://latex.codecogs.com/gif.latex?x_1,x_2,x_3" title="x_1,x_2,x_3">。</p>
-<p>另外的区别是：HMM是有向图，严格定义了y的有序性 CRF是无向图，y无序（图中是线性链式，为CRF的特殊情况）。HMM是生成模型，通过求联合概率获得；CRF是判别模型，通过条件概率求得。在如词性标注上的应用中CRF更合理，因为它直接求某个标注的概率，而HMM需要先算联合概率再转而求目标概率。</p>
+<p>直观看图和公式，可以知道HMM里面观测序列的每一项都只跟发射它的状态序列项有关，即<img src="https://latex.codecogs.com/gif.latex?y_1">对<img src="https://latex.codecogs.com/gif.latex?x_1" title="x_1">，<img src="https://latex.codecogs.com/gif.latex?y_2">对<img src="https://latex.codecogs.com/gif.latex?x_2">，<img src="https://latex.codecogs.com/gif.latex?y_3">对<img src="https://latex.codecogs.com/gif.latex?x_3">。而CRF里面观测序列的每一项都可以和任何一个状态序列项有关(因为无向)，即<img src="https://latex.codecogs.com/gif.latex?y_i" title="y_i">对<img src="https://latex.codecogs.com/gif.latex?x_1,x_2,x_3" title="x_1,x_2,x_3">。</p>
+<p>另外的区别是：HMM是有向图，严格定义了y的有序性，只能从左至右。CRF是无向图，y无序，可左可右。HMM是生成模型，通过求联合概率获得；CRF是判别模型，通过条件概率求得。在如词性标注上的应用中CRF更合理，因为它直接求某个标注的概率，而HMM需要先算联合概率再转而求目标概率。</p>
 <p>CRF的标准定义是：</p>
 <p>形式化定义：设<img src="https://latex.codecogs.com/gif.latex?X=(x_1,x_2,...,x_n),Y=(y_1,y_2,...,y_n)" title="X=(x_1,x_2,...,x_n),Y=(y_1,y_2,...,y_n)">均为线性链表示的随机变量序列，若给在定随机变量序列X的条件下，随机变量序列Y的条件概率分布P(Y|X)构成条件随机场，即满足马尔科夫性：<img src="https://latex.codecogs.com/gif.latex?P(y_i|x,y_1,...,y_{i-1},y_{i&plus;1},...,y_n)=P(y_i|x,y_{i-1},y_{i&plus;1}),\&space;\&space;i=1,2,...,n">，则称P(Y|X)是线性链条件随机场。</p>
 <p>注：本文只谈线性链CRF，即上图中所示的CRF结构</p>
 <h1 id="CRF在词性标注的应用"><a href="#CRF在词性标注的应用" class="headerlink" title="CRF在词性标注的应用"></a>CRF在词性标注的应用</h1><p>我们通过CRF在词性标注上的应用来理解CRF算法原理。</p>
-<p>有这样一个句子： Dorian is a good boy 正确的词性标注为：名词-动词-名词。现在我们通过CRF来实现它：</p>
+<p>有这样一个句子： Dorian is a good boy 正确的词性标注为：名词-动词-冠词-形容词-名词。现在我们通过CRF来实现它：</p>
 <p><img src="/uploads/CRF_2.png" alt></p>
 <h2 id="特征函数评分"><a href="#特征函数评分" class="headerlink" title="特征函数评分"></a>特征函数评分</h2><p>首先需要建立两种特征函数，转移特征函数和状态特征函数，每种特征函数有很多个。转移特征函数用来给相邻（只用相邻的就够了，这也是线性链CRF的特点）词性的组合打分，状态特征函数用来给当前位置的特征打分。然后给每个特征函数的打分一个权重，最后相加起来得到综合分数：</p>
 <p><img src="https://latex.codecogs.com/gif.latex?\sum_{i,k}^{&space;}\lambda_kt_k(y_{i-1},y_{i},x,i)&plus;\sum_{i,l}^{&space;}\mu_ls_l(y_i,x,i)"></p>
@@ -723,7 +723,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

@@ -100,13 +100,13 @@
 
 
 
-  <meta name="description" content="提升树引入提升树相当于提升方法在CART上的应用。平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的 GBDT有分类和回归两个方向的应用，本文主要介绍GBDT 回归提升树。 关于函数梯度GBDT的提升是加法模型，它不是定义一个固定结构">
+  <meta name="description" content="提升树引入提升树相当于提升方法在CART上的应用。平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值来实现提升的。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的。为什么？请往下看。 GBDT有分类和回归两个方向的应用，本文主要介绍GBDT 回归提升树。 关于函数梯度GBDT的提升是">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GBDT 梯度提升树">
 <meta property="og:url" content="https://dorianzi.github.io/2019/04/05/GBDT/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="提升树引入提升树相当于提升方法在CART上的应用。平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的 GBDT有分类和回归两个方向的应用，本文主要介绍GBDT 回归提升树。 关于函数梯度GBDT的提升是加法模型，它不是定义一个固定结构">
+<meta property="og:description" content="提升树引入提升树相当于提升方法在CART上的应用。平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值来实现提升的。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的。为什么？请往下看。 GBDT有分类和回归两个方向的应用，本文主要介绍GBDT 回归提升树。 关于函数梯度GBDT的提升是">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?F_m(X)=F_{m-1}(X)+\Delta&space;F(X)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(F(x))">
@@ -144,15 +144,15 @@
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_3(x)=\left\{\begin{matrix}&space;0.15,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.22,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right.">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_4(x)=\left\{\begin{matrix}&space;-0.16,\&space;\&space;x<4.5\\&space;0.11,\&space;\&space;\&space;\&space;\&space;x\geq&space;4.5&space;\end{matrix}\right.">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;0.07,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.11,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right.">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;-0.15,\&space;\&space;x<2.5\\&space;0.04,\&space;\&space;\&space;\&space;\&space;x\geq&space;2.5&space;\end{matrix}\right.">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T_6(x)=\left\{\begin{matrix}&space;-0.15,\&space;\&space;x<2.5\\&space;0.04,\&space;\&space;\&space;\&space;\&space;x\geq&space;2.5&space;\end{matrix}\right.">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_6(x)=T_1(x)+T_2(x)+...+T_6(x)\\&space;=\left\{\begin{matrix}&space;5.63,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x<2.5\\&space;5.82,\&space;\&space;2.5\leq&space;x<3.5\\&space;6.56,\&space;\&space;3.5\leq&space;x<4.5\\&space;6.83,\&space;\&space;4.5\leq&space;x<6.5\\&space;8.95,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right.">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_6(x)">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?L(y,f_6(x))=\sum_{i=1}^{10}(y_i-f_6(x_i))^2=0.17">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?f_6(x)">
-<meta property="og:updated_time" content="2019-04-06T15:06:43.572Z">
+<meta property="og:updated_time" content="2019-06-14T23:40:00.356Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GBDT 梯度提升树">
-<meta name="twitter:description" content="提升树引入提升树相当于提升方法在CART上的应用。平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的 GBDT有分类和回归两个方向的应用，本文主要介绍GBDT 回归提升树。 关于函数梯度GBDT的提升是加法模型，它不是定义一个固定结构">
+<meta name="twitter:description" content="提升树引入提升树相当于提升方法在CART上的应用。平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值来实现提升的。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的。为什么？请往下看。 GBDT有分类和回归两个方向的应用，本文主要介绍GBDT 回归提升树。 关于函数梯度GBDT的提升是">
 <meta name="twitter:image" content="https://latex.codecogs.com/gif.latex?F_m(X)=F_{m-1}(X)+\Delta&space;F(X)">
 
 
@@ -528,7 +528,7 @@
       
 
       
-        <h1 id="提升树引入"><a href="#提升树引入" class="headerlink" title="提升树引入"></a>提升树引入</h1><p>提升树相当于提升方法在<a href="https://dorianzi.github.io/2019/03/30/CART/#more">CART</a>上的应用。<br>平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的</p>
+        <h1 id="提升树引入"><a href="#提升树引入" class="headerlink" title="提升树引入"></a>提升树引入</h1><p>提升树相当于提升方法在<a href="https://dorianzi.github.io/2019/03/30/CART/#more">CART</a>上的应用。<br>平常我们讲的提升树就是GBDT （Gradient Boosting Decision Tree），它是通过拟合损失函数的负梯度值在当前模型的值来实现提升的。注意这里我们不是拟合真实值，而是拟合梯度值，只是梯度跟真实值是有关系的。为什么？请往下看。</p>
 <p>GBDT有分类和回归两个方向的应用，本文主要介绍<font size="4">GBDT 回归提升树</font>。</p>
 <h1 id="关于函数梯度"><a href="#关于函数梯度" class="headerlink" title="关于函数梯度"></a>关于函数梯度</h1><p>GBDT的提升是加法模型，它不是定义一个固定结构的函数，然后通过样本拟合更新它的参数。它是函数本身的累加：<img src="https://latex.codecogs.com/gif.latex?F_m(X)=F_{m-1}(X)&plus;\Delta&space;F(X)" title="f_m(X)=f_{m-1}(X)+\Delta f(X)">。所以如果要更快逼近最后的函数，我们就需要在正确的方向上变化，这个“正确的方向”当然就是损失函数减少最快的方向。所以我们需要用损失函数<img src="https://latex.codecogs.com/gif.latex?L(F(x))" title="L(f(x))">对函数<img src="https://latex.codecogs.com/gif.latex?F(x)" title="f(x)">求导，求得的导数，就是接下来<img src="https://latex.codecogs.com/gif.latex?F(x)" title="F(x)">需要弥补的方向。这时候用一个函数能<img src="https://latex.codecogs.com/gif.latex?\Delta&space;F(X)" title="f_m(X)=f_{m-1}(X)+\Delta f(X)">去拟合刚才求得的导数，那么函数就可以更新为<img src="https://latex.codecogs.com/gif.latex?F_m(X)=F_{m-1}(X)&plus;\Delta&space;F(X)" title="f_m(X)=f_{m-1}(X)+\Delta f(X)">了。</p>
 <p>导数值跟损失函数的选择有关系。如果选择平方损失误差<img src="https://latex.codecogs.com/gif.latex?L(y_i,F(x_i))=\frac{1}{2}[y_i-F(x_i)]^2" title="L(y_i,F(x_i))=\frac{1}{2}[y_i-F(x_i)]^2">，那么它的导数就是：</p>
@@ -583,7 +583,7 @@
 
 <p>到第六颗树的时候，我们已经累计获得了：</p>
 <p><img src="https://latex.codecogs.com/gif.latex?T_3(x)=\left\{\begin{matrix}&space;0.15,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.22,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right."> &emsp;&emsp; <img src="https://latex.codecogs.com/gif.latex?T_4(x)=\left\{\begin{matrix}&space;-0.16,\&space;\&space;x<4.5\\&space;0.11,\&space;\&space;\&space;\&space;\&space;x\geq&space;4.5&space;\end{matrix}\right." title="T_4(x)=\left\{\begin{matrix} -0.16,\ \ x<4.5\\ 0.11,\ \ \ \ \ x\geq 4.5 \end{matrix}\right."></p>
-<p><img src="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;0.07,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.11,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right."> &emsp;&emsp; <img src="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;-0.15,\&space;\&space;x<2.5\\&space;0.04,\&space;\&space;\&space;\&space;\&space;x\geq&space;2.5&space;\end{matrix}\right."></p>
+<p><img src="https://latex.codecogs.com/gif.latex?T_5(x)=\left\{\begin{matrix}&space;0.07,\&space;\&space;\&space;\&space;x<6.5\\&space;-0.11,\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right."> &emsp;&emsp; <img src="https://latex.codecogs.com/gif.latex?T_6(x)=\left\{\begin{matrix}&space;-0.15,\&space;\&space;x<2.5\\&space;0.04,\&space;\&space;\&space;\&space;\&space;x\geq&space;2.5&space;\end{matrix}\right."></p>
 <p>此时提升树为：</p>
 <p><img src="https://latex.codecogs.com/gif.latex?f_6(x)=T_1(x)&plus;T_2(x)&plus;...&plus;T_6(x)\\&space;=\left\{\begin{matrix}&space;5.63,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x<2.5\\&space;5.82,\&space;\&space;2.5\leq&space;x<3.5\\&space;6.56,\&space;\&space;3.5\leq&space;x<4.5\\&space;6.83,\&space;\&space;4.5\leq&space;x<6.5\\&space;8.95,\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;\&space;x\geq&space;6.5&space;\end{matrix}\right."></p>
 <p>此时用<img src="https://latex.codecogs.com/gif.latex?f_6(x)">拟合训练数据的平方损失误差为：</p>
@@ -720,7 +720,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
