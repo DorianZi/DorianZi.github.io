@@ -151,8 +151,8 @@
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolov2_11.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolov2_12.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolov2_13.png">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/yolov2_13.png">
-<meta property="og:updated_time" content="2019-07-03T11:44:39.396Z">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolov2_14.png">
+<meta property="og:updated_time" content="2019-07-03T11:47:50.762Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YOLOv2 目标检测算法之YOLOv2">
 <meta name="twitter:description" content="YOLOv2论文在此 事实上，根据论文来看，作者根据不同的改进提出的是两个模型1）提高YOLO的精度同时保持速度，这是YOLOv22）提出了一种分类和检测的联合训练策略，使得模型更强大,可以检测多达9000个类别，这是YOLO9000 我们先来看YOLOv2对于YOLOv1的改进： YOLOv2改进点1）Batch NormalizationBatch Normalization是一个通用的提高模">
@@ -597,7 +597,7 @@
 <h1 id="YOLO9000"><a href="#YOLO9000" class="headerlink" title="YOLO9000"></a>YOLO9000</h1><p>YOLO9000实际上是YOLOv2的一种继续优化方法，它之所以被单独拎出来，甚至还专门命名为YOLO9000，是因为它开创性地提出了两种不同数据集联合训练方法。</p>
 <p>ImageNet分类数据集，数据量巨大，因为图片分类是容易进行标注的；COCO，VOC等物体检测数据集，数据量较少，因为图片中物体检测的标注更复杂。YOLOv2用COCO的数据集，学习物体的边界框，置信度和框内物体分类。虽然在边界框和置信度上，没有可以加强的地方，但是在框内物体分类这一项，可以联合ImageNet分类数据集的大量数据进行分类能力的大大加强(可以识别多达9000个类别的物体)。</p>
 <p>联合训练的最大问题是检测数据集（如COCO数据集）只有粗尺度的标记信息，如猫、狗，而分类数据集（如ImageNet）标记信息则更细尺度，如狗这一类就包括哈士奇、金毛等。所以我们需要一种一致性的方法来融合标记信息。</p>
-<p>为此作者提出了一种名为WordTree的层级分类方法，主要思路是根据各个类别之间的从属关系（根据WordNet）建立一种树结构，如下图：<br><img src="/uploads/yolov2_13.png" alt></p>
+<p>为此作者提出了一种名为WordTree的层级分类方法，主要思路是根据各个类别之间的从属关系（根据WordNet）建立一种树结构，如下图：<br><img src="/uploads/yolov2_14.png" alt></p>
 <p>WordTree中的根节点为”physical object”，其实就是YOLOv2给出的“框内有物体”的置信度。每个节点分出的子节点（如图中的blplane,jet,airbus,stealth fighter）都属于同一子类，可以对它们进行softmax处理，以得到每一个具体分类的概率。当然上面经过softmax得到的概率只是局部概率，要计算一个分类的最终预测概率，需要将从根节点到该分类的路径上的各个局部概率相乘。如计算jet的最终预测概率，需要将physical object,artifact,vehicle,air,airplane,jet这6个节点的局部概率相乘。</p>
 <p>这个结构在训练上的思路是：在训练过程中，当网络遇到一个检测数据集的图片与标记信息，那么就把这些数据用完整的损失函数反向传播；当网络遇到一个分类数据集的图片和分类标记信息，只用整个结构中分类部分的损失函数反向传播。</p>
 <p>在预测上，当然跟所有软分类器一样，计算所有路径的概率乘积，选取最大概率的那个结果，就是最终的预测结果了。</p>
