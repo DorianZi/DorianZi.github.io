@@ -187,7 +187,7 @@ ImageNet分类数据集，数据量巨大，因为图片分类是容易进行标
 联合训练的最大问题是检测数据集（如COCO数据集）只有粗尺度的标记信息，如猫、狗，而分类数据集（如ImageNet）标记信息则更细尺度，如狗这一类就包括哈士奇、金毛等。所以我们需要一种一致性的方法来融合标记信息。
 
 为此作者提出了一种名为WordTree的层级分类方法，主要思路是根据各个类别之间的从属关系（根据WordNet）建立一种树结构，如下图：
-![](/uploads/yolov2_13.png)
+![](/uploads/yolov2_14.png)
 
 WordTree中的根节点为"physical object"，其实就是YOLOv2给出的“框内有物体”的置信度。每个节点分出的子节点（如图中的blplane,jet,airbus,stealth fighter）都属于同一子类，可以对它们进行softmax处理，以得到每一个具体分类的概率。当然上面经过softmax得到的概率只是局部概率，要计算一个分类的最终预测概率，需要将从根节点到该分类的路径上的各个局部概率相乘。如计算jet的最终预测概率，需要将physical object,artifact,vehicle,air,airplane,jet这6个节点的局部概率相乘。
 
