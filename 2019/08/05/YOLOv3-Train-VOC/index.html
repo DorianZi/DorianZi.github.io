@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="L6qAeUEWrk">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '6O9OK26379',
+      apiKey: 'd266e496228bce82728a87f4c2ea4800',
+      indexName: 'MyHexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在之前的文章中，我们已经讲解了YOLOv3的原理。这篇，我们来折腾一下YOLOv3的训练实操。此篇中，我们不打算动手写YOLOv3的算法编程实现，而是直接使用官方代码进行编译，这样我们的折腾点都在数据集配置，调参等方面。 首先进入YOLO的官网https://pjreddie.com/darknet/yolo/ 。YOLO从v1到v3都是支持的，但是默认是最新的v3。如果需要去到老版本，可以键入h">
+<meta name="keywords" content="Deep Learning,Computer Vision">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Official YOLOv3 training on VOC 使用官方YOLOv3训练VOC数据集">
+<meta property="og:url" content="https://dorianzi.github.io/2019/08/05/YOLOv3-Train-VOC/index.html">
+<meta property="og:site_name" content="Dorian Mode">
+<meta property="og:description" content="在之前的文章中，我们已经讲解了YOLOv3的原理。这篇，我们来折腾一下YOLOv3的训练实操。此篇中，我们不打算动手写YOLOv3的算法编程实现，而是直接使用官方代码进行编译，这样我们的折腾点都在数据集配置，调参等方面。 首先进入YOLO的官网https://pjreddie.com/darknet/yolo/ 。YOLO从v1到v3都是支持的，但是默认是最新的v3。如果需要去到老版本，可以键入h">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolov3_train_1.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolov3_train_2.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolov3_train_3.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolov3_train_4.png">
+<meta property="og:image" content="https://dorianzi.github.io/uploads/yolov3_train_5.png">
+<meta property="og:updated_time" content="2019-08-19T01:01:54.591Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Official YOLOv3 training on VOC 使用官方YOLOv3训练VOC数据集">
+<meta name="twitter:description" content="在之前的文章中，我们已经讲解了YOLOv3的原理。这篇，我们来折腾一下YOLOv3的训练实操。此篇中，我们不打算动手写YOLOv3的算法编程实现，而是直接使用官方代码进行编译，这样我们的折腾点都在数据集配置，调参等方面。 首先进入YOLO的官网https://pjreddie.com/darknet/yolo/ 。YOLO从v1到v3都是支持的，但是默认是最新的v3。如果需要去到老版本，可以键入h">
+<meta name="twitter:image" content="https://dorianzi.github.io/uploads/yolov3_train_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://dorianzi.github.io/2019/08/05/YOLOv3-Train-VOC/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Official YOLOv3 training on VOC 使用官方YOLOv3训练VOC数据集 | Dorian Mode</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bdd9553b00b737f4e03ff3fc43e220f2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/DorianZi/DorianZi.github.io/tree/master" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dorian Mode</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/08/05/YOLOv3-Train-VOC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dorian Zi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dorian Mode">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Official YOLOv3 training on VOC 使用官方YOLOv3训练VOC数据集
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-05 07:07:15" itemprop="dateCreated datePublished" datetime="2019-08-05T07:07:15+08:00">2019-08-05</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+          
+          <!--Dorian Added Start-->
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Deep-Learning/" <i class="fa fa-tag"> Deep Learning</a>
+              
+                <a href="/tags/Computer-Vision/" <i class="fa fa-tag"> Computer Vision</a>
+              
+            </div>
+          
+          <!--Dorian Added End-->
+        
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在<a href="https://dorianzi.github.io/2019/07/05/YOLOv3/">之前的文章</a>中，我们已经讲解了YOLOv3的原理。这篇，我们来折腾一下YOLOv3的训练实操。此篇中，我们不打算动手写YOLOv3的算法编程实现，而是直接使用官方代码进行编译，这样我们的折腾点都在数据集配置，调参等方面。</p>
+<p>首先进入YOLO的官网<a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="noopener">https://pjreddie.com/darknet/yolo/</a> 。<br>YOLO从v1到v3都是支持的，但是默认是最新的v3。如果需要去到老版本，可以键入<br><a href="https://pjreddie.com/darknet/yolov1/" target="_blank" rel="noopener">https://pjreddie.com/darknet/yolov1/</a><br>或者<br><a href="https://pjreddie.com/darknet/yolov2" target="_blank" rel="noopener">https://pjreddie.com/darknet/yolov2</a> </p>
+<p>官网已经有比较详细操作过程，我只抽取其中一部分进行闭坑式讲解。</p>
+<h1 id="代码下载"><a href="#代码下载" class="headerlink" title="代码下载"></a>代码下载</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/pjreddie/darknet</span><br></pre></td></tr></table></figure>
+<p>我们实际下载的是darknet而非YOLOv3本。因为YOLOv3只是基于darknet这个backbone而构建的应用于目标检测的专用网络，而基于darknet构建的网络很多，YOLOv3只是其中之一。比如RNN和darknet的结合可以进入：<br><a href="https://pjreddie.com/darknet/rnns-in-darknet/" target="_blank" rel="noopener">https://pjreddie.com/darknet/rnns-in-darknet/</a><br>它实际上也是要下载darknet。</p>
+<h1 id="代码编译"><a href="#代码编译" class="headerlink" title="代码编译"></a>代码编译</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd darknet</span><br><span class="line">$ make</span><br></pre></td></tr></table></figure>
+<p>这样就完成了编译，获得名为darknet的binary。<br>然而默认编译出来的binary是跑在CPU上的（也就是说不能通过GPU和CUDA来并行计算），且不支持OpenCV（也就是说不具备摄像头读图等功能）</p>
+<p>想要获取以上两种功能（特别是能让你训练极度加速的GPU），你需要先改动Makefile再进行make:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ vim Makefile</span><br><span class="line"># 改动内容为：</span><br><span class="line">    GPU=1</span><br><span class="line">    ...</span><br><span class="line">    OPENCV=1</span><br><span class="line">    ...</span><br><span class="line">$ make</span><br></pre></td></tr></table></figure></p>
+<p>GPU=1意味着使用Nvidia的卡及其CUDA。所以必须保证你的系统有卡，且安装了CUDA。CUDA的下载安装过程这里不赘述<br>OPENCV=1也需要你的系统安装了OpenCV库,，它不需要额外的硬件支持<br>当然，强烈建议使用GPU进行训练，它能让你的训练速度成百倍地增长。事实上，没有GPU，进入CV领域是没有意义的，你几乎做不了任何事情，除非你愿意等CPU一个月的训练时间。</p>
+<h1 id="初次测试"><a href="#初次测试" class="headerlink" title="初次测试"></a>初次测试</h1><p>为了验证我们编译好的binary可用，先拿YOLOv3提供方训练好的权重进行预测<br>首先下载训练好的权重文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://pjreddie.com/media/files/yolov3.weights</span><br></pre></td></tr></table></figure></p>
+<p>是的，光这个yolov3.weights权重文件就有237M大小。</p>
+<p>接着，对自带的图片dog.jpg进行目标检测：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./darknet detector test cfg/coco.data cfg/yolov3.cfg yolov3.weights data/dog.jpg</span><br><span class="line">或者</span><br><span class="line">$ ./darknet detect cfg/yolov3.cfg yolov3.weights data/dog.jpg</span><br></pre></td></tr></table></figure></p>
+<p>最终的检测结果会生成在predictions.jpg里，打开看看：<br><img src="/uploads/yolov3_train_1.png" alt></p>
+<p>我们再回过头来看上面的命令。为什么两条命令中的参数<font color="red"> detector test cfg/coco.data</font> 和 <font color="brown"> detect</font>是一样的效果呢？</p>
+<p>我猜测后者是前者的封装，于是前往源代码寻找答案：<br>打开examples/darknet.c<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># examples/darknet.c:</span><br><span class="line"></span><br><span class="line">430     &#125; else if (0 == strcmp(argv[1], &quot;detector&quot;))&#123;</span><br><span class="line">431         run_detector(argc, argv);</span><br><span class="line">432     &#125; else if (0 == strcmp(argv[1], &quot;detect&quot;))&#123;</span><br><span class="line">433         float thresh = find_float_arg(argc, argv, &quot;-thresh&quot;, .5);</span><br><span class="line">434         char *filename = (argc &gt; 4) ? argv[4]: 0;</span><br><span class="line">435         char *outfile = find_char_arg(argc, argv, &quot;-out&quot;, 0);</span><br><span class="line">436         int fullscreen = find_arg(argc, argv, &quot;-fullscreen&quot;);</span><br><span class="line">437         test_detector(&quot;cfg/coco.data&quot;, argv[2], argv[3], filename, thresh, .5, outfile, fullscreen);</span><br><span class="line">438     &#125;</span><br></pre></td></tr></table></figure></p>
+<p>可见：<br>当传入”detector”的时候会调用run_detector(argc, argv)          ①<br>当传入”detect”的时候会调用test_detector(“cfg/coco.data”,*)   ②<br>①和②是一个效果吗？ 接下来寻找run_detector和test_detector的函数体：</p>
+<p>打开examples/detector.c<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># examples/detector.c:</span><br><span class="line"></span><br><span class="line">562 void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename, float thresh, float hier_thresh    , char *outfile, int fullscreen)</span><br><span class="line">563 &#123;</span><br><span class="line">564     list *options = read_data_cfg(datacfg);</span><br><span class="line">565     char *name_list = option_find_str(options, &quot;names&quot;, &quot;data/names.list&quot;);</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">789 void run_detector(int argc, char **argv)</span><br><span class="line">790 &#123;</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">836     if(0==strcmp(argv[2], &quot;test&quot;)) test_detector(datacfg, cfg, weights, filename, thresh, hier_thresh, outfile, fu    llscreen);</span><br></pre></td></tr></table></figure></p>
+<p>到这里就发现，原来run_detector被传入”test”是会调用test_detector(“cfg/coco.data”,*)的，所以是的①和②是一个效果</p>
+<p>接下来还有另一个问题：有了yolov3.weights为什么还需要cfg/coco.data和cfg/yolov3.cfg呢？<br>因为yolov3.weights只是包含了训练生成的参数，而不含有网络信息，类别名信息等，所以我们需要引入另外的文件。<br>事实上，在训练和测试都需要这两个文件。<br>1）cfg/coco.data代表的是coco数据集的信息，我们在训练的时候需要它提供的提供“图片们存放的位置”，“类别名字有哪些”等信息，在测试的时候虽然不需要图片存放信息但是需要它给出的“类别名字有哪些”的信息，即data/names.list<br>2）cfg/yolov3.cfg给出的是网络的结构，训练的超参数等信息。当然训练和测试都需要它。</p>
+<h1 id="训练VOC数据集"><a href="#训练VOC数据集" class="headerlink" title="训练VOC数据集"></a>训练VOC数据集</h1><h2 id="VOC数据集准备"><a href="#VOC数据集准备" class="headerlink" title="VOC数据集准备"></a>VOC数据集准备</h2><p>首先下载VOC2007和VOC2012数据集。实际上VOC2012包含的是从2008年到2012年的数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://pjreddie.com/media/files/VOCtrainval_11-May-2012.tar</span><br><span class="line">wget https://pjreddie.com/media/files/VOCtrainval_06-Nov-2007.tar</span><br><span class="line">wget https://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar</span><br><span class="line">tar xf VOCtrainval_11-May-2012.tar</span><br><span class="line">tar xf VOCtrainval_06-Nov-2007.tar</span><br><span class="line">tar xf VOCtest_06-Nov-2007.tar</span><br></pre></td></tr></table></figure></p>
+<p>数据集被统一存放在VOCdevkit/目录了，我们进入其中的2012数据集去看看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd VOCdevkit/VOC2012/ &amp;&amp; ls</span><br><span class="line">Annotations  ImageSets  JPEGImages  SegmentationClass  SegmentationObject</span><br></pre></td></tr></table></figure>
+<p>SegmentationClass和SegmentationObject不会被用到，因为它们是做语义分割或者实例分割用的，而YOLO是做目标检测的。<br>ImageSets会被用到，它存放的是哪些训练数据，哪些是验证数据的信息。<br>我们最关心的还是Annotations到JPEGImages的映射。举例理解：Annotations里面存放的2012_004329.xml记录了JPEGImages<br>里2012_004329.jpg的目标框位置，分类类别等信息。这个映射其实就是label到数据的映射。</p>
+<p>不过可惜的是，YOLO官方代码有它自己的规则，它不接受.xml格式的label信息，它要简单的.txt格式。好在，官方提供了.xml到.txt的转换脚本，运行以下即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python scripts/voc_label.py</span><br></pre></td></tr></table></figure></p>
+<p>脚本的输出包括两部分，一个是记录图片位置的.txt:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls *txt</span><br><span class="line">2007_test.txt  2007_train.txt  2007_val.txt  2012_train.txt  2012_val.txt  train.all.txt  train.txt</span><br></pre></td></tr></table></figure></p>
+<p>另一个就是.txt格式的label:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ls VOCdevkit/VOC2007/labels</span><br><span class="line">000001.txt 000002.txt 000003.txt ...</span><br><span class="line">$ ls VOCdevkit/VOC2012/labels</span><br><span class="line">2008_000002.txt 2008_000003.txt ...</span><br></pre></td></tr></table></figure></p>
+<p>好，至此VOC的数据就准备好了。</p>
+<h2 id="开始训练VOC数据集"><a href="#开始训练VOC数据集" class="headerlink" title="开始训练VOC数据集"></a>开始训练VOC数据集</h2><p>首先要修改cfg/voc.data文件，这样训练的时候才能知道你的要训练多少类别（classes）,训练集存放在哪(train)，验证集存放在哪(valid),类别名类别文件用哪一个(names),训练出来的中间文件和输出的权重文件存放在哪个目录(backup)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ vim cfg/voc.data</span><br><span class="line">  1 classes= 20</span><br><span class="line">  2 train  = /home/dzi/YOLOv3/darknet/train.txt</span><br><span class="line">  3 valid  = /home/dzi/YOLOv3/darknet/2007_test.txt</span><br><span class="line">  4 names = data/voc.names</span><br><span class="line">  5 backup = backup</span><br></pre></td></tr></table></figure></p>
+<p>然后要调整超参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ vim cfg/yolov3-voc.cfg</span><br><span class="line">[net]</span><br><span class="line">  2 # Testing</span><br><span class="line">  3 #batch=1</span><br><span class="line">  4 #subdivisions=1</span><br><span class="line">  5 # Training</span><br><span class="line">  6 batch=64</span><br><span class="line">  7 subdivisions=16</span><br><span class="line">  8 width=416</span><br><span class="line">  9 height=416</span><br><span class="line"> 10 channels=3</span><br><span class="line"> 11 momentum=0.9</span><br><span class="line"> 12 decay=0.0005</span><br><span class="line"> 13 angle=0</span><br><span class="line"> 14 saturation = 1.5</span><br><span class="line"> 15 exposure = 1.5</span><br><span class="line"> 16 hue=.1</span><br><span class="line"> 17 </span><br><span class="line"> 18 learning_rate=0.001</span><br><span class="line"> 19 burn_in=1000</span><br><span class="line"> 20 max_batches = 30000</span><br><span class="line"> 21 policy=steps</span><br><span class="line"> 22 steps=10000,20000</span><br><span class="line"> 23 scales=.1,.1</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>其中比较常调整是这几组参数：<br>1）batch=64和subdivisions=16，分别表示每次迭代用64张图片，在计算机处理的时候，每次输送16张进去。这两个参数能大则大，跟你的内存和显存有关。<br>2）max_batches = 30000，learning_rate=0.001， steps=10000,20000， scales=.1,.1 初始学习率为0.001，在迭代到10000次时，学习率衰减为0.001*0.1，在迭代到20000次时，学习率继续衰减为0.001*0.1*0.2, 迭代到30000次停止训练。<br>调参策略这里就不讲了，因为太过玄学。</p>
+<p>最后一个准备是下载用Imagenet预训练好darknet53模型。根据之前文章讲过的理论，我们知道，YOLO（以及其它目标检测网络）采用了迁移学习，也就说先用backbone网络（darknet53）在数据众多的比如Imagenet数据集上进行图片分类学习，获得强大的分类能力，然后再将网络结构接入目标检测网络部分（YOLO），继续在目标检测数据集（VOC）上进行训练。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://pjreddie.com/media/files/darknet53.conv.74</span><br></pre></td></tr></table></figure></p>
+<p>开始正式训练!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./darknet detector train cfg/voc.data cfg/yolov3-voc.cfg darknet53.conv.74</span><br></pre></td></tr></table></figure>
+<h1 id="训练成果"><a href="#训练成果" class="headerlink" title="训练成果"></a>训练成果</h1><p>用GPU训练了一天以后<br>…</p>
+<p>来看一下成果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ls -tr backup/</span><br><span class="line">yolov3-voc_100.weights  yolov3-voc_400.weights  yolov3-voc_700.weights  yolov3-voc_10000.weights</span><br><span class="line">yolov3-voc_200.weights  yolov3-voc_500.weights  yolov3-voc_800.weights  yolov3-voc.backup</span><br><span class="line">yolov3-voc_300.weights  yolov3-voc_600.weights  yolov3-voc_900.weights</span><br></pre></td></tr></table></figure></p>
+<p>分别在100,200,…,900,10000次迭代之后把权重保存了下来。我们来测试一下效果</p>
+<p>试一下100次迭代后的模型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ./darknet detector test cfg/voc.data cfg/yolov3-voc.cfg backup/yolov3-voc_100.weights data/dog.jpg</span><br><span class="line">...</span><br><span class="line">chair: 65%</span><br><span class="line">diningtable: 56%</span><br><span class="line">person: 54%</span><br><span class="line">boat: 51%</span><br><span class="line">cow: 54%</span><br><span class="line">motorbike: 56%</span><br><span class="line">person: 54%</span><br><span class="line">chair: 61%</span><br><span class="line">cow: 63%</span><br><span class="line">diningtable: 61%</span><br><span class="line">person: 54%</span><br><span class="line">bicycle: 52%</span><br><span class="line">person: 53%</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p><img src="/uploads/yolov3_train_2.png" alt><br>非常惨不忍睹！根据上面打印的置信度结果来看，的确整个模型的输出结果已经错乱了</p>
+<p>试一下900次迭代后的模型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./darknet detector test cfg/voc.data cfg/yolov3-voc.cfg backup/yolov3-voc_900.weights data/dog.jpg</span><br><span class="line">...</span><br><span class="line">data/dog.jpg: Predicted in 0.181030 seconds.</span><br></pre></td></tr></table></figure></p>
+<p><img src="/uploads/yolov3_train_3.png" alt><br>什么变化都没有</p>
+<p>再试一下10000次迭代后的模型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ./darknet detector test cfg/voc.data cfg/yolov3-voc.cfg backup/yolov3-voc_10000.weights data/dog.jpg</span><br><span class="line">...</span><br><span class="line">data/dog.jpg: Predicted in 0.181329 seconds.</span><br><span class="line">dog: 94%</span><br><span class="line">car: 80%</span><br><span class="line">bicycle: 92%</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p><img src="/uploads/yolov3_train_4.png" alt><br>预测结果令人满意！可以看到它的置信度给出的是dog: 94%， car: 80%，  bicycle: 92%</p>
+<p>之后为了让计算机休息一下，我杀掉了训练进程。<br>不过没关系，在休息了一段时间之后，因为yolov3-voc.backup的存在，我在<font color="red">断点处</font>重启了训练：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./darknet detector train cfg/voc.data cfg/yolov3-voc.cfg backup/yolov3-voc.backup</span><br></pre></td></tr></table></figure></p>
+<p>又过了一天<br>…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ls -tr backup/</span><br><span class="line">yolov3-voc_100.weights  yolov3-voc_400.weights  yolov3-voc_700.weights  yolov3-voc_10000.weights</span><br><span class="line">yolov3-voc_200.weights  yolov3-voc_500.weights  yolov3-voc_800.weights  yolov3-voc_20000.weights</span><br><span class="line">yolov3-voc_300.weights  yolov3-voc_600.weights  yolov3-voc_900.weights  yolov3-voc.backup</span><br></pre></td></tr></table></figure></p>
+<p>有了yolov3-voc_20000.weights，我想已经够了，于是主动停止了训练。</p>
+<p>我们最后来试试效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ./darknet detector test cfg/voc.data cfg/yolov3-voc.cfg backup/yolov3-voc_20000.weights data/dog.jpg</span><br><span class="line">...</span><br><span class="line">data/dog.jpg: Predicted in 0.181969 seconds.</span><br><span class="line">dog: 91%</span><br><span class="line">car: 89%</span><br><span class="line">bicycle: 100%</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p><img src="/uploads/yolov3_train_5.png" alt><br>从置信度上看，提高显著！</p>
+<p>以上。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+
+      
+        <div class="post-tags">
+         <br>
+         <br>
+<!--  Dorian Removed Start    
+         
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+         
+            <a href="/tags/Computer-Vision/" rel="tag"># Computer Vision</a>
+         
+       Dorian Removed End -->
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/05/YOLOv3/" rel="next" title="YOLOv3 目标检测算法之YOLOv3">
+                <i class="fa fa-chevron-left"></i> YOLOv3 目标检测算法之YOLOv3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/eric_clapton.jpg" alt="Dorian Zi">
+            
+              <p class="site-author-name" itemprop="name">Dorian Zi</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/dorianzi" title="GitHub &rarr; https://github.com/dorianzi" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://kaggle.com/dorianzi" title="Kaggle &rarr; https://kaggle.com/dorianzi" rel="noopener" target="_blank"><i class="fa fa-fw fa-list-alt"></i>Kaggle</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://xiami.com/artist/mf8ydg642ef" title="Xiami &rarr; https://xiami.com/artist/mf8ydg642ef" rel="noopener" target="_blank"><i class="fa fa-fw fa-music"></i>Xiami</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://music.163.com/#/album?id=3080421" title="Netease &rarr; https://music.163.com/#/album?id=3080421" rel="noopener" target="_blank"><i class="fa fa-fw fa-headphones"></i>Netease</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://facebook.com/profile.php?id=100008679135728" title="FB Page &rarr; https://facebook.com/profile.php?id=100008679135728" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://instagram.com/dorian.zi/" title="Instagram &rarr; https://instagram.com/dorian.zi/" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://linkedin.com/in/dorian-zi-7620b6127/" title="Linkedin &rarr; https://linkedin.com/in/dorian-zi-7620b6127/" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+                </span>
+              
+            </div>
+          
+
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=481876106&auto=1&height=66"></iframe>
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代码下载"><span class="nav-number">1.</span> <span class="nav-text">代码下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码编译"><span class="nav-number">2.</span> <span class="nav-text">代码编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初次测试"><span class="nav-number">3.</span> <span class="nav-text">初次测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练VOC数据集"><span class="nav-number">4.</span> <span class="nav-text">训练VOC数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VOC数据集准备"><span class="nav-number">4.1.</span> <span class="nav-text">VOC数据集准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始训练VOC数据集"><span class="nav-number">4.2.</span> <span class="nav-text">开始训练VOC数据集</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练成果"><span class="nav-number">5.</span> <span class="nav-text">训练成果</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dorian Zi</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '5b4b5d838e55b91b3713',
+    clientSecret: 'ca4bfc7fee3940ef0896565d06b76890fd29ce40',
+    repo: 'DorianZi.github.io',
+    owner: 'DorianZi',
+    admin: ['DorianZi'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=7.0.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
