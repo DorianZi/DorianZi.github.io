@@ -103,7 +103,7 @@
   <meta name="description" content="在之前的文章中，我们已经讲解了YOLOv3的原理。这篇，我们来折腾一下YOLOv3的训练实操。此篇中，我们不打算动手写YOLOv3的算法编程实现，而是直接使用官方代码进行编译，这样我们的折腾点都在数据集配置，调参等方面。 首先进入YOLO的官网https://pjreddie.com/darknet/yolo/ 。YOLO从v1到v3都是支持的，但是默认是最新的v3。如果需要去到老版本，可以键入h">
 <meta name="keywords" content="Deep Learning,Computer Vision">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Official YOLOv3 training on VOC 使用官方YOLOv3训练VOC数据集">
+<meta property="og:title" content="Official YOLOv3 training on VOC 使用VOC数据集训练官方YOLOv3">
 <meta property="og:url" content="https://dorianzi.github.io/2019/08/05/YOLOv3-Train-VOC/index.html">
 <meta property="og:site_name" content="Dorian Mode">
 <meta property="og:description" content="在之前的文章中，我们已经讲解了YOLOv3的原理。这篇，我们来折腾一下YOLOv3的训练实操。此篇中，我们不打算动手写YOLOv3的算法编程实现，而是直接使用官方代码进行编译，这样我们的折腾点都在数据集配置，调参等方面。 首先进入YOLO的官网https://pjreddie.com/darknet/yolo/ 。YOLO从v1到v3都是支持的，但是默认是最新的v3。如果需要去到老版本，可以键入h">
@@ -113,9 +113,9 @@
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolov3_train_3.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolov3_train_4.png">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/yolov3_train_5.png">
-<meta property="og:updated_time" content="2019-08-19T02:09:38.548Z">
+<meta property="og:updated_time" content="2019-08-21T00:26:24.397Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Official YOLOv3 training on VOC 使用官方YOLOv3训练VOC数据集">
+<meta name="twitter:title" content="Official YOLOv3 training on VOC 使用VOC数据集训练官方YOLOv3">
 <meta name="twitter:description" content="在之前的文章中，我们已经讲解了YOLOv3的原理。这篇，我们来折腾一下YOLOv3的训练实操。此篇中，我们不打算动手写YOLOv3的算法编程实现，而是直接使用官方代码进行编译，这样我们的折腾点都在数据集配置，调参等方面。 首先进入YOLO的官网https://pjreddie.com/darknet/yolo/ 。YOLO从v1到v3都是支持的，但是默认是最新的v3。如果需要去到老版本，可以键入h">
 <meta name="twitter:image" content="https://dorianzi.github.io/uploads/yolov3_train_1.png">
 
@@ -134,7 +134,7 @@
   };
 </script>
 
-  <title>Official YOLOv3 training on VOC 使用官方YOLOv3训练VOC数据集 | Dorian Mode</title>
+  <title>Official YOLOv3 training on VOC 使用VOC数据集训练官方YOLOv3 | Dorian Mode</title>
   
 
 
@@ -396,7 +396,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Official YOLOv3 training on VOC 使用官方YOLOv3训练VOC数据集
+          <h1 class="post-title" itemprop="name headline">Official YOLOv3 training on VOC 使用VOC数据集训练官方YOLOv3
 
               
             
@@ -513,7 +513,7 @@
 <p>打开examples/detector.c<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># examples/detector.c:</span><br><span class="line"></span><br><span class="line">562 void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename, float thresh, float hier_thresh    , char *outfile, int fullscreen)</span><br><span class="line">563 &#123;</span><br><span class="line">564     list *options = read_data_cfg(datacfg);</span><br><span class="line">565     char *name_list = option_find_str(options, &quot;names&quot;, &quot;data/names.list&quot;);</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">789 void run_detector(int argc, char **argv)</span><br><span class="line">790 &#123;</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">836     if(0==strcmp(argv[2], &quot;test&quot;)) test_detector(datacfg, cfg, weights, filename, thresh, hier_thresh, outfile, fu    llscreen);</span><br></pre></td></tr></table></figure></p>
 <p>到这里就发现，原来run_detector被传入”test”是会调用test_detector(“cfg/coco.data”,*)的，所以是的①和②是一个效果</p>
 <p>接下来还有另一个问题：有了yolov3.weights为什么还需要cfg/coco.data和cfg/yolov3.cfg呢？<br>因为yolov3.weights只是包含了训练生成的参数，而不含有网络信息，类别名信息等，所以我们需要引入另外的文件。<br>事实上，在训练和测试都需要这两个文件。<br>1）cfg/coco.data代表的是coco数据集的信息，我们在训练的时候需要它提供的提供“图片们存放的位置”，“类别名字有哪些”等信息，在测试的时候虽然不需要图片存放信息但是需要它给出的“类别名字有哪些”的信息，即data/names.list<br>2）cfg/yolov3.cfg给出的是网络的结构，训练的超参数等信息。当然训练和测试都需要它。</p>
-<h1 id="训练VOC数据集"><a href="#训练VOC数据集" class="headerlink" title="训练VOC数据集"></a>训练VOC数据集</h1><h2 id="VOC数据集准备"><a href="#VOC数据集准备" class="headerlink" title="VOC数据集准备"></a>VOC数据集准备</h2><p>首先下载VOC2007和VOC2012数据集。实际上VOC2012包含的是从2008年到2012年的数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://pjreddie.com/media/files/VOCtrainval_11-May-2012.tar</span><br><span class="line">wget https://pjreddie.com/media/files/VOCtrainval_06-Nov-2007.tar</span><br><span class="line">wget https://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar</span><br><span class="line">tar xf VOCtrainval_11-May-2012.tar</span><br><span class="line">tar xf VOCtrainval_06-Nov-2007.tar</span><br><span class="line">tar xf VOCtest_06-Nov-2007.tar</span><br></pre></td></tr></table></figure></p>
+<h1 id="VOC数据集的训练"><a href="#VOC数据集的训练" class="headerlink" title="VOC数据集的训练"></a>VOC数据集的训练</h1><h2 id="数据集准备"><a href="#数据集准备" class="headerlink" title="数据集准备"></a>数据集准备</h2><p>首先下载VOC2007和VOC2012数据集。实际上VOC2012包含的是从2008年到2012年的数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://pjreddie.com/media/files/VOCtrainval_11-May-2012.tar</span><br><span class="line">wget https://pjreddie.com/media/files/VOCtrainval_06-Nov-2007.tar</span><br><span class="line">wget https://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar</span><br><span class="line">tar xf VOCtrainval_11-May-2012.tar</span><br><span class="line">tar xf VOCtrainval_06-Nov-2007.tar</span><br><span class="line">tar xf VOCtest_06-Nov-2007.tar</span><br></pre></td></tr></table></figure></p>
 <p>数据集被统一存放在VOCdevkit/目录了，我们进入其中的2012数据集去看看：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd VOCdevkit/VOC2012/ &amp;&amp; ls</span><br><span class="line">Annotations  ImageSets  JPEGImages  SegmentationClass  SegmentationObject</span><br></pre></td></tr></table></figure>
 <p>SegmentationClass和SegmentationObject不会被用到，因为它们是做语义分割或者实例分割用的，而YOLO是做目标检测的。<br>ImageSets会被用到，它存放的是哪些训练数据，哪些是验证数据的信息。<br>我们最关心的还是Annotations到JPEGImages的映射。举例理解：Annotations里面存放的2012_004329.xml记录了JPEGImages<br>里2012_004329.jpg的目标框位置，分类类别等信息。这个映射其实就是label到数据的映射。</p>
@@ -521,7 +521,7 @@
 <p>脚本的输出包括两部分，一个是记录图片位置的.txt:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls *txt</span><br><span class="line">2007_test.txt  2007_train.txt  2007_val.txt  2012_train.txt  2012_val.txt  train.all.txt  train.txt</span><br></pre></td></tr></table></figure></p>
 <p>另一个就是.txt格式的label:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ls VOCdevkit/VOC2007/labels</span><br><span class="line">000001.txt 000002.txt 000003.txt ...</span><br><span class="line">$ ls VOCdevkit/VOC2012/labels</span><br><span class="line">2008_000002.txt 2008_000003.txt ...</span><br></pre></td></tr></table></figure></p>
 <p>好，至此VOC的数据就准备好了。</p>
-<h2 id="开始训练VOC数据集"><a href="#开始训练VOC数据集" class="headerlink" title="开始训练VOC数据集"></a>开始训练VOC数据集</h2><p>首先要修改cfg/voc.data文件，这样训练的时候才能知道你的要训练多少类别（classes）,训练集存放在哪(train)，验证集存放在哪(valid),类别名类别文件用哪一个(names),训练出来的中间文件和输出的权重文件存放在哪个目录(backup)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ vim cfg/voc.data</span><br><span class="line">  1 classes= 20</span><br><span class="line">  2 train  = /home/dzi/YOLOv3/darknet/train.txt</span><br><span class="line">  3 valid  = /home/dzi/YOLOv3/darknet/2007_test.txt</span><br><span class="line">  4 names = data/voc.names</span><br><span class="line">  5 backup = backup</span><br></pre></td></tr></table></figure></p>
+<h2 id="开始训练"><a href="#开始训练" class="headerlink" title="开始训练"></a>开始训练</h2><p>首先要修改cfg/voc.data文件，这样训练的时候才能知道你的要训练多少类别（classes）,训练集存放在哪(train)，验证集存放在哪(valid),类别名类别文件用哪一个(names),训练出来的中间文件和输出的权重文件存放在哪个目录(backup)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ vim cfg/voc.data</span><br><span class="line">  1 classes= 20</span><br><span class="line">  2 train  = /home/dzi/YOLOv3/darknet/train.txt</span><br><span class="line">  3 valid  = /home/dzi/YOLOv3/darknet/2007_test.txt</span><br><span class="line">  4 names = data/voc.names</span><br><span class="line">  5 backup = backup</span><br></pre></td></tr></table></figure></p>
 <p>然后要调整超参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ vim cfg/yolov3-voc.cfg</span><br><span class="line">[net]</span><br><span class="line">  2 # Testing</span><br><span class="line">  3 #batch=1</span><br><span class="line">  4 #subdivisions=1</span><br><span class="line">  5 # Training</span><br><span class="line">  6 batch=64</span><br><span class="line">  7 subdivisions=16</span><br><span class="line">  8 width=416</span><br><span class="line">  9 height=416</span><br><span class="line"> 10 channels=3</span><br><span class="line"> 11 momentum=0.9</span><br><span class="line"> 12 decay=0.0005</span><br><span class="line"> 13 angle=0</span><br><span class="line"> 14 saturation = 1.5</span><br><span class="line"> 15 exposure = 1.5</span><br><span class="line"> 16 hue=.1</span><br><span class="line"> 17 </span><br><span class="line"> 18 learning_rate=0.001</span><br><span class="line"> 19 burn_in=1000</span><br><span class="line"> 20 max_batches = 30000</span><br><span class="line"> 21 policy=steps</span><br><span class="line"> 22 steps=10000,20000</span><br><span class="line"> 23 scales=.1,.1</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <p>其中比较常调整是这几组参数：<br>1）batch=64和subdivisions=16，分别表示每次迭代用64张图片，在计算机处理的时候，每次输送16张进去。这两个参数能大则大，跟你的内存和显存有关。<br>2）max_batches = 30000，learning_rate=0.001， steps=10000,20000， scales=.1,.1 初始学习率为0.001，在迭代到10000次时，学习率衰减为0.001*0.1，在迭代到20000次时，学习率继续衰减为0.001*0.1*0.2, 迭代到30000次停止训练。<br>调参策略这里就不讲了，因为太过玄学。</p>
 <p>最后一个准备是下载用Imagenet预训练好darknet53模型。根据之前文章讲过的理论，我们知道，YOLO（以及其它目标检测网络）采用了迁移学习，也就说先用backbone网络（darknet53）在数据众多的比如Imagenet数据集上进行图片分类学习，获得强大的分类能力，然后再将网络结构接入目标检测网络部分（YOLO），继续在目标检测数据集（VOC）上进行训练。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://pjreddie.com/media/files/darknet53.conv.74</span><br></pre></td></tr></table></figure></p>
@@ -594,6 +594,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/02/cuda-shared-memory/" rel="prev" title="CUDA Shared Memory 共享内存">
+                CUDA Shared Memory 共享内存 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -668,7 +672,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -855,7 +859,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代码下载"><span class="nav-number">1.</span> <span class="nav-text">代码下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码编译"><span class="nav-number">2.</span> <span class="nav-text">代码编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初次测试"><span class="nav-number">3.</span> <span class="nav-text">初次测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练VOC数据集"><span class="nav-number">4.</span> <span class="nav-text">训练VOC数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VOC数据集准备"><span class="nav-number">4.1.</span> <span class="nav-text">VOC数据集准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始训练VOC数据集"><span class="nav-number">4.2.</span> <span class="nav-text">开始训练VOC数据集</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练成果"><span class="nav-number">5.</span> <span class="nav-text">训练成果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代码下载"><span class="nav-number">1.</span> <span class="nav-text">代码下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码编译"><span class="nav-number">2.</span> <span class="nav-text">代码编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初次测试"><span class="nav-number">3.</span> <span class="nav-text">初次测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VOC数据集的训练"><span class="nav-number">4.</span> <span class="nav-text">VOC数据集的训练</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集准备"><span class="nav-number">4.1.</span> <span class="nav-text">数据集准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始训练"><span class="nav-number">4.2.</span> <span class="nav-text">开始训练</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练成果"><span class="nav-number">5.</span> <span class="nav-text">训练成果</span></a></li></ol></div>
             
 
           </div>
@@ -876,7 +880,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
