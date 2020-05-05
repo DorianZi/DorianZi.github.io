@@ -100,31 +100,25 @@
 
 
 
-  <meta name="description" content="聚类K-means 是聚类算法。不同于分类，聚类是事先不知道有几类的情况下，将数据聚合成几个群体，相当于自己划出几个类出来，属于无监督学习。 K-means 算法流程1）选质心：随机选取K个数据作为质心 2）聚集：对全局数据，计算质心之外的数据到K个质心的距离，到哪个质心距离最近就归到这个质心的团体中 3）选质心：得到了K个团体，对各个团体通过计算数据的平均值得到该团体新的质心（此时的质心很可能是">
-<meta name="keywords" content="Algorithm">
+  <meta name="description" content="共享内存 shared memory的生命周期是跟随block的生命周期的，即一份shared memory随着block的开启而开启，随着block（里所有thread）的结束而结束。 但从物理上说, shared memory里的数据并没有被清空。 如果一个新的block被分配到了这段shared memory，那么就能延续使用shared memory驻留的数据。以下的实验验证了这一点 两次">
+<meta name="keywords" content="CUDA">
 <meta property="og:type" content="article">
-<meta property="og:title" content="K-means K均值聚类">
-<meta property="og:url" content="https://dorianzi.github.io/2019/04/20/K-means/index.html">
+<meta property="og:title" content="shared_memory_data_remain">
+<meta property="og:url" content="https://dorianzi.github.io/2020/05/05/shared-memory-data-remain/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="聚类K-means 是聚类算法。不同于分类，聚类是事先不知道有几类的情况下，将数据聚合成几个群体，相当于自己划出几个类出来，属于无监督学习。 K-means 算法流程1）选质心：随机选取K个数据作为质心 2）聚集：对全局数据，计算质心之外的数据到K个质心的距离，到哪个质心距离最近就归到这个质心的团体中 3）选质心：得到了K个团体，对各个团体通过计算数据的平均值得到该团体新的质心（此时的质心很可能是">
+<meta property="og:description" content="共享内存 shared memory的生命周期是跟随block的生命周期的，即一份shared memory随着block的开启而开启，随着block（里所有thread）的结束而结束。 但从物理上说, shared memory里的数据并没有被清空。 如果一个新的block被分配到了这段shared memory，那么就能延续使用shared memory驻留的数据。以下的实验验证了这一点 两次">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/kmeans_1.png">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/kmeans_2.png">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/kmeans_3.png">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/kmeans_4.png">
-<meta property="og:image" content="https://dorianzi.github.io/uploads/kmeans_5.png">
-<meta property="og:updated_time" content="2019-04-20T01:10:05.751Z">
+<meta property="og:updated_time" content="2020-05-05T04:00:47.906Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="K-means K均值聚类">
-<meta name="twitter:description" content="聚类K-means 是聚类算法。不同于分类，聚类是事先不知道有几类的情况下，将数据聚合成几个群体，相当于自己划出几个类出来，属于无监督学习。 K-means 算法流程1）选质心：随机选取K个数据作为质心 2）聚集：对全局数据，计算质心之外的数据到K个质心的距离，到哪个质心距离最近就归到这个质心的团体中 3）选质心：得到了K个团体，对各个团体通过计算数据的平均值得到该团体新的质心（此时的质心很可能是">
-<meta name="twitter:image" content="https://dorianzi.github.io/uploads/kmeans_1.png">
+<meta name="twitter:title" content="shared_memory_data_remain">
+<meta name="twitter:description" content="共享内存 shared memory的生命周期是跟随block的生命周期的，即一份shared memory随着block的开启而开启，随着block（里所有thread）的结束而结束。 但从物理上说, shared memory里的数据并没有被清空。 如果一个新的block被分配到了这段shared memory，那么就能延续使用shared memory驻留的数据。以下的实验验证了这一点 两次">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/2019/04/20/K-means/">
+  <link rel="canonical" href="https://dorianzi.github.io/2020/05/05/shared-memory-data-remain/">
 
 
 
@@ -134,7 +128,7 @@
   };
 </script>
 
-  <title>K-means K均值聚类 | Dorian Mode</title>
+  <title>shared_memory_data_remain | Dorian Mode</title>
   
 
 
@@ -379,7 +373,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/04/20/K-means/">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2020/05/05/shared-memory-data-remain/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dorian Zi">
@@ -396,7 +390,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">K-means K均值聚类
+          <h1 class="post-title" itemprop="name headline">shared_memory_data_remain
 
               
             
@@ -422,7 +416,7 @@
                 
               
 
-              <time title="Created: 2019-04-20 06:54:59" itemprop="dateCreated datePublished" datetime="2019-04-20T06:54:59+08:00">2019-04-20</time>
+              <time title="Created: 2020-05-05 11:59:32" itemprop="dateCreated datePublished" datetime="2020-05-05T11:59:32+08:00">2020-05-05</time>
             
 
             
@@ -473,7 +467,7 @@
           
             <div class="post-tags">
               
-                <a href="/tags/Algorithm/" <i class="fa fa-tag"> Algorithm</a>
+                <a href="/tags/CUDA/" <i class="fa fa-tag"> CUDA</a>
               
             </div>
           
@@ -492,37 +486,17 @@
       
 
       
-        <h1 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h1><p>K-means 是聚类算法。不同于分类，聚类是事先不知道有几类的情况下，将数据聚合成几个群体，相当于自己划出几个类出来，属于无监督学习。</p>
-<h1 id="K-means-算法流程"><a href="#K-means-算法流程" class="headerlink" title="K-means 算法流程"></a>K-means 算法流程</h1><p>1）选质心：随机选取K个数据作为质心</p>
-<p>2）聚集：对全局数据，计算质心之外的数据到K个质心的距离，到哪个质心距离最近就归到这个质心的团体中</p>
-<p>3）选质心：得到了K个团体，对各个团体通过计算数据的平均值得到该团体新的质心（此时的质心很可能是虚拟点，即不存在原数据中）</p>
-<p>4）重新聚集：对全局数据，计算质心之外的数据到K个质心的距离，到哪个质心距离最近就归到这个质心的团体中</p>
-<p>5）验证：查看这次聚集的团体跟上次聚集的团体有没有变化。没有变化则结束，有变化则继续循环3）和 4）</p>
-<p>通过图解就是:</p>
-<p><img src="/uploads/kmeans_1.png" alt></p>
-<p>通过上图可以看到6）相对于5）的团体没有变化，所以已经收敛，聚类结束</p>
-<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><p>问题：将下面6个点聚类为2类</p>
-<p><img src="/uploads/kmeans_2.png" alt></p>
-<p>1）选择P1和P2为初始质心</p>
-<p>2）通过计算其它点到质心P1, P2的距离来聚集团体：</p>
-<p><img src="/uploads/kmeans_3.png" alt></p>
-<p>根据距离计算，得到两个团体：<br>A 团: P1<br>B 团: P2, P3, P4, P5, P6</p>
-<p>3）对A, B团分别选新质心：</p>
-<p>A团质心是P1自己，B团质心是PB=(6.2, 5.6)</p>
-<p>4）围绕质心P1和PB，重新聚集团体：</p>
-<p>首先距离计算为</p>
-<p><img src="/uploads/kmeans_4.png" alt></p>
-<p>更新团体为：<br>C 团: P1, P2, P3<br>D 团: P4, P5, P6</p>
-<p>团体相对A,B发生了改变，所以继续</p>
-<p>5）对C, D团分别选新质心：</p>
-<p>C团质心是PC=(1.33, 1), D团质心是PD=(9, 8.33)</p>
-<p>6）围绕质心PC和PD，重新聚集团体：</p>
-<p>首先距离计算为</p>
-<p><img src="/uploads/kmeans_5.png" alt></p>
-<p>更新团体为：<br>E 团: P1, P2, P3<br>F 团: P4, P5, P6</p>
-<p>团体相对C,D没有改变，所以已经收敛了。结束!</p>
-<p>以上。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://blog.csdn.net/huangfei711/article/details/78480078" target="_blank" rel="noopener">https://blog.csdn.net/huangfei711/article/details/78480078</a></p>
+        <p>共享内存 shared memory的生命周期是跟随block的生命周期的，即一份shared memory随着block的开启而开启，随着block（里所有thread）的结束而结束。</p>
+<p>但从物理上说, shared memory里的数据并没有被清空。 如果一个新的block被分配到了这段shared memory，那么就能延续使用shared memory驻留的数据。以下的实验验证了这一点</p>
+<h2 id="两次kernel使用同样大小的gridDim和blockDim"><a href="#两次kernel使用同样大小的gridDim和blockDim" class="headerlink" title="两次kernel使用同样大小的gridDim和blockDim"></a>两次kernel使用同样大小的gridDim和blockDim</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">__global__ void kernel(int *out_0 , int *out_1)</span><br><span class="line">&#123;</span><br><span class="line">    __shared__ int sharedVar ;</span><br><span class="line">    if(threadIdx.x != 0) </span><br><span class="line">	    return;</span><br><span class="line"></span><br><span class="line">    if(sharedVar != 999)</span><br><span class="line">	    sharedVar = 999;</span><br><span class="line">    else if(blockIdx.x == 0)</span><br><span class="line">		sharedVar = 111;</span><br><span class="line"></span><br><span class="line">    if(blockIdx.x == 0)</span><br><span class="line">	*out_0 = sharedVar;</span><br><span class="line">    else if(blockIdx.x == 1)</span><br><span class="line">	*out_1 = sharedVar;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	int *out_0;</span><br><span class="line">	int *out_1;</span><br><span class="line">	cudaMallocHost(&amp;out_0,sizeof(int));</span><br><span class="line">	cudaMallocHost(&amp;out_1,sizeof(int));</span><br><span class="line">	dim3 grid(2,1,1); dim3 block(2,1,1); </span><br><span class="line">	cout&lt;&lt; &quot;======Round 0====== &quot; &lt;&lt;endl;</span><br><span class="line">	kernel&lt;&lt;&lt;grid,block&gt;&gt;&gt;(out_0,out_1); </span><br><span class="line">	cudaDeviceSynchronize();</span><br><span class="line">	cout&lt;&lt; &quot;[block#0]sharedVar = &quot; &lt;&lt; *out_0 &lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt; &quot;[block#1]sharedVar = &quot; &lt;&lt; *out_1 &lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">	dim3 grid_1(2,1,1); dim3 block_1(2,1,1); </span><br><span class="line">	cout&lt;&lt; &quot;======Round 1====== &quot; &lt;&lt;endl;</span><br><span class="line">	kernel&lt;&lt;&lt;grid_1,block_1&gt;&gt;&gt;(out_0,out_1);</span><br><span class="line">	cudaDeviceSynchronize();</span><br><span class="line">	cout&lt;&lt; &quot;[block#0]sharedVar = &quot; &lt;&lt; *out_0 &lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt; &quot;[block#1]sharedVar = &quot; &lt;&lt; *out_1 &lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">======Round 0====== </span><br><span class="line">[block#0]sharedVar = 999</span><br><span class="line">[block#1]sharedVar = 999</span><br><span class="line">======Round 1====== </span><br><span class="line">[block#0]sharedVar = 111</span><br><span class="line">[block#1]sharedVar = 999</span><br></pre></td></tr></table></figure></p>
+<p>说明shared memory的数据驻留了</p>
+<h2 id="改变第二次的blockDim-gridDim大小"><a href="#改变第二次的blockDim-gridDim大小" class="headerlink" title="改变第二次的blockDim,gridDim大小"></a>改变第二次的blockDim,gridDim大小</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">将     dim3 grid_1(2,1,1); dim3 block_1(2,1,1); </span><br><span class="line">变为   dim3 grid_1(128,1,1); dim3 block_1(1024,1,1);</span><br></pre></td></tr></table></figure>
+<p>输出如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">======Round 0====== </span><br><span class="line">[block#0]sharedVar = 999</span><br><span class="line">[block#1]sharedVar = 999</span><br><span class="line">======Round 1====== </span><br><span class="line">[block#0]sharedVar = 111</span><br><span class="line">[block#1]sharedVar = 999</span><br></pre></td></tr></table></figure></p>
+<p>说明grid和block尺寸，并不影响shared memory的数据驻留</p>
+<h2 id="重置CUDA"><a href="#重置CUDA" class="headerlink" title="重置CUDA"></a>重置CUDA</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">在dim3 grid_1(2,1,1); dim3 block_1(2,1,1) 之前加上以下几行：</span><br><span class="line">cudaDeviceReset();</span><br><span class="line">cudaMallocHost(&amp;out_0,sizeof(int));</span><br><span class="line">cudaMallocHost(&amp;out_1,sizeof(int));</span><br></pre></td></tr></table></figure>
+<p>输出如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">======Round 0====== </span><br><span class="line">[block#0]sharedVar = 999</span><br><span class="line">[block#1]sharedVar = 999</span><br><span class="line">======Round 1====== </span><br><span class="line">[block#0]sharedVar = 999</span><br><span class="line">[block#1]sharedVar = 999</span><br></pre></td></tr></table></figure></p>
+<p>说明cudaDeviceReset()清空了shared memory的数据</p>
 
       
     </div>
@@ -550,7 +524,7 @@
          <br>
 <!--  Dorian Removed Start    
          
-            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+            <a href="/tags/CUDA/" rel="tag"># CUDA</a>
          
        Dorian Removed End -->
         </div>
@@ -564,8 +538,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/17/Random-Forest/" rel="next" title="Random Forest 随机森林">
-                <i class="fa fa-chevron-left"></i> Random Forest 随机森林
+              <a href="/2020/04/02/cuda-shared-memory/" rel="next" title="CUDA Shared Memory 共享内存">
+                <i class="fa fa-chevron-left"></i> CUDA Shared Memory 共享内存
               </a>
             
           </div>
@@ -573,10 +547,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/22/Neural_Network/" rel="prev" title="Neural Network 神经网络">
-                Neural Network 神经网络 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -840,7 +810,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#聚类"><span class="nav-number">1.</span> <span class="nav-text">聚类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K-means-算法流程"><span class="nav-number">2.</span> <span class="nav-text">K-means 算法流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例"><span class="nav-number">3.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#两次kernel使用同样大小的gridDim和blockDim"><span class="nav-number">1.</span> <span class="nav-text">两次kernel使用同样大小的gridDim和blockDim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改变第二次的blockDim-gridDim大小"><span class="nav-number">2.</span> <span class="nav-text">改变第二次的blockDim,gridDim大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重置CUDA"><span class="nav-number">3.</span> <span class="nav-text">重置CUDA</span></a></li></ol></div>
             
 
           </div>
