@@ -369,6 +369,180 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2020/05/18/shared-memory-matrix-multiply/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dorian Zi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dorian Mode">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/05/18/shared-memory-matrix-multiply/" class="post-title-link" itemprop="url">Matrix Multiple by CUDA Shared Memory 使用共享内存优化矩阵相乘</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-05-18 17:35:04" itemprop="dateCreated datePublished" datetime="2020-05-18T17:35:04+08:00">2020-05-18</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+          
+          <!--Dorian Added Start-->
+          
+          <!--Dorian Added End-->
+        
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              本来来自对于CUDA中使用shared memory进行矩阵相乘的思考。之所以写下它，是因为我感觉到这个例子代表着cuda处理矩阵的基本思维方式，掌握它，时常复习它，很有必要。
+目标是实现矩阵相乘：
+它是如何思维的：1）全局看，gridDim是完全映射输出的矩阵C，基于定义了C的row, col两个
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/05/18/shared-memory-matrix-multiply/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2020/05/05/shared-memory-data-remain/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1920,180 +2094,6 @@ Mask RCNN的改进点先
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/05/23/face-detect/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Dorian Zi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/eric_clapton.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dorian Mode">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/23/face-detect/" class="post-title-link" itemprop="url">Face Recognition by SVM or PCA 基于SVM或PCA的人脸识别</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-23 10:21:59" itemprop="dateCreated datePublished" datetime="2019-05-23T10:21:59+08:00">2019-05-23</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-          
-          <!--Dorian Added Start-->
-          
-          <!--Dorian Added End-->
-        
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              本文将分别讲述基于SVM和PCA的人脸识别
-SVM人脸识别理论在之前的文章中，我们讲过SVM的原理：利用超平面进行二分类。我们来看看它是怎么作用到人脸识别上来的。
-人脸作为一张h*w的二维图像(去掉颜色通道的灰度图)，可以看做一个h*w维的（含有h*w个坐标值）的数据。在SVM里，寻找到一个h*w-
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/23/face-detect/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2142,7 +2142,7 @@ SVM人脸识别理论在之前的文章中，我们讲过SVM的原理：利用�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
