@@ -103,14 +103,14 @@
   <meta name="description" content="函数内部定义的static变量，事实上是全局变量。 而这个全部变量却无法在函数外直接读取，除非函数返回它的引用。理解以上，就可以让函数内定义的静态变量可以实现类似私有成员变量的安全性。 1） 通常，保持一个变量的安全性的做法，是把这个变量变成某个类的私有成员变量，这样就只能通过类的方法来设置和获取。如下123456789101112131415161718192021222324#include">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Static Variable Encapsulation by Function">
+<meta property="og:title" content="Static Variable Encapsulation by Function 静态变量的安全性">
 <meta property="og:url" content="https://dorianzi.github.io/2020/05/31/Variable-Encapsulation-by-Function/index.html">
 <meta property="og:site_name" content="Dorian Mode">
 <meta property="og:description" content="函数内部定义的static变量，事实上是全局变量。 而这个全部变量却无法在函数外直接读取，除非函数返回它的引用。理解以上，就可以让函数内定义的静态变量可以实现类似私有成员变量的安全性。 1） 通常，保持一个变量的安全性的做法，是把这个变量变成某个类的私有成员变量，这样就只能通过类的方法来设置和获取。如下123456789101112131415161718192021222324#include">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-05-31T14:04:03.176Z">
+<meta property="og:updated_time" content="2020-05-31T14:10:54.745Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Static Variable Encapsulation by Function">
+<meta name="twitter:title" content="Static Variable Encapsulation by Function 静态变量的安全性">
 <meta name="twitter:description" content="函数内部定义的static变量，事实上是全局变量。 而这个全部变量却无法在函数外直接读取，除非函数返回它的引用。理解以上，就可以让函数内定义的静态变量可以实现类似私有成员变量的安全性。 1） 通常，保持一个变量的安全性的做法，是把这个变量变成某个类的私有成员变量，这样就只能通过类的方法来设置和获取。如下123456789101112131415161718192021222324#include">
 
 
@@ -128,7 +128,7 @@
   };
 </script>
 
-  <title>Static Variable Encapsulation by Function | Dorian Mode</title>
+  <title>Static Variable Encapsulation by Function 静态变量的安全性 | Dorian Mode</title>
   
 
 
@@ -390,7 +390,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Static Variable Encapsulation by Function
+          <h1 class="post-title" itemprop="name headline">Static Variable Encapsulation by Function 静态变量的安全性
 
               
             
@@ -488,7 +488,7 @@
       
         <p>函数内部定义的static变量，事实上是全局变量。 而这个全部变量却无法在函数外直接读取，除非函数返回它的引用。<br>理解以上，就可以让函数内定义的静态变量可以实现类似私有成员变量的安全性。</p>
 <p>1） 通常，保持一个变量的安全性的做法，是把这个变量变成某个类的私有成员变量，这样就只能通过类的方法来设置和获取。如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">class myVal</span><br><span class="line">&#123;</span><br><span class="line">        private: </span><br><span class="line">                int val;</span><br><span class="line">        public:</span><br><span class="line">                void setval(int n)&#123; </span><br><span class="line">                        val = n;</span><br><span class="line">                &#125;   </span><br><span class="line">                int getval()&#123;</span><br><span class="line">                        return val;</span><br><span class="line">                &#125;   </span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">int main()&#123;</span><br><span class="line">        myVal obj;</span><br><span class="line">        obj.setval(999);</span><br><span class="line">        cout&lt;&lt; obj.getval()&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">        obj.setval(666);</span><br><span class="line">        cout&lt;&lt; obj.getval()&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>2） 如果改用函数内static变量，可以实现类似功能：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int &amp;getval()&#123;</span><br><span class="line">        static int val;</span><br><span class="line">        return val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void setval(int n)&#123; </span><br><span class="line">        getval()=n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">        setval(999);</span><br><span class="line">        cout&lt;&lt; getval()&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">        setval(666);</span><br><span class="line">        cout&lt;&lt; getval()&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2） 如果改用函数内static变量，可以实现类似功能：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int &amp;getval()&#123;</span><br><span class="line">        static int val;</span><br><span class="line">        return val;</span><br><span class="line">&#125;</span><br><span class="line">void setval(int n)&#123; </span><br><span class="line">        getval()=n;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">        setval(999);</span><br><span class="line">        cout&lt;&lt; getval()&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">        setval(666);</span><br><span class="line">        cout&lt;&lt; getval()&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
