@@ -100,45 +100,25 @@
 
 
 
-  <meta name="description" content="相似矩阵矩阵的意义之一就是，它代表一种线性变换。一种线性变换在不同的基下的表示方式是不一样的。相似矩阵表达的是：同一个线性变换在不同基下的表达。 下面的推导将会证明矩阵A和B矩阵相似，也就是说在下图左边的基下，A矩阵能够将向量顺时针转动一个角度且拉伸到一定倍数，而在右边的基下，B矩阵也能将该向量顺时针转动同一个角度且拉伸到同一个倍数。 推导见下图  首先我们脱离任何基，在“绝对”坐标系里面描述一个">
-<meta name="keywords" content="Algorithm">
+  <meta name="description" content="为什么C++世界要虚函数以及纯虚函数，然后用父类指针指向子类？反正怎么都需要先创建子类实例对象，为何不直接使用这个子类对象，而要多此一举先赋给父类指针，再使用？答案是 —— 为了软件模块化和程序员协作的独立性，也称解耦合。 举个例子1）我手握一个父类指针，指向一个对象，不关心具体指向了什么对象，我只管用它调用约定好的接口（虚函数）， 那我的编译就是独立的了，我可以不用等别人的代码ready，就能自">
+<meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Matrix Similarity 矩阵相似">
-<meta property="og:url" content="https://dorianzi.github.io/2019/03/04/matrix_similarity/index.html">
+<meta property="og:title" content="Decoupling by Virtual Function 通过虚函数解耦合的软件设计">
+<meta property="og:url" content="https://dorianzi.github.io/2020/06/24/Decoupling-by-Virtual-Function/index.html">
 <meta property="og:site_name" content="Dorian Mode">
-<meta property="og:description" content="相似矩阵矩阵的意义之一就是，它代表一种线性变换。一种线性变换在不同的基下的表示方式是不一样的。相似矩阵表达的是：同一个线性变换在不同基下的表达。 下面的推导将会证明矩阵A和B矩阵相似，也就是说在下图左边的基下，A矩阵能够将向量顺时针转动一个角度且拉伸到一定倍数，而在右边的基下，B矩阵也能将该向量顺时针转动同一个角度且拉伸到同一个倍数。 推导见下图  首先我们脱离任何基，在“绝对”坐标系里面描述一个">
+<meta property="og:description" content="为什么C++世界要虚函数以及纯虚函数，然后用父类指针指向子类？反正怎么都需要先创建子类实例对象，为何不直接使用这个子类对象，而要多此一举先赋给父类指针，再使用？答案是 —— 为了软件模块化和程序员协作的独立性，也称解耦合。 举个例子1）我手握一个父类指针，指向一个对象，不关心具体指向了什么对象，我只管用它调用约定好的接口（虚函数）， 那我的编译就是独立的了，我可以不用等别人的代码ready，就能自">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://github.com/DorianZi/algorithm_explained/raw/master/res/matrix_similarity.jpg">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{\beta}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow}&space;,\underset{j}{\rightarrow})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{a}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}=\underset{v}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow}&space;,\underset{j'}{\rightarrow})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}(\underset{i}{\rightarrow},\underset{j}{\rightarrow})=(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}=B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}A=BP^{-1}">
-<meta property="og:image" content="https://latex.codecogs.com/gif.latex?P^{-1}AP=B">
-<meta property="og:updated_time" content="2019-06-13T10:46:12.537Z">
+<meta property="og:updated_time" content="2020-06-24T10:12:41.614Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Matrix Similarity 矩阵相似">
-<meta name="twitter:description" content="相似矩阵矩阵的意义之一就是，它代表一种线性变换。一种线性变换在不同的基下的表示方式是不一样的。相似矩阵表达的是：同一个线性变换在不同基下的表达。 下面的推导将会证明矩阵A和B矩阵相似，也就是说在下图左边的基下，A矩阵能够将向量顺时针转动一个角度且拉伸到一定倍数，而在右边的基下，B矩阵也能将该向量顺时针转动同一个角度且拉伸到同一个倍数。 推导见下图  首先我们脱离任何基，在“绝对”坐标系里面描述一个">
-<meta name="twitter:image" content="https://github.com/DorianZi/algorithm_explained/raw/master/res/matrix_similarity.jpg">
+<meta name="twitter:title" content="Decoupling by Virtual Function 通过虚函数解耦合的软件设计">
+<meta name="twitter:description" content="为什么C++世界要虚函数以及纯虚函数，然后用父类指针指向子类？反正怎么都需要先创建子类实例对象，为何不直接使用这个子类对象，而要多此一举先赋给父类指针，再使用？答案是 —— 为了软件模块化和程序员协作的独立性，也称解耦合。 举个例子1）我手握一个父类指针，指向一个对象，不关心具体指向了什么对象，我只管用它调用约定好的接口（虚函数）， 那我的编译就是独立的了，我可以不用等别人的代码ready，就能自">
 
 
 
 
 
 
-  <link rel="canonical" href="https://dorianzi.github.io/2019/03/04/matrix_similarity/">
+  <link rel="canonical" href="https://dorianzi.github.io/2020/06/24/Decoupling-by-Virtual-Function/">
 
 
 
@@ -148,7 +128,7 @@
   };
 </script>
 
-  <title>Matrix Similarity 矩阵相似 | Dorian Mode</title>
+  <title>Decoupling by Virtual Function 通过虚函数解耦合的软件设计 | Dorian Mode</title>
   
 
 
@@ -393,7 +373,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2019/03/04/matrix_similarity/">
+    <link itemprop="mainEntityOfPage" href="https://dorianzi.github.io/2020/06/24/Decoupling-by-Virtual-Function/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dorian Zi">
@@ -410,7 +390,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Matrix Similarity 矩阵相似
+          <h1 class="post-title" itemprop="name headline">Decoupling by Virtual Function 通过虚函数解耦合的软件设计
 
               
             
@@ -436,7 +416,7 @@
                 
               
 
-              <time title="Created: 2019-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-04T00:00:00+08:00">2019-03-04</time>
+              <time title="Created: 2020-06-24 10:41:49" itemprop="dateCreated datePublished" datetime="2020-06-24T10:41:49+08:00">2020-06-24</time>
             
 
             
@@ -487,7 +467,7 @@
           
             <div class="post-tags">
               
-                <a href="/tags/Algorithm/" <i class="fa fa-tag"> Algorithm</a>
+                <a href="/tags/C/" <i class="fa fa-tag"> C++</a>
               
             </div>
           
@@ -506,24 +486,16 @@
       
 
       
-        <h1 id="相似矩阵"><a href="#相似矩阵" class="headerlink" title="相似矩阵"></a>相似矩阵</h1><p>矩阵的意义之一就是，它代表一种线性变换。一种线性变换在不同的基下的表示方式是不一样的。相似矩阵表达的是：同一个线性变换在不同基下的表达。</p>
-<p>下面的推导将会证明矩阵A和B矩阵相似，也就是说在下图左边的基下，A矩阵能够将向量顺时针转动一个角度且拉伸到一定倍数，而在右边的基下，B矩阵也能将该向量顺时针转动同一个角度且拉伸到同一个倍数。</p>
-<h2 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h2><p>见下图</p>
-<p><img src="https://github.com/DorianZi/algorithm_explained/raw/master/res/matrix_similarity.jpg"></p>
-<p>首先我们脱离任何基，在“绝对”坐标系里面描述一个线性变换：线性变换将向量<img src="https://latex.codecogs.com/gif.latex?\underset{\alpha}{\rightarrow}" title="\underset{a}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?\underset{\beta}{\rightarrow}" title="\underset{\beta}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>接下来我们分别在不同的基里描述这个线性变换：</p>
-<p>在基<img src="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow}&space;,\underset{j}{\rightarrow})" title="(\underset{i}{\rightarrow} ,\underset{j}{\rightarrow})" style="display:inline;vertical-align:text-top;">下，上述变换描述为：线性变换A将<img src="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}" title="\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?A\underset{v}{\rightarrow}" title="A\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>同时由于我们知道向量<img src="https://latex.codecogs.com/gif.latex?\underset{a}{\rightarrow}" title="\underset{a}{\rightarrow}" style="display:inline;vertical-align:text-top;">和<img src="https://latex.codecogs.com/gif.latex?\underset{v}{\rightarrow}" title="\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;">的关系是：<img src="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}=\underset{v}{\rightarrow}" title="(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}=\underset{v}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>所以该变换可以进一步表述为：线性变换A将<img src="https://latex.codecogs.com/gif.latex?(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}" title="(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{a}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}" title="A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>同理在新基下<img src="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow}&space;,\underset{j'}{\rightarrow})" title="(\underset{i'}{\rightarrow} ,\underset{j'}{\rightarrow})" style="display:inline;vertical-align:text-top;">该变换表述为：线性变换B将<img src="https://latex.codecogs.com/gif.latex?(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" title="(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;">变换为<img src="https://latex.codecogs.com/gif.latex?B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" title="B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;"></p>
-<p>如果我们知道两组基的转换关系为<img src="https://latex.codecogs.com/gif.latex?P^{-1}" title="P^{-1}" style="display:inline;vertical-align:text-top;">，那么有：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}(\underset{i}{\rightarrow},\underset{j}{\rightarrow})=(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})" title="P^{-1}(\underset{i}{\rightarrow},\underset{j}{\rightarrow})=(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})" style="display:inline;vertical-align:text-top;"> ①</p>
-<p>同时，线性变换之后得到的向量也应该满足基之间的转换关系：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}A(\underset{i}{\rightarrow},\underset{j}{\rightarrow})\underset{\alpha}{\rightarrow}=B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" title="P^{-1}A(\underset{i}{\rightarrow},\underset{i}{\rightarrow})\underset{\alpha}{\rightarrow}=B(\underset{i'}{\rightarrow},\underset{j'}{\rightarrow})\underset{\alpha}{\rightarrow}" style="display:inline;vertical-align:text-top;">  ②</p>
-<p>将①带入②得到：</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}A=BP^{-1}" title="P^{-1}A=BP^{-1}" style="display:inline;vertical-align:text-top;"></p>
-<p>==&gt;</p>
-<p><img src="https://latex.codecogs.com/gif.latex?P^{-1}AP=B" title="P^{-1}AP=B" style="display:inline;vertical-align:text-top;"></p>
+        <p>为什么C++世界要虚函数以及纯虚函数，然后用父类指针指向子类？反正怎么都需要先创建子类实例对象，为何不直接使用这个子类对象，而要多此一举先赋给父类指针，再使用？<br>答案是 —— 为了软件模块化和程序员协作的独立性，也称解耦合。</p>
+<p><strong>举个例子</strong><br>1）我手握一个父类指针，指向一个对象，不关心具体指向了什么对象，我只管用它调用约定好的接口（虚函数）， 那我的编译就是独立的了，我可以不用等别人的代码ready，就能自由写我的代码了。<br>2）你写了一个子类实现这个接口，并把子类实例化对象扔给我的父类指针。你的编译也是独立的了<br>3）他也写一个子类实现这个接口，也把子类实例化对象扔给我的父类指针。他的编译也是独立的了<br>那么链接的时候，2)和3)谁后链接上，就挤掉了对方，抢占了父类指针。看下面的代码</p>
+<p><strong>接口定义：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//==========farther.h==========</span><br><span class="line">#ifndef __FARTHER_H__</span><br><span class="line">#define __FARTHER_H__</span><br><span class="line">using namespace std;</span><br><span class="line">class Farther</span><br><span class="line">&#123;</span><br><span class="line">        public:</span><br><span class="line">                Farther();</span><br><span class="line">                virtual void func()=0;</span><br><span class="line">&#125;;</span><br><span class="line">extern Farther* sonPtr;</span><br><span class="line">#endif //__FARTHER_H__</span><br><span class="line"></span><br><span class="line">//==========farther.cpp==========</span><br><span class="line">#include &quot;farther.h&quot;</span><br><span class="line">Farther* sonPtr;</span><br><span class="line">Farther::Farther()&#123;</span><br><span class="line">        sonPtr=this; //谁实例化谁就把自己给sonPtr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//==========接口可以独立编译产生 farther.o ==========</span><br><span class="line">$ g++ -c farther.cpp</span><br></pre></td></tr></table></figure></p>
+<p><strong>我的代码，主控</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//==========main.cpp==========</span><br><span class="line">#include &quot;farther.h&quot;</span><br><span class="line">int main()&#123;</span><br><span class="line">                sonPtr-&gt;func(); //我不管sonPtr指向谁，反正我要调用func()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//==========主控代码可以独立编译产生 main.o ==========</span><br><span class="line">$ g++ -c main.cpp</span><br></pre></td></tr></table></figure></p>
+<p><strong>你的代码，实现一个子类</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//==========sone_1.cpp==========</span><br><span class="line">#include &quot;farther.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">class Son_1: public Farther</span><br><span class="line">&#123;</span><br><span class="line">        public:</span><br><span class="line">                void func()&#123;</span><br><span class="line">                        cout &lt;&lt; &quot;This is func() from Son_1&quot; &lt;&lt; endl;</span><br><span class="line">                &#125;   </span><br><span class="line">&#125;;</span><br><span class="line">Son_1 son_1;</span><br><span class="line"></span><br><span class="line">//==========可以独立编译产生 sone_1.o ==========</span><br><span class="line">$ g++ -c sone_1.cpp</span><br></pre></td></tr></table></figure></p>
+<p><strong>他的代码，实现另一个子类</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//==========sone_2.cpp==========</span><br><span class="line">#include &quot;farther.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">class Son_2: public Farther</span><br><span class="line">&#123;</span><br><span class="line">        public:</span><br><span class="line">                void func()&#123;</span><br><span class="line">                        cout &lt;&lt; &quot;This is func() from Son_2&quot; &lt;&lt; endl;</span><br><span class="line">                &#125;   </span><br><span class="line">&#125;;</span><br><span class="line">Son_2 son_2;</span><br><span class="line"></span><br><span class="line">//==========可以独立编译产生 sone_2.o ==========</span><br><span class="line">$ g++ -c sone_2.cpp</span><br></pre></td></tr></table></figure></p>
+<p><strong>联调</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ g++ main.o farther.o son_2.o son_1.o -o main</span><br><span class="line">$ ./main </span><br><span class="line">//This is func() from Son_1</span><br><span class="line">$ g++ main.o farther.o son_1.o son_2.o -o main</span><br><span class="line">$ ./main </span><br><span class="line">//This is func() from Son_2</span><br></pre></td></tr></table></figure></p>
+<p>可见解耦效果明显，大家都可以愉快地并行开发。<br>但是实际上这种联调方式不会在实际中发生，因为要用新功能son_2直接别链接son_1就完事了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ g++ main.o farther.o son_2.o -o main</span><br></pre></td></tr></table></figure></p>
+<p>不过，也有一种情况，是我需要顺序执行所有新老功能，那可以这么做:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//把接口中sonPtr改成vector以允许功能堆叠</span><br><span class="line">vector&lt;Farther*&gt; sonPtr;</span><br><span class="line">Farther::Farther()&#123;</span><br><span class="line">        sonPtr.push_back(this);</span><br><span class="line">&#125;</span><br><span class="line">//那么主控中就遍历执行</span><br><span class="line">for(auto p:sonPtr)</span><br><span class="line">    p-&gt;func();</span><br><span class="line">    </span><br><span class="line">//不过链接的顺序还是要注意</span><br><span class="line">$ g++ main.o farther.o son_1.o son_2.o -o main</span><br><span class="line">$ ./main</span><br><span class="line">//This is func() from Son_1</span><br><span class="line">//This is func() from Son_2</span><br></pre></td></tr></table></figure></p>
+<p>以上。</p>
 
       
     </div>
@@ -551,7 +523,7 @@
          <br>
 <!--  Dorian Removed Start    
          
-            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+            <a href="/tags/C/" rel="tag"># C++</a>
          
        Dorian Removed End -->
         </div>
@@ -565,15 +537,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2020/05/31/Variable-Encapsulation-by-Function/" rel="next" title="Static Variable Encapsulation by Function 静态变量的安全性">
+                <i class="fa fa-chevron-left"></i> Static Variable Encapsulation by Function 静态变量的安全性
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/04/matrix-QR-decomposition/" rel="prev" title="QR Decomposition 矩阵的QR分解">
-                QR Decomposition 矩阵的QR分解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -621,17 +593,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -828,23 +791,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相似矩阵"><span class="nav-number">1.</span> <span class="nav-text">相似矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#推导"><span class="nav-number">1.1.</span> <span class="nav-text">推导</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
