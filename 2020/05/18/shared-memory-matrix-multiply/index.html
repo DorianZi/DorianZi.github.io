@@ -105,7 +105,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Matrix Multiple by CUDA Shared Memory 使用共享内存优化矩阵相乘">
 <meta property="og:url" content="https://dorianzi.github.io/2020/05/18/shared-memory-matrix-multiply/index.html">
-<meta property="og:site_name" content="Dorian Mode">
+<meta property="og:site_name" content="Dorian Scale">
 <meta property="og:description" content="本来来自对于CUDA中使用shared memory进行矩阵相乘的思考。之所以写下它，是因为我感觉到这个例子代表着cuda处理矩阵的基本思维方式，掌握它，时常复习它，很有必要。 目标是实现矩阵相乘： 它是如何思维的：1）全局看，gridDim是完全映射输出的矩阵C，基于定义了C的row, col两个变量2）局部看，每个block大小为TILE_DIM*TILE_DIM, 也就是w*w, 对应矩阵C">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/matrix-multiplication-block-column-by-block-row.png">
@@ -130,7 +130,7 @@
   };
 </script>
 
-  <title>Matrix Multiple by CUDA Shared Memory 使用共享内存优化矩阵相乘 | Dorian Mode</title>
+  <title>Matrix Multiple by CUDA Shared Memory 使用共享内存优化矩阵相乘 | Dorian Scale</title>
   
 
 
@@ -200,7 +200,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Dorian Mode</span>
+        <span class="site-title">Dorian Scale</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -384,7 +384,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dorian Mode">
+      <meta itemprop="name" content="Dorian Scale">
     </span>
 
     
