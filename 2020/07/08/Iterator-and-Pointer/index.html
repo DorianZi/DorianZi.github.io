@@ -100,18 +100,18 @@
 
 
 
-  <meta name="description" content="为什么要用迭代器，这个问题常常伴随着“有指针还不够吗”。是的，不够，因为指针作为内置数据类型，已经把功能限定好了，你没法让++和–的功能互换。 而迭代器可以。 当我们看到下面的代码1234567891011121314151617181920212223#include &amp;lt;iostream&amp;gt;#include &amp;lt;vector&amp;gt;using namespace std;int m">
+  <meta name="description" content="为什么要用迭代器，这个问题常常伴随着“有指针还不够吗”。是的，不够，因为指针作为内置数据类型，已经把功能限定好了，你没法让++和--的功能互换。 而迭代器可以。 当我们看到下面的代码1234567891011121314151617181920212223#include &amp;lt;iostream&amp;gt;#include &amp;lt;vector&amp;gt;using namespace std;int">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Why Iterator 为什么要用迭代器">
 <meta property="og:url" content="https://dorianzi.github.io/2020/07/08/Iterator-and-Pointer/index.html">
 <meta property="og:site_name" content="Dorian Scale">
-<meta property="og:description" content="为什么要用迭代器，这个问题常常伴随着“有指针还不够吗”。是的，不够，因为指针作为内置数据类型，已经把功能限定好了，你没法让++和–的功能互换。 而迭代器可以。 当我们看到下面的代码1234567891011121314151617181920212223#include &amp;lt;iostream&amp;gt;#include &amp;lt;vector&amp;gt;using namespace std;int m">
+<meta property="og:description" content="为什么要用迭代器，这个问题常常伴随着“有指针还不够吗”。是的，不够，因为指针作为内置数据类型，已经把功能限定好了，你没法让++和--的功能互换。 而迭代器可以。 当我们看到下面的代码1234567891011121314151617181920212223#include &amp;lt;iostream&amp;gt;#include &amp;lt;vector&amp;gt;using namespace std;int">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-07-08T03:38:16.334Z">
+<meta property="og:updated_time" content="2020-07-08T03:47:47.180Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Why Iterator 为什么要用迭代器">
-<meta name="twitter:description" content="为什么要用迭代器，这个问题常常伴随着“有指针还不够吗”。是的，不够，因为指针作为内置数据类型，已经把功能限定好了，你没法让++和–的功能互换。 而迭代器可以。 当我们看到下面的代码1234567891011121314151617181920212223#include &amp;lt;iostream&amp;gt;#include &amp;lt;vector&amp;gt;using namespace std;int m">
+<meta name="twitter:description" content="为什么要用迭代器，这个问题常常伴随着“有指针还不够吗”。是的，不够，因为指针作为内置数据类型，已经把功能限定好了，你没法让++和--的功能互换。 而迭代器可以。 当我们看到下面的代码1234567891011121314151617181920212223#include &amp;lt;iostream&amp;gt;#include &amp;lt;vector&amp;gt;using namespace std;int">
 
 
 
@@ -486,10 +486,10 @@
       
 
       
-        <p>为什么要用迭代器，这个问题常常伴随着“有指针还不够吗”。<br>是的，不够，因为指针作为内置数据类型，已经把功能限定好了，你没法让++和–的功能互换。 而迭代器可以。</p>
+        <p>为什么要用迭代器，这个问题常常伴随着“有指针还不够吗”。<br>是的，不够，因为指针作为内置数据类型，已经把功能限定好了，你没法让++和--的功能互换。 而迭代器可以。</p>
 <p>当我们看到下面的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">        vector&lt;int&gt; vec = &#123;1,2,3,4,5&#125;;</span><br><span class="line">        vector&lt;int&gt;::iterator it = vec.begin();</span><br><span class="line">        it++;</span><br><span class="line">        cout&lt;&lt; *it&lt;&lt;endl;</span><br><span class="line">        it += 2;</span><br><span class="line">        cout&lt;&lt; *it&lt;&lt;endl;</span><br><span class="line">        it-- ;</span><br><span class="line">        cout&lt;&lt; *it&lt;&lt;endl;</span><br><span class="line">        it -= 2 ; </span><br><span class="line">        vector&lt;int&gt;::iterator it_new = vec.begin();</span><br><span class="line">        if(it==it_new)</span><br><span class="line">                cout&lt;&lt; &quot;it equal to it_new&quot;&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line">//输出如下</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">3</span><br><span class="line">it equal to it_new</span><br></pre></td></tr></table></figure></p>
-<p>可能会认为vector<int>::iterator it就是指针，因为它能执行++, –, += , -= , * , == 等操作，跟指针一样。但实际上并非如此。</int></p>
-<p>1）我这样理解指针：指针是C/C++<strong>内置</strong>定义的数据类型模板，能执行 ++, –, += , -= , <em> , == 等运算符。<br>2）我这样理解迭代器：迭代器是标准库或者用户定义的<strong>类</strong>，且不一定重载了以上所有的运算符。但是++一般是有的，否则就失去了“迭代”的意义<br>3）我这样理解vector迭代器：STL库中vector的编写者，为vector的iterator迭代器仿照指针重载了++, –, += , -= , </em> , == 等指针常用的运算符，使它特别像指针。</p>
+<p>可能会认为vector<int>::iterator it就是指针，因为它能执行++, --, += , -= , * , == 等操作，跟指针一样。但实际上并非如此。</int></p>
+<p>1）我这样理解指针：指针是C/C++<strong>内置</strong>定义的数据类型模板，能执行 ++, --, += , -= , <em> , == 等运算符。<br>2）我这样理解迭代器：迭代器是标准库或者用户定义的<strong>类</strong>，且不一定重载了以上所有的运算符。但是++一般是有的，否则就失去了“迭代”的意义<br>3）我这样理解vector迭代器：STL库中vector的编写者，为vector的iterator迭代器仿照指针重载了++, --, += , -= , </em> , == 等指针常用的运算符，使它特别像指针。</p>
 <p>根据使用场景不同，可以定义不同的迭代器，vector可不止定义了iterator一种迭代器，还有const_iterator , reverse_iterator , const_reverse_iterator<br>我们看看reverse_iterator的场景：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line">        vector&lt;int&gt; vec = &#123;1,2,3,4,5&#125;;</span><br><span class="line">        vector&lt;int&gt;::reverse_iterator it = vec.rbegin();</span><br><span class="line">        cout &lt;&lt; *it &lt;&lt; endl;</span><br><span class="line">        it++;</span><br><span class="line">        cout &lt;&lt; *it &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">//输出如下</span><br><span class="line">5</span><br><span class="line">4</span><br></pre></td></tr></table></figure></p>
 <p>可以见reverse_iterator作为反向迭代器，把++操作重载成了反向的。但你不能说这是反向指针。</p>
 <p>以上。</p>
