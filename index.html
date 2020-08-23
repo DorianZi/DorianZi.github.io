@@ -474,8 +474,8 @@
         
           
             <p>
-              
-#include &lt;iostream&gt;using namespace std;//    N// M#define N 8#define M 4#define BLOCKSIZE_X 2#define BLOCKSIZE_Y 2__global__ void launch_kernel
+              常常我们使用shared memory，为了解决以下两种问题：1）同一个全局内存既被读取，又被写入。为了避免写入覆盖，于是放shared memory里暂存，所有数据处理好后，最后一起写入全局内存。2）避免重复读取全局内存影响性能，所以一开始把数据存到shared memory，以便之后多次读取
+本
               ...
             </p>
           <!--noindex-->
