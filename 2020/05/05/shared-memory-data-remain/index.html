@@ -101,6 +101,7 @@
 
 
   <meta name="description" content="共享内存 shared memory的生命周期是跟随block的生命周期的，即一份shared memory随着block的开启而开启，随着block（里所有thread）的结束而结束。 但从物理上说, shared memory里的数据并没有被清空。 如果一个新的block被分配到了这段shared memory，那么就能延续使用shared memory驻留的数据。以下的实验验证了这一点 两次">
+<meta name="keywords" content="CUDA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CUDA Shared Memory Data Retain 共享内存驻留">
 <meta property="og:url" content="https://dorianzi.github.io/2020/05/05/shared-memory-data-remain/index.html">
@@ -422,6 +423,24 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -445,6 +464,12 @@
           
           
           <!--Dorian Added Start-->
+          
+            <div class="post-tags">
+              
+                <a href="/tags/CUDA/" <i class="fa fa-tag"> CUDA</a>
+              
+            </div>
           
           <!--Dorian Added End-->
         
@@ -493,6 +518,16 @@
 
     <footer class="post-footer">
 
+      
+        <div class="post-tags">
+         <br>
+         <br>
+<!--  Dorian Removed Start    
+         
+            <a href="/tags/CUDA/" rel="tag"># CUDA</a>
+         
+       Dorian Removed End -->
+        </div>
       
 
       
@@ -611,7 +646,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -630,7 +665,37 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
