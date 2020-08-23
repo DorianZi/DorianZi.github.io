@@ -101,7 +101,6 @@
 
 
   <meta name="description" content="本来来自对于CUDA中使用shared memory进行矩阵相乘的思考。之所以写下它，是因为我感觉到这个例子代表着cuda处理矩阵的基本思维方式，掌握它，时常复习它，很有必要。 目标是实现矩阵相乘： 它是如何思维的：1）全局看，gridDim是完全映射输出的矩阵C，基于定义了C的row, col两个变量2）局部看，每个block大小为TILE_DIM*TILE_DIM, 也就是w*w, 对应矩阵C">
-<meta name="keywords" content="CUDA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Matrix Multiple by CUDA Shared Memory 使用共享内存优化矩阵相乘">
 <meta property="og:url" content="https://dorianzi.github.io/2020/05/18/shared-memory-matrix-multiply/index.html">
@@ -425,24 +424,6 @@
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Technic/" itemprop="url" rel="index"><span itemprop="name">Technic</span></a></span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -466,12 +447,6 @@
           
           
           <!--Dorian Added Start-->
-          
-            <div class="post-tags">
-              
-                <a href="/tags/CUDA/" <i class="fa fa-tag"> CUDA</a>
-              
-            </div>
           
           <!--Dorian Added End-->
         
@@ -516,16 +491,6 @@
 
     <footer class="post-footer">
 
-      
-        <div class="post-tags">
-         <br>
-         <br>
-<!--  Dorian Removed Start    
-         
-            <a href="/tags/CUDA/" rel="tag"># CUDA</a>
-         
-       Dorian Removed End -->
-        </div>
       
 
       
@@ -635,7 +600,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -654,37 +619,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

@@ -100,16 +100,19 @@
 
 
 
-  <meta name="keywords" content="CUDA">
+  <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071#include &amp;lt;iostream&amp;gt;using namespace std;//    N// M#define N">
+<meta name="keywords" content="CUDA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CUDA Matrix Transpose using Shared Memory 使用cuda共享内存优化矩阵转置">
 <meta property="og:url" content="https://dorianzi.github.io/2020/08/21/CUDA-Matrix-Transpose-using-Shared-Memory/index.html">
 <meta property="og:site_name" content="Dorian Scale">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071#include &amp;lt;iostream&amp;gt;using namespace std;//    N// M#define N">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://dorianzi.github.io/uploads/matrix_transpose_using_shared_memory.png">
-<meta property="og:updated_time" content="2020-08-21T03:16:02.194Z">
+<meta property="og:updated_time" content="2020-08-23T09:08:20.600Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CUDA Matrix Transpose using Shared Memory 使用cuda共享内存优化矩阵转置">
+<meta name="twitter:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071#include &amp;lt;iostream&amp;gt;using namespace std;//    N// M#define N">
 <meta name="twitter:image" content="https://dorianzi.github.io/uploads/matrix_transpose_using_shared_memory.png">
 
 
@@ -486,7 +489,7 @@
 
       
         <p><img src="/uploads/matrix_transpose_using_shared_memory.png" alt></p>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">//    N</span><br><span class="line">// M</span><br><span class="line">#define N 8</span><br><span class="line">#define M 4</span><br><span class="line">#define BLOCKSIZE_X 2</span><br><span class="line">#define BLOCKSIZE_Y 2</span><br><span class="line"></span><br><span class="line">__global__ void launch_kernel(int *matrix, int *out)&#123;</span><br><span class="line">	__shared__ int shmem[BLOCKSIZE_Y][BLOCKSIZE_X];</span><br><span class="line"></span><br><span class="line">	// x,  y is the global thread location</span><br><span class="line">	const unsigned  int x = blockIdx.x * blockDim.x + threadIdx.x;</span><br><span class="line">	const unsigned int y = blockIdx.y * blockDim.y + threadIdx.y;</span><br><span class="line">	if(x&gt;=N || y&gt;=M) return;</span><br><span class="line"></span><br><span class="line">	// threadIdx.y , threadIdx.x is the local shared memory index</span><br><span class="line">	shmem[threadIdx.y][threadIdx.x] = matrix[y * N + x];</span><br><span class="line">	__syncthreads();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	// find shmem[row][col] mapped to current thread</span><br><span class="line">	const unsigned int tid = blockDim.x * threadIdx.y + threadIdx.x;</span><br><span class="line">	const unsigned int col = tid / blockDim.y;</span><br><span class="line">	const unsigned int row = tid % blockDim.y;</span><br><span class="line"></span><br><span class="line">	// find the global index of (sx, sy) mapped to the local shmem[row][col]</span><br><span class="line">	const unsigned int sx = blockIdx.x * blockDim.x + col;</span><br><span class="line">	const unsigned int sy = blockIdx.y * blockDim.y + row;</span><br><span class="line"></span><br><span class="line">	// then copy shmem[row][col] to out matrix (sy, sx)</span><br><span class="line">	out[sx*M + sy] = shmem[row][col];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int matrix_h_in[M][N], *matrix_d_in;</span><br><span class="line">	cout &lt;&lt; &quot;Original:&quot; &lt;&lt;endl;</span><br><span class="line">	for(int i=0; i&lt;M; i++)&#123;</span><br><span class="line">		for(int j=0; j&lt;N; j++)&#123;</span><br><span class="line">			matrix_h_in[i][j] =  rand()%10;</span><br><span class="line">			cout &lt;&lt; matrix_h_in[i][j] &lt;&lt; &quot;\t&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	cudaMalloc(&amp;matrix_d_in, M*N*sizeof(int));</span><br><span class="line">	cudaMemcpy(matrix_d_in, matrix_h_in, M*N*sizeof(int), cudaMemcpyHostToDevice);</span><br><span class="line"></span><br><span class="line">	int matrix_h_out[N][M], *matrix_d_out;</span><br><span class="line">	cudaMalloc(&amp;matrix_d_out, N*M*sizeof(int));</span><br><span class="line">	dim3 block(BLOCKSIZE_X,BLOCKSIZE_Y,1);</span><br><span class="line">	dim3 grid((N + block.x-1)/block.x, (M + block.y-1)/block.y, 1);</span><br><span class="line">	launch_kernel&lt;&lt;&lt;grid,block&gt;&gt;&gt;(matrix_d_in, matrix_d_out);</span><br><span class="line">	cudaDeviceSynchronize();</span><br><span class="line">	cudaMemcpy(matrix_h_out, matrix_d_out, N*M*sizeof(int), cudaMemcpyDeviceToHost);</span><br><span class="line"></span><br><span class="line">	cout &lt;&lt; &quot;Transposed:&quot; &lt;&lt;endl;</span><br><span class="line">        for(int i=0; i&lt;N; i++)&#123;</span><br><span class="line">		for(int j=0; j&lt;M; j++)&#123;</span><br><span class="line">			cout &lt;&lt; matrix_h_out[i][j] &lt;&lt; &quot;\t&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	cudaFree(matrix_d_in);</span><br><span class="line">	cudaFree(matrix_d_out);</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -622,7 +625,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -641,37 +644,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
